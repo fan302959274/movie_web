@@ -8,29 +8,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author sh00859
- * @description 实例代码
+ * @description 首页代码
  * @date 2017/8/21
  */
 @Controller
-@RequestMapping("/node")
-public class NodeController {
+public class IndexController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private static Integer count = 0;
-
     /**
-     * 实例接口
+     * 首页
      *
      * @param
      * @param
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = {"/name"})
-    public String getName() throws Exception {
-        logger.info("处理进来了--" + count++);
-        return "login";
+    @RequestMapping(value = {"/"})
+    public String index() throws Exception {
+        return "/index";
     }
 
 
