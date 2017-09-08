@@ -1,21 +1,18 @@
 package com.movie.web;
 
-import com.movie.mapper.TblVideoMapper;
 import com.movie.model.TblVideo;
 import com.movie.service.VideoService;
-import com.movie.util.request.PageReq;
+import com.movie.util.request.TblVideoPageReq;
 import com.movie.util.response.CommonResp;
 import com.movie.util.response.PageResp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 
@@ -48,9 +45,9 @@ public class VideoController {
      * @date 2017/9/8
      */
     @RequestMapping(value = {"/list"})
-    public ModelAndView list(PageReq<TblVideo> pageReq, Map map) throws Exception {
+    public ModelAndView list(TblVideoPageReq pageReq, Map map) throws Exception {
         PageResp<TblVideo> resp = videoService.selectListByPage(pageReq);
-        map.put("data",resp);
+        map.put("data", resp);
         return new ModelAndView("/video/table", map);
     }
 

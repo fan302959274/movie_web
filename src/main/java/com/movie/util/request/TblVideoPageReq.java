@@ -3,9 +3,7 @@ package com.movie.util.request;/**
  */
 
 
-import com.movie.util.response.ResponseCode;
-
-import java.util.List;
+import com.movie.model.TblVideo;
 
 /**
  * 通用请求类
@@ -13,10 +11,10 @@ import java.util.List;
  * @author
  * @create 2017-07-20 10:57
  **/
-public class PageReq<T> {
+public class TblVideoPageReq extends TblVideo {
+
     private Integer page;
     private Integer pageSize;
-    private T param;
 
     public Integer getPage() {
         return page;
@@ -34,11 +32,4 @@ public class PageReq<T> {
         this.pageSize = pageSize;
     }
 
-    public T getParam() {
-        return param;
-    }
-
-    public void setParam(T param) {
-        this.param = param;
-    }
 }

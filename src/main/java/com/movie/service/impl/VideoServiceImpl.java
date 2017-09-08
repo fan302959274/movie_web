@@ -5,10 +5,11 @@ import com.movie.mapper.TblVideoMapper;
 import com.movie.model.TblVideo;
 import com.movie.model.TblVideoExample;
 import com.movie.service.VideoService;
-import com.movie.util.request.PageReq;
+import com.movie.util.request.TblVideoPageReq;
 import com.movie.util.response.CommonResp;
 import com.movie.util.response.PageResp;
 import com.movie.util.response.ResponseCode;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,17 +49,25 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public PageResp<TblVideo> selectListByPage(PageReq<TblVideo> pageReq) {
+    public PageResp<TblVideo> selectListByPage(TblVideoPageReq pageReq) {
         PageResp<TblVideo> resp = new PageResp<TblVideo>();
         TblVideoExample example = new TblVideoExample();
         try {
-            Integer page = pageReq.getPage()==null?1:pageReq.getPage();
-            Integer pageSize = pageReq.getPageSize()==null?10:pageReq.getPageSize();
-            PageHelper.startPage(page,pageSize);
-            TblVideo param = pageReq.getParam();
+            Integer page = pageReq.getPage() == null ? 1 : pageReq.getPage();
+            Integer pageSize = pageReq.getPageSize() == null ? 10 : pageReq.getPageSize();
+            PageHelper.startPage(page, pageSize);
+            if (null != pageReq) {
+                TblVideoExample.Criteria criteria = example.createCriteria();
+                if (!StringUtils.isBlank(pageReq.getVideoName())) {
+                    criteria.andVideoNameLike("%" + pageReq.getVideoName() + "%");
+                }
+                if (!StringUtils.isBlank(pageReq.getVideoType())) {
+                    criteria.andVideoTypeEqualTo(pageReq.getVideoType());
+                }
+            }
             List<TblVideo> list = tblVideoMapper.selectByExample(example);
             Integer total = tblVideoMapper.countByExample(example);
-            resp.setTotalPage(total%pageSize==0?total/pageSize:(total/pageSize+1));
+            resp.setTotalPage(total % pageSize == 0 ? total / pageSize : (total / pageSize + 1));
             resp.setTotal(total);
             resp.setPage(page);
             resp.setPageSize(pageSize);
