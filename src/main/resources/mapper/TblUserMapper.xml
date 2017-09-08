@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.movie.mapper.TblUserMapper" >
+  <resultMap id="BaseResultMap" type="com.movie.model.TblUser" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_open_id" property="userOpenId" jdbcType="VARCHAR" />
+    <result column="user_nick_name" property="userNickName" jdbcType="VARCHAR" />
+    <result column="user_gender" property="userGender" jdbcType="VARCHAR" />
+    <result column="user_city" property="userCity" jdbcType="VARCHAR" />
+    <result column="user_province" property="userProvince" jdbcType="VARCHAR" />
+    <result column="user_country" property="userCountry" jdbcType="VARCHAR" />
+    <result column="user_avatar_url" property="userAvatarUrl" jdbcType="VARCHAR" />
+    <result column="user_union_id" property="userUnionId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_wechat" property="userWechat" jdbcType="VARCHAR" />
+    <result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_name, user_open_id, user_nick_name, user_gender, user_city, user_province, 
+    user_country, user_avatar_url, user_union_id, user_id, user_wechat, user_mobile, 
+    create_date, update_date, creator, updator, is_deleted
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.movie.model.TblUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.movie.model.TblUserExample" >
+    delete from tbl_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.movie.model.TblUser" >
+    insert into tbl_user (id, user_name, user_open_id, 
+      user_nick_name, user_gender, user_city, 
+      user_province, user_country, user_avatar_url, 
+      user_union_id, user_id, user_wechat, 
+      user_mobile, create_date, update_date, 
+      creator, updator, is_deleted
+      )
+    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userOpenId,jdbcType=VARCHAR}, 
+      #{userNickName,jdbcType=VARCHAR}, #{userGender,jdbcType=VARCHAR}, #{userCity,jdbcType=VARCHAR}, 
+      #{userProvince,jdbcType=VARCHAR}, #{userCountry,jdbcType=VARCHAR}, #{userAvatarUrl,jdbcType=VARCHAR}, 
+      #{userUnionId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userWechat,jdbcType=VARCHAR}, 
+      #{userMobile,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, #{isDeleted,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.movie.model.TblUser" >
+    insert into tbl_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userOpenId != null" >
+        user_open_id,
+      </if>
+      <if test="userNickName != null" >
+        user_nick_name,
+      </if>
+      <if test="userGender != null" >
+        user_gender,
+      </if>
+      <if test="userCity != null" >
+        user_city,
+      </if>
+      <if test="userProvince != null" >
+        user_province,
+      </if>
+      <if test="userCountry != null" >
+        user_country,
+      </if>
+      <if test="userAvatarUrl != null" >
+        user_avatar_url,
+      </if>
+      <if test="userUnionId != null" >
+        user_union_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userWechat != null" >
+        user_wechat,
+      </if>
+      <if test="userMobile != null" >
+        user_mobile,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="updator != null" >
+        updator,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userOpenId != null" >
+        #{userOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="userNickName != null" >
+        #{userNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userGender != null" >
+        #{userGender,jdbcType=VARCHAR},
+      </if>
+      <if test="userCity != null" >
+        #{userCity,jdbcType=VARCHAR},
+      </if>
+      <if test="userProvince != null" >
+        #{userProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="userCountry != null" >
+        #{userCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="userAvatarUrl != null" >
+        #{userAvatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userUnionId != null" >
+        #{userUnionId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userWechat != null" >
+        #{userWechat,jdbcType=VARCHAR},
+      </if>
+      <if test="userMobile != null" >
+        #{userMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updator != null" >
+        #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.movie.model.TblUserExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_user
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userOpenId != null" >
+        user_open_id = #{record.userOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userNickName != null" >
+        user_nick_name = #{record.userNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userGender != null" >
+        user_gender = #{record.userGender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userCity != null" >
+        user_city = #{record.userCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userProvince != null" >
+        user_province = #{record.userProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userCountry != null" >
+        user_country = #{record.userCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userAvatarUrl != null" >
+        user_avatar_url = #{record.userAvatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userUnionId != null" >
+        user_union_id = #{record.userUnionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userWechat != null" >
+        user_wechat = #{record.userWechat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userMobile != null" >
+        user_mobile = #{record.userMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null" >
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updator != null" >
+        updator = #{record.updator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDeleted != null" >
+        is_deleted = #{record.isDeleted,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_user
+    set id = #{record.id,jdbcType=BIGINT},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      user_open_id = #{record.userOpenId,jdbcType=VARCHAR},
+      user_nick_name = #{record.userNickName,jdbcType=VARCHAR},
+      user_gender = #{record.userGender,jdbcType=VARCHAR},
+      user_city = #{record.userCity,jdbcType=VARCHAR},
+      user_province = #{record.userProvince,jdbcType=VARCHAR},
+      user_country = #{record.userCountry,jdbcType=VARCHAR},
+      user_avatar_url = #{record.userAvatarUrl,jdbcType=VARCHAR},
+      user_union_id = #{record.userUnionId,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      user_wechat = #{record.userWechat,jdbcType=VARCHAR},
+      user_mobile = #{record.userMobile,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      updator = #{record.updator,jdbcType=VARCHAR},
+      is_deleted = #{record.isDeleted,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.movie.model.TblUser" >
+    update tbl_user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userOpenId != null" >
+        user_open_id = #{userOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="userNickName != null" >
+        user_nick_name = #{userNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userGender != null" >
+        user_gender = #{userGender,jdbcType=VARCHAR},
+      </if>
+      <if test="userCity != null" >
+        user_city = #{userCity,jdbcType=VARCHAR},
+      </if>
+      <if test="userProvince != null" >
+        user_province = #{userProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="userCountry != null" >
+        user_country = #{userCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="userAvatarUrl != null" >
+        user_avatar_url = #{userAvatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userUnionId != null" >
+        user_union_id = #{userUnionId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userWechat != null" >
+        user_wechat = #{userWechat,jdbcType=VARCHAR},
+      </if>
+      <if test="userMobile != null" >
+        user_mobile = #{userMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updator != null" >
+        updator = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.movie.model.TblUser" >
+    update tbl_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_open_id = #{userOpenId,jdbcType=VARCHAR},
+      user_nick_name = #{userNickName,jdbcType=VARCHAR},
+      user_gender = #{userGender,jdbcType=VARCHAR},
+      user_city = #{userCity,jdbcType=VARCHAR},
+      user_province = #{userProvince,jdbcType=VARCHAR},
+      user_country = #{userCountry,jdbcType=VARCHAR},
+      user_avatar_url = #{userAvatarUrl,jdbcType=VARCHAR},
+      user_union_id = #{userUnionId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      user_wechat = #{userWechat,jdbcType=VARCHAR},
+      user_mobile = #{userMobile,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      updator = #{updator,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
