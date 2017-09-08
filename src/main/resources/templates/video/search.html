@@ -1,6 +1,5 @@
-<script src="/js/pagination.js"></script>
 <div>
-    <form class="bs-example bs-example-form" role="form">
+    <form class="bs-example bs-example-form" id="searchForm" role="form">
         <div class="row">
 
             <div class="form-horizontal">
@@ -50,28 +49,14 @@
                 </div>
             </div>
 
-            <div class="form-horizontal">
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                    <div class="form-group ">
-                        <label class="col-lg-3 col-sm-3 control-label">状态：</label>
-                        <div class="col-lg-9 col-sm-9">
-                            <select path="authStatus" name="authStatus"
-                                    class="form-control">
-                                <option value="">全部</option>
-                                <option value="0">停用</option>
-                                <option value="1">启用</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
         </div>
 
         <div class="row">
             <div class="form-horizontal">
-                <div class="col-md-8 col-sm-8 text-left">
-                    <button type="button" class="btn btn-primary btn-md" id="add">添加</button>
+                <div class="col-md-5 col-sm-8 text-left">
+                    <button type="button" class="btn btn-info btn-md" id="add">添加</button>
                 </div>
                 <div class="col-md-4 col-sm-4 text-right">
                     <button type="button" class="btn btn-primary btn-md" id="query">查询</button>
@@ -88,10 +73,8 @@
 </div>
 
 
-<div id="table_list">
+<div id="table_list" style="margin-top:1%;">
 </div>
-
-<div id="test1" style="text-align: right;" pagination="pagination_new" pagenumber="11" totalpage="13"></div>
 
 
 

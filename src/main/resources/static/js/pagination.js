@@ -98,6 +98,7 @@ function addClickListener(element){
             paginationClick(element.attr("id"));
             initPagination(element);
         }
+
         return false;
     })
 }
@@ -108,7 +109,14 @@ function checkParamIsPositiveInteger(param){
 
 //用户需要自己实现的点击事件，参数为分页容器的id
 function paginationClick(pagination_id){
-
+    $.ajax({
+        type: "POST",
+        data:$("#"+pagination_id).serialize()+"&page="+$("#"+pagination_id).attr("pagenumber"),
+        url: $("#"+pagination_id).attr("url"),
+        success: function(data){
+            $('#table_list').html(data);
+        }
+    });
 }
 $(function(){
     paginationInit();
