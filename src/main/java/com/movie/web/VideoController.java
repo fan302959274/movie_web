@@ -67,8 +67,14 @@ public class VideoController {
      * @date 2017/9/8
      */
     @RequestMapping(value = {"/add"})
-    public String add() throws Exception {
-        return "/video/add";
+    public ModelAndView add(Map map) throws Exception {
+        //获取所有的视频类型
+        TblParam param = new TblParam();
+        param.setParamType("001");
+        map.put("video_type_list",paramService.selectList(param ));
+        param.setParamType("002");
+        map.put("video_tag_list",paramService.selectList(param ));
+        return new ModelAndView("/video/add", map);
     }
 
 
