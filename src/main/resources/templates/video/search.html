@@ -1,4 +1,4 @@
-<div>
+<div xmlns:th="http://www.w3.org/1999/xhtml">
     <form class="bs-example bs-example-form" id="searchform" role="form">
         <div class="row">
 
@@ -20,8 +20,7 @@
                             <select name="videoType" id="videoType"
                                     class="form-control">
                                 <option value="">全部</option>
-                                <option value="0">停用</option>
-                                <option value="1">启用</option>
+                                <option th:each="type:${video_type_list}" th:value="${type.paramCode}" th:text="${type.paramValue}"></option>
                             </select>
                         </div>
                     </div>

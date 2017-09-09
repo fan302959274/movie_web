@@ -1,6 +1,8 @@
 package com.movie.web;
 
+import com.movie.model.TblParam;
 import com.movie.model.TblVideo;
+import com.movie.service.ParamService;
 import com.movie.service.VideoService;
 import com.movie.util.request.TblVideoPageReq;
 import com.movie.util.response.CommonResp;
@@ -28,6 +30,8 @@ public class VideoController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private VideoService videoService;
+    @Autowired
+    private ParamService paramService;
 
     /**
      * @description 搜索界面
@@ -35,8 +39,13 @@ public class VideoController {
      * @date 2017/9/8
      */
     @RequestMapping(value = {"/search"})
-    public String search() throws Exception {
-        return "/video/search";
+    public ModelAndView search(Map map) throws Exception {
+        //获取所有的视频类型
+        TblParam param = new TblParam();
+        param.setParamType("001");
+        map.put("video_type_list",paramService.selectList(param ));
+        return new ModelAndView("/video/search", map);
+
     }
 
     /**
