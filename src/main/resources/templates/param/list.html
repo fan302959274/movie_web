@@ -17,7 +17,7 @@
             <td th:text="${param.paramType}"></td>
             <td th:text="${param.paramCode}"></td>
             <td>
-                <button type="button" class="btn btn-success btn-sm" th:value="${param.id}" id="add" name="add">添加连接
+                <button type="button" class="btn btn-success btn-sm" th:value="${param.id}" id="upload" name="upload">添加连接
                 </button>
                 <button type="button" class="btn btn-warning btn-sm" th:value="${param.id}" id="edit" name="edit">编辑
                 </button>
@@ -63,6 +63,16 @@
         $("[name='delete']").click(function () {
             $('#delcfmmodel').modal("show");
             $('#delcfmmodel #deletesubmmit').val($(this).val());
+        });
+        $("[name='upload']").click(function () {
+            $.ajax({
+                type: "POST",
+                data: {"id": $(this).val()},
+                url: "/param/uploadpage",
+                success: function (data) {
+                    $('#content').html(data);
+                }
+            });
         });
 
 

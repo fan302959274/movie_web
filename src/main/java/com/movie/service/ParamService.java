@@ -7,6 +7,7 @@ import com.movie.util.request.TblParamPageReq;
 import com.movie.util.request.TblVideoPageReq;
 import com.movie.util.response.CommonResp;
 import com.movie.util.response.PageResp;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,10 +36,24 @@ public interface ParamService {
     public CommonResp<TblParam> save(TblParam tblParam);
 
     /**
+     * @description 修改记录
+     * @author sh00859
+     * @date 2017/7/13
+     */
+    public CommonResp<TblParam> edit(TblParam tblParam);
+
+    /**
      * @description 删除记录
      * @author sh00859
      * @date 2017/7/13
      */
     public CommonResp<String> delete(TblParam tblParam);
+
+    /**
+     * @description 上传文件
+     * @author sh00859
+     * @date 2017/7/13
+     */
+    public CommonResp<TblParam> upload(MultipartFile file,Long id);
 
 }

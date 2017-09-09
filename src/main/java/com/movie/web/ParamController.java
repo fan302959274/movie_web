@@ -12,8 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 
@@ -79,6 +82,18 @@ public class ParamController {
         return paramService.save(tblParam);
     }
 
+
+    /**
+     * @description 更新
+     * @author sh00859
+     * @date 2017/9/8
+     */
+    @RequestMapping(value = {"/edit"})
+    @ResponseBody
+    public CommonResp<TblParam> edit(TblParam tblParam) throws Exception {
+        return paramService.edit(tblParam);
+    }
+
     /**
      * @description 删除
      * @author sh00859
@@ -89,5 +104,31 @@ public class ParamController {
     public CommonResp<String> delete(TblParam tblParam) throws Exception {
         return paramService.delete(tblParam);
     }
+
+
+    /**
+     * @description 上传页面
+     * @author sh00859
+     * @date 2017/9/8
+     */
+    @RequestMapping(value = {"/uploadpage"})
+    public ModelAndView uploadpage(TblParam tblParam, Map map) throws Exception {
+        map.put("data",tblParam);
+        return new ModelAndView("/param/upload",map);
+    }
+
+    /**
+     * @description 上传文件
+     * @author sh00859
+     * @date 2017/9/8
+     */
+    @RequestMapping(value = {"/upload"})
+    @ResponseBody
+    public CommonResp<TblParam> upload(HttpServletRequest request,Long id) throws Exception {
+        MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;
+        MultipartFile file = multipartRequest.getFile("paramUrl");
+        return paramService.upload(file,id);
+    }
+
 
 }

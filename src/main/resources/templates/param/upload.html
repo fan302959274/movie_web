@@ -1,26 +1,9 @@
-<form class="form-horizontal" role="form" id="add_param_form">
+<form class="form-horizontal" enctype="multipart/form-data" role="form" id="upload_param_form">
     <div class="form-group">
-        <label for="paramValue" class="col-sm-1 control-label">参数名称</label>
+        <label for="paramUrl" class="col-sm-1 control-label">参数连接</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" id="paramValue" name="paramValue" placeholder="请输入名字"/>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="paramType" class="col-sm-1 control-label">参数类型</label>
-        <div class="col-sm-2">
-            <input type="number" class="form-control" id="paramType" name="paramType" placeholder="参数类型"/>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="paramCode" class="col-sm-1 control-label">参数编码</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" id="paramCode" name="paramCode" placeholder="参数编码"/>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="paramDesc" class="col-sm-1 control-label">参数描述</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" id="paramDesc" name="paramDesc" placeholder="参数描述"/>
+            <input type="hidden" class="form-control" th:value="${data.id}" name="id" id="id"/>
+            <input type="file" class="form-control" id="paramUrl" name="paramUrl" placeholder="请选择参数连接"/>
         </div>
     </div>
 
@@ -36,22 +19,26 @@
 <script>
 
     $(function () {
-        $("#add_param_form").validate({
+        $("#upload_param_form").validate({
             rules: {
-                paramName: {
+                paramUrl: {
                     required: true
                 }
             },
             messages: {
-                paramName: {
+                paramUrl: {
                     required: "请输名称",
                 }
             },
             submitHandler: function () {
-                $("#add_param_form").ajaxSubmit({
-                    type: "post",
-                    url: "/param/save?time=" + (new Date()).getTime(),
-                    success: function (data) {
+                $.ajaxFileUpload({
+                    method:"POST",
+                    url:"/param/upload",
+                    secureuri:true,
+                    fileElementId:'paramUrl',                        //文件选择框的id属性
+                    data: { id: $("#upload_param_form #id").val() },//自定义参数,
+                    success: function(data,s, status){
+                        //上传成功之后的操作
                         if (!"20000" == data.code) {
                             alert(data.message);
                         } else {
@@ -63,6 +50,8 @@
                                 }
                             });
                         }
+                    },error: function (data, status, e){
+                        //上传失败之后的操作
                     }
                 });
             }
