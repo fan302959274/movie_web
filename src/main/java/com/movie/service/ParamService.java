@@ -34,4 +34,11 @@ public interface ParamService {
      */
     public CommonResp<TblParam> save(TblParam tblParam);
 
+    /**
+     * @description 删除记录
+     * @author sh00859
+     * @date 2017/7/13
+     */
+    public CommonResp<String> delete(TblParam tblParam);
+
 }

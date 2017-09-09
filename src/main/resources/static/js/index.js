@@ -1,8 +1,8 @@
-function change_list(url){
+function change_list(url) {
     $.ajax({
         type: "GET",
         url: url,
-        success: function(data){
+        success: function (data) {
             $('#content').html(data);
         }
     });

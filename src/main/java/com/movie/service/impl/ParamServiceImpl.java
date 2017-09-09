@@ -87,4 +87,18 @@ public class ParamServiceImpl implements ParamService {
         }
         return resp;
     }
+
+    @Override
+    public CommonResp<String> delete(TblParam tblParam) {
+        CommonResp<String> resp = new CommonResp<String>();
+        try {
+            tblParamMapper.deleteByPrimaryKey(tblParam.getId());
+        } catch (Exception e) {
+            logger.error("删除param列表异常" + e.getMessage());
+            resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
+            resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
+            return resp;
+        }
+        return resp;
+    }
 }

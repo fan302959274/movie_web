@@ -79,4 +79,15 @@ public class ParamController {
         return paramService.save(tblParam);
     }
 
+    /**
+     * @description 删除
+     * @author sh00859
+     * @date 2017/9/8
+     */
+    @RequestMapping(value = {"/delete"})
+    @ResponseBody
+    public CommonResp<String> delete(TblParam tblParam) throws Exception {
+        return paramService.delete(tblParam);
+    }
+
 }

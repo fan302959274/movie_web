@@ -1,0 +1,83 @@
+<form class="form-horizontal" role="form" id="add_param_form">
+    <div class="form-group">
+        <label for="paramValue" class="col-sm-1 control-label">参数名称</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="paramValue" name="paramValue" placeholder="请输入名字"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="paramType" class="col-sm-1 control-label">参数类型</label>
+        <div class="col-sm-2">
+            <input type="number" class="form-control" id="paramType" name="paramType" placeholder="参数类型"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="paramCode" class="col-sm-1 control-label">参数编码</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="paramCode" name="paramCode" placeholder="参数编码"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="paramDesc" class="col-sm-1 control-label">参数描述</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="paramDesc" name="paramDesc" placeholder="参数描述"/>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-8">
+            <button type="submit" class="btn btn-success">保存</button>
+            <button type="button" id="return" class="btn btn-default">返回</button>
+        </div>
+    </div>
+</form>
+
+<script>
+
+    $(function () {
+        $("#add_param_form").validate({
+            rules: {
+                paramName: {
+                    required: true
+                }
+            },
+            messages: {
+                paramName: {
+                    required: "请输名称",
+                }
+            },
+            submitHandler: function () {
+                $("#add_param_form").ajaxSubmit({
+                    type: "post",
+                    url: "/param/save?time=" + (new Date()).getTime(),
+                    success: function (data) {
+                        if (!"20000" == data.code) {
+                            alert(data.message);
+                        } else {
+                            $.ajax({
+                                type: "GET",
+                                url: '/param/search',
+                                success: function (data) {
+                                    $('#content').html(data);
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+
+        $("#return").click(function () {
+            $.ajax({
+                type: "GET",
+                url: '/param/search',
+                success: function (data) {
+                    $('#content').html(data);
+                }
+            });
+        });
+    });
+
+
+</script>
