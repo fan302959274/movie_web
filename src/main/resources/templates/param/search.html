@@ -1,0 +1,101 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml">
+    <form class="bs-example bs-example-form" id="searchform" role="form">
+        <div class="row">
+
+            <div class="form-horizontal">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="form-group ">
+                        <label class="col-lg-4 col-sm-4 control-label">参数名称：</label>
+                        <div class="col-lg-8 col-sm-8">
+                            <input type="text" class="form-control" id="paramValue" name="paramValue" placeholder="参数名称"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="form-group ">
+                        <label class="col-lg-4 col-sm-4 control-label">参数编码：</label>
+                        <div class="col-lg-8 col-sm-8">
+                            <input type="text" class="form-control" id="paramCode" name="paramCode" placeholder="参数编码"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="form-group ">
+                        <label class="col-lg-4 col-sm-4 control-label">参数类型：</label>
+                        <div class="col-lg-8 col-sm-8">
+                            <select name="paramType" id="paramType"
+                                    class="form-control">
+                                <option value="">全部</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-3 col-sm-3 text-left">
+                    <button type="button" class="btn btn-info btn-md" id="add">添加</button>
+                </div>
+                <div class="col-md-6 col-sm-6 text-right">
+                    <button type="button" class="btn btn-primary btn-md" id="query">查询</button>
+                    <button type="button" class="btn btn-default btn-md" id="reset" onclick="clearValue();">
+                        清空
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+
+</div>
+
+
+<div id="table_list" style="margin-top:1%;">
+</div>
+
+
+<script>
+
+    $(function () {
+        $.ajax({
+            type: "POST",
+            url: "/param/list",
+            success: function (data) {
+                $('#table_list').html(data);
+            }
+        });
+
+        $("#add").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/param/add",
+                success: function (data) {
+                    $('#content').html(data);
+                }
+            });
+        });
+        $("#query").click(function () {
+            $.ajax({
+                type: "POST",
+                data: $("#searchform").serialize(),
+                url: "/param/list",
+                success: function (data) {
+                    $('#table_list').html(data);
+                }
+            });
+        });
+
+    });
+
+
+</script>
