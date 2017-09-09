@@ -1,5 +1,5 @@
 <div>
-    <form class="bs-example bs-example-form" id="searchForm" role="form">
+    <form class="bs-example bs-example-form" id="searchform" role="form">
         <div class="row">
 
             <div class="form-horizontal">
@@ -78,7 +78,7 @@
         $("#query").click(function () {
             $.ajax({
                 type: "POST",
-                data: $("#searchForm").serialize(),
+                data: $("#searchform").serialize(),
                 url: "/video/list",
                 success: function (data) {
                     $('#table_list').html(data);

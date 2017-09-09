@@ -111,8 +111,8 @@ function checkParamIsPositiveInteger(param){
 function paginationClick(pagination_id){
     $.ajax({
         type: "POST",
-        data:$("#"+pagination_id).serialize()+"&page="+$("#"+pagination_id).attr("pagenumber"),
-        url: $("#"+pagination_id).attr("url"),
+        data:$("#searchform").serialize()+"&page="+$("#"+pagination_id).attr("pagenumber"),
+        url: $("#"+pagination_id).attr("pageurl"),
         success: function(data){
             $('#table_list').html(data);
         }

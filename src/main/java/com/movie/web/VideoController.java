@@ -48,7 +48,7 @@ public class VideoController {
     public ModelAndView list(TblVideoPageReq pageReq, Map map) throws Exception {
         PageResp<TblVideo> resp = videoService.selectListByPage(pageReq);
         map.put("data", resp);
-        return new ModelAndView("/video/table", map);
+        return new ModelAndView("/video/list", map);
     }
 
 
