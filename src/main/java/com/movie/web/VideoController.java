@@ -13,8 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 
@@ -87,6 +90,30 @@ public class VideoController {
     @ResponseBody
     public CommonResp<TblVideo> save(TblVideo tblVideo) throws Exception {
         return videoService.save(tblVideo);
+    }
+
+    /**
+     * @description 上传页面
+     * @author sh00859
+     * @date 2017/9/8
+     */
+    @RequestMapping(value = {"/uploadpage"})
+    public ModelAndView uploadpage(TblVideo tblVideo, Map map) throws Exception {
+        map.put("data",tblVideo);
+        return new ModelAndView("/video/upload",map);
+    }
+
+    /**
+     * @description 上传文件
+     * @author sh00859
+     * @date 2017/9/8
+     */
+    @RequestMapping(value = {"/upload"})
+    @ResponseBody
+    public CommonResp<TblVideo> upload(HttpServletRequest request, Long id) throws Exception {
+        MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;
+        MultipartFile file = multipartRequest.getFile("videoViewPath");
+        return videoService.upload(file,id);
     }
 
 

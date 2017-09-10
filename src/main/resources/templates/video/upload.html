@@ -1,12 +1,12 @@
 <ol class="breadcrumb">
     <li><strong><span style="color: #27a0d7;">上传连接</span></strong></li>
 </ol>
-<form class="form-horizontal" enctype="multipart/form-data" role="form" id="upload_param_form">
+<form class="form-horizontal" enctype="multipart/form-data" role="form" id="upload_video_form">
     <div class="form-group">
-        <label for="paramUrl" class="col-sm-1 control-label">参数连接</label>
+        <label for="videoViewPath" class="col-sm-1 control-label">视频连接</label>
         <div class="col-sm-4">
             <input type="hidden" class="form-control" th:value="${data.id}" name="id" id="id"/>
-            <input type="file" class="form-control" id="paramUrl" name="paramUrl" placeholder="请选择参数连接"/>
+            <input type="file" class="form-control" id="videoViewPath" name="videoViewPath" placeholder="请选择参数连接"/>
         </div>
     </div>
 
@@ -22,24 +22,24 @@
 <script>
 
     $(function () {
-        $("#upload_param_form").validate({
+        $("#upload_video_form").validate({
             rules: {
-                paramUrl: {
+                videoViewPath: {
                     required: true
                 }
             },
             messages: {
-                paramUrl: {
+                videoViewPath: {
                     required: "请输名称",
                 }
             },
             submitHandler: function () {
                 $.ajaxFileUpload({
                     method:"POST",
-                    url:"/param/upload",
+                    url:"/video/upload",
                     secureuri:true,
-                    fileElementId:'paramUrl',                        //文件选择框的id属性
-                    data: { id: $("#upload_param_form #id").val() },//自定义参数,
+                    fileElementId:'videoViewPath',                        //文件选择框的id属性
+                    data: { id: $("#upload_video_form #id").val() },//自定义参数,
                     success: function(data,s, status){
                         //上传成功之后的操作
                         if (!"20000" == data.code) {
@@ -47,7 +47,7 @@
                         } else {
                             $.ajax({
                                 type: "GET",
-                                url: '/param/search',
+                                url: '/video/search',
                                 success: function (data) {
                                     $('#content').html(data);
                                 }
@@ -63,7 +63,7 @@
         $("#return").click(function () {
             $.ajax({
                 type: "GET",
-                url: '/param/search',
+                url: '/video/search',
                 success: function (data) {
                     $('#content').html(data);
                 }
