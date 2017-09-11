@@ -9,6 +9,7 @@ import com.movie.util.response.CommonResp;
 import com.movie.util.response.PageResp;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ParamService {
@@ -33,7 +34,7 @@ public interface ParamService {
      * @author sh00859
      * @date 2017/7/13
      */
-    public CommonResp<TblParam> save(TblParam tblParam);
+    public CommonResp<TblParam> save(MultipartFile file,String paramValue, String paramType, String paramCode, String paramDesc);
 
     /**
      * @description 修改记录

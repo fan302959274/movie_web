@@ -7,6 +7,8 @@ import com.movie.util.response.CommonResp;
 import com.movie.util.response.PageResp;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
+
 public interface VideoService {
 
 
@@ -15,7 +17,7 @@ public interface VideoService {
      * @author sh00859
      * @date 2017/7/13
      */
-    public CommonResp<TblVideo> save(TblVideo tblVideo);
+    public CommonResp<TblVideo> save(MultipartFile file,String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType, String videoTag);
 
     /**
      * @description 分页查询记录

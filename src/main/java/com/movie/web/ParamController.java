@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.Map;
 
 
@@ -78,8 +79,10 @@ public class ParamController {
      */
     @RequestMapping(value = {"/save"})
     @ResponseBody
-    public CommonResp<TblParam> save(TblParam tblParam) throws Exception {
-        return paramService.save(tblParam);
+    public CommonResp<TblParam> save(HttpServletRequest request, String paramValue, String paramType,String paramCode, String paramDesc) throws Exception {
+        MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;
+        MultipartFile file = multipartRequest.getFile("paramUrl");
+        return paramService.save(file, paramValue,  paramType, paramCode,  paramDesc);
     }
 
 

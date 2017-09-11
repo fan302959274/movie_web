@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.Map;
 
 
@@ -88,8 +89,10 @@ public class VideoController {
      */
     @RequestMapping(value = {"/save"})
     @ResponseBody
-    public CommonResp<TblVideo> save(TblVideo tblVideo) throws Exception {
-        return videoService.save(tblVideo);
+    public CommonResp<TblVideo> save(HttpServletRequest request, String videoName, BigDecimal videoDuration,BigDecimal videoSize,String videoType,String videoTag) throws Exception {
+        MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;
+        MultipartFile file = multipartRequest.getFile("videoPoster");
+        return videoService.save(file , videoName,  videoDuration, videoSize, videoType, videoTag);
     }
 
     /**

@@ -22,6 +22,12 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="videoPoster" class="col-sm-1 control-label">视频封面</label>
+        <div class="col-sm-4">
+            <input type="file" class="form-control" id="videoPoster" name="videoPoster" placeholder="视频封面"/>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="videoSize" class="col-sm-1 control-label">视频大小</label>
         <div class="col-sm-4">
             <input type="number" class="form-control" id="videoSize" name="videoSize" placeholder="兆"/>
@@ -71,7 +77,7 @@
                 }
             },
             submitHandler: function () {
-                $("#add_video_form").ajaxSubmit({
+                /*$("#add_video_form").ajaxSubmit({
                     type: "post",
                     url: "/video/save?time=" + (new Date()).getTime(),
                     success: function (data) {
@@ -86,6 +92,41 @@
                                 }
                             });
                         }
+                    }
+                });*/
+                var videoTags="";
+                $("input[name='videoTag']:checked").each(function(i){
+                    videoTags+=$(this).val()+",";
+                });
+                videoTags=videoTags.substring(0,videoTags.lastIndexOf(","));
+
+                $.ajaxFileUpload({
+                    method: "POST",
+                    url: "/video/save?time=" + (new Date()).getTime(),
+                    secureuri: true,
+                    fileElementId: 'videoPoster',                        //文件选择框的id属性
+                    data: {
+                        "videoName": $("#add_video_form #videoName").val(),
+                        "videoDuration": $("#add_video_form #videoDuration").val(),
+                        "videoSize": $("#add_video_form #videoSize").val(),
+                        "videoType": $("#add_video_form #videoType").val(),
+                        "videoTag": videoTags
+                    },//自定义参数,
+                    success: function (data, s, status) {
+                        //上传成功之后的操作
+                        if (!"20000" == data.code) {
+                            alert(data.message);
+                        } else {
+                            $.ajax({
+                                type: "GET",
+                                url: '/video/search',
+                                success: function (data) {
+                                    $('#content').html(data);
+                                }
+                            });
+                        }
+                    }, error: function (data, status, e) {
+                        //上传失败之后的操作
                     }
                 });
             }

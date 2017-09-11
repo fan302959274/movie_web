@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -36,10 +37,26 @@ public class VideoServiceImpl implements VideoService {
 
 
     @Override
-    public CommonResp<TblVideo> save(TblVideo tblVideo) {
+    public CommonResp<TblVideo> save(MultipartFile file, String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType, String videoTag) {
+
         CommonResp<TblVideo> resp = new CommonResp<TblVideo>();
         try {
-            tblVideoMapper.insertSelective(tblVideo);
+            if (!file.isEmpty()) {
+                // 上传文件至oss
+                String uploadResult = OssUploadByPartUtil.fileUpload(file, endpoint, accessKeyId, accessKeySecret, bucketName);
+                TblVideo tblVideo = new TblVideo();
+                tblVideo.setVideoName(videoName);
+                tblVideo.setVideoDuration(videoDuration);
+                tblVideo.setVideoSize(videoSize);
+                tblVideo.setVideoType(videoType);
+                tblVideo.setVideoTag(videoTag);
+                tblVideo.setVideoPoster(uploadResult);
+                tblVideoMapper.insertSelective(tblVideo);
+            } else {
+                resp.setCode(ResponseCode.FILE_IS_EMPTY.getCode());
+                resp.setMsg(ResponseCode.FILE_IS_EMPTY.getMsg());
+                return resp;
+            }
             resp.setResultList(null);
         } catch (Exception e) {
             logger.error("保存video列表异常" + e.getMessage());

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -50,9 +51,19 @@ public class ParamServiceImpl implements ParamService {
     }
 
     @Override
-    public CommonResp<TblParam> save(TblParam tblParam) {
+    public CommonResp<TblParam> save(MultipartFile file, String paramValue, String paramType, String paramCode, String paramDesc) {
         CommonResp<TblParam> resp = new CommonResp<TblParam>();
+        TblParam tblParam = new TblParam();
         try {
+            tblParam.setParamValue(paramValue);
+            tblParam.setParamType(paramType);
+            tblParam.setParamCode(paramCode);
+            tblParam.setParamDesc(paramDesc);
+            if (!file.isEmpty()) {
+                // 上传文件至oss
+                String uploadResult = OssUploadByPartUtil.fileUpload(file, endpoint, accessKeyId, accessKeySecret, bucketName);
+                tblParam.setParamUrl(uploadResult);
+            }
             tblParamMapper.insertSelective(tblParam);
             resp.setResultList(null);
         } catch (Exception e) {
@@ -115,7 +126,7 @@ public class ParamServiceImpl implements ParamService {
     }
 
     @Override
-    public CommonResp<TblParam> upload(MultipartFile file,Long id) {
+    public CommonResp<TblParam> upload(MultipartFile file, Long id) {
         CommonResp<TblParam> resp = new CommonResp<TblParam>();
         if (!file.isEmpty()) {
             try {
