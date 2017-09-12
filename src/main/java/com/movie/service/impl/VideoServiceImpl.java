@@ -37,7 +37,7 @@ public class VideoServiceImpl implements VideoService {
 
 
     @Override
-    public CommonResp<TblVideo> save(MultipartFile file, String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType, String videoTag) {
+    public CommonResp<TblVideo> save(MultipartFile file, String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType,String videoViewPath, String videoTag) {
 
         CommonResp<TblVideo> resp = new CommonResp<TblVideo>();
         try {
@@ -49,6 +49,7 @@ public class VideoServiceImpl implements VideoService {
                 tblVideo.setVideoDuration(videoDuration);
                 tblVideo.setVideoSize(videoSize);
                 tblVideo.setVideoType(videoType);
+                tblVideo.setVideoViewPath(videoViewPath);
                 tblVideo.setVideoTag(videoTag);
                 tblVideo.setVideoPoster(uploadResult);
                 tblVideoMapper.insertSelective(tblVideo);

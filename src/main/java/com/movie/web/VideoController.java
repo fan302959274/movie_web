@@ -89,10 +89,10 @@ public class VideoController {
      */
     @RequestMapping(value = {"/save"})
     @ResponseBody
-    public CommonResp<TblVideo> save(HttpServletRequest request, String videoName, BigDecimal videoDuration,BigDecimal videoSize,String videoType,String videoTag) throws Exception {
+    public CommonResp<TblVideo> save(HttpServletRequest request, String videoName, BigDecimal videoDuration,BigDecimal videoSize,String videoType,String videoViewPath,String videoTag) throws Exception {
         MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("videoPoster");
-        return videoService.save(file , videoName,  videoDuration, videoSize, videoType, videoTag);
+        return videoService.save(file , videoName,  videoDuration, videoSize, videoType, videoViewPath, videoTag);
     }
 
     /**

@@ -22,9 +22,9 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="videoPoster" class="col-sm-1 control-label">视频封面</label>
+        <label for="videoViewPath" class="col-sm-1 control-label">视频连接</label>
         <div class="col-sm-4">
-            <input type="file" class="form-control" id="videoPoster" name="videoPoster" placeholder="视频封面"/>
+            <input type="text" class="form-control" id="videoViewPath" name="videoViewPath" placeholder="视频连接"/>
         </div>
     </div>
     <div class="form-group">
@@ -42,6 +42,12 @@
                 <option th:each="type:${video_type_list}" th:value="${type.paramCode}"
                         th:text="${type.paramValue}"></option>
             </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="videoPoster" class="col-sm-1 control-label">视频封面</label>
+        <div class="col-sm-4">
+            <input type="file" class="form-control" id="videoPoster" name="videoPoster" placeholder="视频封面"/>
         </div>
     </div>
     <div class="form-group">
@@ -77,23 +83,6 @@
                 }
             },
             submitHandler: function () {
-                /*$("#add_video_form").ajaxSubmit({
-                    type: "post",
-                    url: "/video/save?time=" + (new Date()).getTime(),
-                    success: function (data) {
-                        if (!"20000" == data.code) {
-                            alert(data.message);
-                        } else {
-                            $.ajax({
-                                type: "GET",
-                                url: '/video/search',
-                                success: function (data) {
-                                    $('#content').html(data);
-                                }
-                            });
-                        }
-                    }
-                });*/
                 var videoTags="";
                 $("input[name='videoTag']:checked").each(function(i){
                     videoTags+=$(this).val()+",";
@@ -110,6 +99,7 @@
                         "videoDuration": $("#add_video_form #videoDuration").val(),
                         "videoSize": $("#add_video_form #videoSize").val(),
                         "videoType": $("#add_video_form #videoType").val(),
+                        "videoViewPath": $("#add_video_form #videoViewPath").val(),
                         "videoTag": videoTags
                     },//自定义参数,
                     success: function (data, s, status) {
