@@ -20,6 +20,8 @@ public class PageResp<T> {
     private Integer pageSize;
     private Integer total;
     private Integer totalPage;
+    private Integer offset;
+    private Integer limit;
 
     public T getResult() {
         return result;
@@ -83,5 +85,21 @@ public class PageResp<T> {
 
     public void setTotalPage(Integer totalPage) {
         this.totalPage = totalPage;
+    }
+
+    public Integer getOffset() {
+        return offset;
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
     }
 }

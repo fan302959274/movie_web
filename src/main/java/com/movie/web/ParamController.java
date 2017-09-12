@@ -6,6 +6,7 @@ import com.movie.service.ParamService;
 import com.movie.util.request.TblParamPageReq;
 import com.movie.util.response.CommonResp;
 import com.movie.util.response.PageResp;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class ParamController {
     public ModelAndView search(Map map) throws Exception {
         //获取所有的视频类型
         TblParam param = new TblParam();
-        return new ModelAndView("/param/search", map);
+        return new ModelAndView("/param/datatable", map);
 
     }
 
@@ -54,10 +55,10 @@ public class ParamController {
      * @date 2017/9/8
      */
     @RequestMapping(value = {"/list"})
-    public ModelAndView list(TblParamPageReq pageReq, Map map) throws Exception {
+    @ResponseBody
+    public PageResp<TblParam> list(TblParamPageReq pageReq) throws Exception {
         PageResp<TblParam> resp = paramService.selectListByPage(pageReq);
-        map.put("data", resp);
-        return new ModelAndView("/param/list", map);
+        return resp;
     }
 
 
