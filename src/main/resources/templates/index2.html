@@ -97,6 +97,10 @@
             return oTableInit;
         };
 
+        //查询按钮事件
+        $('#search_btn').click(function(){
+            $('#tb_departments').bootstrapTable('refresh', {url: '/param/list'});
+        })
 
         var ButtonInit = function () {
             var oInit = new Object();

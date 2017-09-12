@@ -12,6 +12,7 @@
 
     $(function () {
 
+        //datatable相关
         //1.初始化Table
         var oTable = new TableInit();
         oTable.Init();
@@ -19,6 +20,18 @@
         //2.初始化Button的点击事件
         var oButtonInit = new ButtonInit();
         oButtonInit.Init();
+
+
+        //添加
+        $("#btn_add").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/param/add",
+                success: function (data) {
+                    $('#content').html(data);
+                }
+            });
+        });
 
     });
 
@@ -42,7 +55,7 @@
                 pageNumber: 1,                       //初始化加载第一页，默认第一页
                 pageSize: 10,                       //每页的记录行数（*）
                 pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
-                search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
                 strictSearch: true,
                 showColumns: true,                  //是否显示所有的列
                 showRefresh: true,                  //是否显示刷新按钮
@@ -63,7 +76,7 @@
                     title: '参数类型'
                 }, {
                     field: 'paramCode',
-                    title: '参数code'
+                    title: '参数编码'
                 }, {
                     field: 'paramValue',
                     title: '参数值'
@@ -73,12 +86,12 @@
 
         //得到查询的参数
         oTableInit.queryParams = function (params) {
-            console.log(params);
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                 limit: params.limit,   //页面大小
-                offset: params.offset  //页码
-//                    departmentname: $("#txt_search_departmentname").val(),
-//                    statu: $("#txt_search_statu").val()
+                offset: params.offset,  //页码
+                paramValue: $("#paramValue").val(),
+                paramCode: $("#paramCode").val(),
+                paramType: $("#paramType").val()
                 //每页多少条数据
             };
             return temp;
@@ -86,6 +99,10 @@
         return oTableInit;
     };
 
+    //查询按钮事件
+    $('#query').click(function(){
+        $('#tb_departments').bootstrapTable('refresh', {url: '/param/list'});
+    })
 
     var ButtonInit = function () {
         var oInit = new Object();
@@ -103,38 +120,6 @@
         <div class="panel-heading">查询条件</div>
         <div class="panel-body">
             <form id="formSearch" class="form-horizontal">
-                <!--<div class="form-group" style="margin-top:15px">-->
-
-                    <!--<label class="control-label col-sm-1" for="paramValue">参数名称</label>-->
-                    <!--<div class="col-sm-3">-->
-                        <!--<input type="text" class="form-control" id="paramValue" name="paramValue" placeholder="参数名称"/>-->
-                    <!--</div>-->
-
-                    <!--<label class="control-label col-sm-1" for="paramCode">参数编码</label>-->
-                    <!--<div class="col-sm-3">-->
-                        <!--<input type="text" class="form-control" id="paramCode" name="paramCode" placeholder="参数编码"/>-->
-                    <!--</div>-->
-
-                    <!--<label class="control-label col-sm-1" for="paramType">参数类型</label>-->
-                    <!--<div class="col-sm-3">-->
-                        <!--<input type="text" class="form-control" id="paramType" name="paramType" placeholder="参数类型"/>-->
-                    <!--</div>-->
-
-
-
-
-
-
-
-                    <!--<div class="col-sm-12" style="text-align:right;">-->
-                        <!--<button type="button" id="btn_query" class="btn btn-primary">查询-->
-                        <!--</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-
-
-
-
 
                 <div class="row">
 
@@ -185,17 +170,6 @@
 
                 </div>
 
-                <!--<div class="row">-->
-                    <!--<div class="form-horizontal">-->
-                        <!--<div class="col-md-9 col-sm-9 text-right">-->
-                            <!--<button type="button" class="btn btn-primary btn-md" id="query">查询</button>-->
-                            <!--<button type="button" class="btn btn-default btn-md" id="reset" onclick="clearValue();">-->
-                                <!--清空-->
-                            <!--</button>-->
-                        <!--</div>-->
-
-                    <!--</div>-->
-                <!--</div>-->
             </form>
         </div>
     </div>
