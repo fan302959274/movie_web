@@ -1,5 +1,6 @@
 package com.movie.web;
 
+import com.alibaba.fastjson.JSON;
 import com.movie.model.TblParam;
 import com.movie.model.TblVideo;
 import com.movie.service.ParamService;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.Map;
 
@@ -42,13 +44,13 @@ public class VideoController {
      * @author sh00859
      * @date 2017/9/8
      */
-    @RequestMapping(value = {"/search"})
+    @RequestMapping(value = {"/main"})
     public ModelAndView search(Map map) throws Exception {
         //获取所有的视频类型
         TblParam param = new TblParam();
         param.setParamType("001");
         map.put("video_type_list",paramService.selectList(param ));
-        return new ModelAndView("/video/search", map);
+        return new ModelAndView("/video/main", map);
 
     }
 
@@ -57,11 +59,11 @@ public class VideoController {
      * @author sh00859
      * @date 2017/9/8
      */
-    @RequestMapping(value = {"/list"})
-    public ModelAndView list(TblVideoPageReq pageReq, Map map) throws Exception {
+    @RequestMapping(value = {"/data"})
+    @ResponseBody
+    public PageResp<TblVideo> list(TblVideoPageReq pageReq) throws Exception {
         PageResp<TblVideo> resp = videoService.selectListByPage(pageReq);
-        map.put("data", resp);
-        return new ModelAndView("/video/list", map);
+        return resp;
     }
 
 
@@ -89,7 +91,7 @@ public class VideoController {
      */
     @RequestMapping(value = {"/save"})
     @ResponseBody
-    public CommonResp<TblVideo> save(HttpServletRequest request, String videoName, BigDecimal videoDuration,BigDecimal videoSize,String videoType,String videoViewPath,String videoTag) throws Exception {
+    public CommonResp<TblVideo> save(HttpServletResponse response, HttpServletRequest request, String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType, String videoViewPath, String videoTag) throws Exception {
         MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("videoPoster");
         return videoService.save(file , videoName,  videoDuration, videoSize, videoType, videoViewPath, videoTag);
@@ -119,6 +121,16 @@ public class VideoController {
         return videoService.upload(file,id);
     }
 
+    /**
+     * @description 删除
+     * @author sh00859
+     * @date 2017/9/8
+     */
+    @RequestMapping(value = {"/delete"})
+    @ResponseBody
+    public CommonResp<String> delete(String ids) throws Exception {
+        return videoService.delete(ids);
+    }
 
 
 

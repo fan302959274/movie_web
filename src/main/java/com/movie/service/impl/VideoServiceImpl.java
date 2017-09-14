@@ -2,6 +2,7 @@ package com.movie.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.movie.mapper.TblVideoMapper;
+import com.movie.model.TblParamExample;
 import com.movie.model.TblVideo;
 import com.movie.model.TblVideoExample;
 import com.movie.service.VideoService;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -73,9 +75,9 @@ public class VideoServiceImpl implements VideoService {
         PageResp<TblVideo> resp = new PageResp<TblVideo>();
         TblVideoExample example = new TblVideoExample();
         try {
-            Integer page = pageReq.getPage() == null ? 1 : pageReq.getPage();
-            Integer pageSize = pageReq.getPageSize() == null ? 10 : pageReq.getPageSize();
-            PageHelper.startPage(page, pageSize);
+            Integer offset = pageReq.getOffset() == null ? 0 : pageReq.getOffset();
+            Integer limit = pageReq.getLimit() == null ? 10 : pageReq.getLimit();
+            PageHelper.offsetPage(offset, limit);
             if (null != pageReq) {
                 TblVideoExample.Criteria criteria = example.createCriteria();
                 if (!StringUtils.isBlank(pageReq.getVideoName())) {
@@ -87,10 +89,10 @@ public class VideoServiceImpl implements VideoService {
             }
             List<TblVideo> list = tblVideoMapper.selectByExample(example);
             Integer total = tblVideoMapper.countByExample(example);
-            resp.setTotalPage(total % pageSize == 0 ? total / pageSize : (total / pageSize + 1));
+            resp.setTotalPage(total % limit == 0 ? total / limit : (total / limit + 1));
             resp.setTotal(total);
-            resp.setPage(page);
-            resp.setPageSize(pageSize);
+            resp.setOffset(offset);
+            resp.setLimit(limit);
             resp.setResultList(list);
         } catch (Exception e) {
             logger.error("获取video列表异常" + e.getMessage());
@@ -121,6 +123,27 @@ public class VideoServiceImpl implements VideoService {
         } else {
             resp.setCode(ResponseCode.FILE_IS_EMPTY.getCode());
             resp.setMsg(ResponseCode.FILE_IS_EMPTY.getMsg());
+            return resp;
+        }
+        return resp;
+    }
+
+    @Override
+    public CommonResp<String> delete(String ids) {
+        CommonResp<String> resp = new CommonResp<String>();
+        try {
+            TblVideoExample example = new TblVideoExample();
+            String[] idLongs =  ids.split(",");
+            List<Long> values = new ArrayList<Long>();
+            for(String id :idLongs){
+                values.add(Long.parseLong(id));
+            }
+            example.createCriteria().andIdIn(values);
+            tblVideoMapper.deleteByExample(example);
+        } catch (Exception e) {
+            logger.error("删除video列表异常" + e.getMessage());
+            resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
+            resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
             return resp;
         }
         return resp;

@@ -5,7 +5,7 @@
         //初始化Table
         oTableInit.Init = function () {
             $('#tb_departments').bootstrapTable({
-                url: '/param/list',                 //请求后台的URL（*）
+                url: '/video/data',                 //请求后台的URL（*）
                 method: 'get',                      //请求方式（*）
                 toolbar: '#toolbar',                //工具按钮用哪个容器
                 striped: true,                      //是否显示行间隔色
@@ -19,7 +19,7 @@
                 pageNumber: 1,                       //初始化加载第一页，默认第一页
                 pageSize: 10,                       //每页的记录行数（*）
                 pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
-                search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+//                search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
                 strictSearch: true,
                 showColumns: true,                  //是否显示所有的列
                 showRefresh: true,                  //是否显示刷新按钮
@@ -31,19 +31,25 @@
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
                 columns: [{
-                    checkbox: true
+                    checkbox: true,
                 }, {
                     field: 'id',
-                    title: 'id'
+                    title: 'id',
                 }, {
-                    field: 'paramType',
-                    title: '参数类型'
+                    field: 'videoName',
+                    title: '视频名称',
                 }, {
-                    field: 'paramCode',
-                    title: '参数编码'
+                    field: 'videoType',
+                    title: '视频类型',
                 }, {
-                    field: 'paramValue',
-                    title: '参数值'
+                    field: 'videoTag',
+                    title: '视频标签',
+                }, {
+                    field: 'videoDuration',
+                    title: '视频时长',
+                }, {
+                    field: 'videoSize',
+                    title: '视频大小',
                 },]
             });
         };
@@ -54,9 +60,8 @@
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                 limit: params.limit,   //页面大小
                 offset: params.offset,  //页码
-                paramValue: $("#paramValue").val(),
-                paramCode: $("#paramCode").val(),
-                paramType: $("#paramType").val()
+                videoName: $("#videoName").val(),
+                videoType: $("#videoType").val()
                 //每页多少条数据
             };
             return temp;
@@ -92,7 +97,7 @@
         $("#btn_add").click(function () {
             $.ajax({
                 type: "POST",
-                url: "/param/add",
+                url: "/video/add",
                 success: function (data) {
                     $('#content').html(data);
                 }
@@ -100,20 +105,25 @@
         });
         //删除
         $("#btn_delete").click(function () {
+            var ids = "";
             var delete_rows= $("#tb_departments").bootstrapTable('getSelections');
-            if(delete_rows.length>1){
-                alert("暂且只支持删除一行");
+            for(row in delete_rows){
+                ids += delete_rows[row].id+",";
+            }
+            ids = ids.substring(0,ids.length-1);
+            if(delete_rows.length == 0){
+                alert("至少删除一行");
             }else{
                 $('#delcfmmodel').modal("show");
-                $('#delcfmmodel #deletesubmmit').val(delete_rows[0].id);
+                $('#delcfmmodel #deletesubmmit').val(ids);
             }
         });
 
         $("#deletesubmmit").click(function () {
             $.ajax({
                 type: "POST",
-                data: {"id": $(this).val()},
-                url: "/param/delete",
+                data: {"ids": $(this).val()},
+                url: "/video/delete",
                 success: function (data) {
                     if ("20000" == data.code) {
                         $("#query").click();
@@ -127,7 +137,7 @@
 
     //查询按钮事件
     $('#query').click(function () {
-        $('#tb_departments').bootstrapTable('refresh', {url: '/param/list'});
+        $('#tb_departments').bootstrapTable('refresh', {url: '/video/data'});
     })
 
 
@@ -143,10 +153,9 @@
                     <div class="form-horizontal">
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                             <div class="form-group ">
-                                <label class="col-lg-4 col-sm-4 control-label">参数名称：</label>
+                                <label class="col-lg-4 col-sm-4 control-label">视频名称：</label>
                                 <div class="col-lg-8 col-sm-8">
-                                    <input type="text" class="form-control" id="paramValue" name="paramValue"
-                                           placeholder="参数名称"/>
+                                    <input type="text" class="form-control" id="videoName" name="videoName" placeholder="视频名称"/>
                                 </div>
                             </div>
                         </div>
@@ -154,35 +163,27 @@
                     <div class="form-horizontal">
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                             <div class="form-group ">
-                                <label class="col-lg-4 col-sm-4 control-label">参数编码：</label>
+                                <label class="col-lg-4 col-sm-4 control-label">视频类型：</label>
                                 <div class="col-lg-8 col-sm-8">
-                                    <input type="text" class="form-control" id="paramCode" name="paramCode"
-                                           placeholder="参数编码"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-horizontal">
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                            <div class="form-group ">
-                                <label class="col-lg-4 col-sm-4 control-label">参数类型：</label>
-                                <div class="col-lg-8 col-sm-8">
-                                    <input type="number" class="form-control" id="paramType" name="paramType"
-                                           placeholder="参数类型"/>
+                                    <select name="videoType" id="videoType"
+                                            class="form-control">
+                                        <option value="">全部</option>
+                                        <option th:each="type:${video_type_list}" th:value="${type.paramCode}" th:text="${type.paramValue}"></option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-horizontal">
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                            <div class="form-group ">
-                                <button type="button" class="btn btn-primary btn-md" id="query">查询</button>
-                                <button type="button" class="btn btn-default btn-md" id="reset" onclick="clearValue();">
-                                    清空
-                                </button>
-                            </div>
+
+                        <div class="col-md-3 col-sm-3 text-right">
+                            <button type="button" class="btn btn-primary btn-md" id="query">查询</button>
+                            <button type="button" class="btn btn-default btn-md" id="reset" onclick="clearValue();">
+                                清空
+                            </button>
                         </div>
+
                     </div>
 
 

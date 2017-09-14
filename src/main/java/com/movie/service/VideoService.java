@@ -32,4 +32,11 @@ public interface VideoService {
      * @date 2017/7/13
      */
     public CommonResp<TblVideo> upload(MultipartFile file, Long id);
+
+    /**
+     * @description 删除记录
+     * @author sh00859
+     * @date 2017/7/13
+     */
+    public CommonResp<String> delete(String ids);
 }

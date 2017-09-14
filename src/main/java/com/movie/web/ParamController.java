@@ -36,25 +36,25 @@ public class ParamController {
     private ParamService paramService;
 
     /**
-     * @description 搜索界面
+     * @description 主界面
      * @author sh00859
      * @date 2017/9/8
      */
-    @RequestMapping(value = {"/search"})
+    @RequestMapping(value = {"/main"})
     public ModelAndView search(Map map) throws Exception {
         //获取所有的视频类型
         TblParam param = new TblParam();
-        return new ModelAndView("/param/datatable", map);
+        return new ModelAndView("/param/main", map);
 
     }
 
 
     /**
-     * @description 列表界面
+     * @description 列表数据
      * @author sh00859
      * @date 2017/9/8
      */
-    @RequestMapping(value = {"/list"})
+    @RequestMapping(value = {"/data"})
     @ResponseBody
     public PageResp<TblParam> list(TblParamPageReq pageReq) throws Exception {
         PageResp<TblParam> resp = paramService.selectListByPage(pageReq);
@@ -105,8 +105,8 @@ public class ParamController {
      */
     @RequestMapping(value = {"/delete"})
     @ResponseBody
-    public CommonResp<String> delete(TblParam tblParam) throws Exception {
-        return paramService.delete(tblParam);
+    public CommonResp<String> delete(String ids) throws Exception {
+        return paramService.delete(ids);
     }
 
 

@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -112,10 +114,17 @@ public class ParamServiceImpl implements ParamService {
     }
 
     @Override
-    public CommonResp<String> delete(TblParam tblParam) {
+    public CommonResp<String> delete(String ids) {
         CommonResp<String> resp = new CommonResp<String>();
         try {
-            tblParamMapper.deleteByPrimaryKey(tblParam.getId());
+            TblParamExample example = new TblParamExample();
+            String[] idLongs =  ids.split(",");
+            List<Long> values = new ArrayList<Long>();
+            for(String id :idLongs){
+                values.add(Long.parseLong(id));
+            }
+            example.createCriteria().andIdIn(values);
+            tblParamMapper.deleteByExample(example);
         } catch (Exception e) {
             logger.error("删除param列表异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());

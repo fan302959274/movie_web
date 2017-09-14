@@ -48,7 +48,7 @@ public interface ParamService {
      * @author sh00859
      * @date 2017/7/13
      */
-    public CommonResp<String> delete(TblParam tblParam);
+    public CommonResp<String> delete(String ids);
 
     /**
      * @description 上传文件
