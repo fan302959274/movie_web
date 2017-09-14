@@ -93,9 +93,22 @@ public class ParamController {
      * @date 2017/9/8
      */
     @RequestMapping(value = {"/edit"})
+    public ModelAndView edit(TblParam tblParam,Map map) throws Exception {
+        map.put("data",paramService.selectByKey(tblParam.getId()));
+        return new ModelAndView("/param/edit", map);
+    }
+
+    /**
+     * @description 更新
+     * @author sh00859
+     * @date 2017/9/8
+     */
+    @RequestMapping(value = {"/update"})
     @ResponseBody
-    public CommonResp<TblParam> edit(TblParam tblParam) throws Exception {
-        return paramService.edit(tblParam);
+    public CommonResp<TblParam> update(HttpServletRequest request, Long id,String paramValue, String paramType,String paramCode, String paramDesc) throws Exception {
+        MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;
+        MultipartFile file = multipartRequest.getFile("paramUrl");
+        return paramService.update(file, id,paramValue,  paramType, paramCode,  paramDesc);
     }
 
     /**

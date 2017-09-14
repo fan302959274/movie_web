@@ -20,6 +20,12 @@ public interface ParamService {
      * @author sh00859
      * @date 2017/7/13
      */
+    public TblParam selectByKey(Long id);
+    /**
+     * @description 获取参数
+     * @author sh00859
+     * @date 2017/7/13
+     */
     public List<TblParam> selectList(TblParam tblParam);
 
     /**
@@ -42,6 +48,13 @@ public interface ParamService {
      * @date 2017/7/13
      */
     public CommonResp<TblParam> edit(TblParam tblParam);
+
+    /**
+     * @description 修改记录
+     * @author sh00859
+     * @date 2017/7/13
+     */
+    public CommonResp<TblParam> update(MultipartFile file,Long id,String paramValue, String paramType, String paramCode, String paramDesc);
 
     /**
      * @description 删除记录

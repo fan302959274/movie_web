@@ -1,15 +1,19 @@
 <div class="panel-body" style="padding-bottom:0px;padding-top:0px;">
     <div class="panel panel-default">
-        <div class="panel-heading">参数添加</div>
+        <div class="panel-heading">参数修改</div>
         <div class="panel-body">
-            <form id="add_param_form" class="form-horizontal">
+            <form id="edit_param_form" class="form-horizontal">
 
                 <div class="row">
+                    <input type="hidden" class="form-control" id="id" name="id"
+                           th:value="${data.id}"
+                           placeholder="请输入名字"/>
 
                     <div class="form-group">
                         <label for="paramValue" class="col-sm-1 control-label">参数名称</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="paramValue" name="paramValue"
+                                   th:value="${data.paramValue}"
                                    placeholder="请输入名字"/>
                         </div>
                     </div>
@@ -17,25 +21,30 @@
                         <label for="paramType" class="col-sm-1 control-label">参数类型</label>
                         <div class="col-sm-2">
                             <input type="number" class="form-control" id="paramType" name="paramType"
+                                   th:value="${data.paramType}"
                                    placeholder="参数类型"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="paramCode" class="col-sm-1 control-label">参数编码</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="paramCode" name="paramCode" placeholder="参数编码"/>
+                            <input type="text" class="form-control" id="paramCode" name="paramCode"
+                                   th:value="${data.paramCode}" placeholder="参数编码"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="paramDesc" class="col-sm-1 control-label">参数描述</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="paramDesc" name="paramDesc" placeholder="参数描述"/>
+                            <input type="text" class="form-control" id="paramDesc" name="paramDesc"
+                                   th:value="${data.paramDesc}" placeholder="参数描述"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="paramUrl" class="col-sm-1 control-label">参数连接</label>
                         <div class="col-sm-4">
-                            <input type="file" class="form-control" id="paramUrl" name="paramUrl" placeholder="参数连接"/>
+                            <img  th:attr="src=${data.paramUrl}" />
+                            <input type="file" class="form-control" id="paramUrl" name="paramUrl"
+                                   th:value="${data.paramUrl}" placeholder="参数连接"/>
                         </div>
                     </div>
 
@@ -60,7 +69,7 @@
 <script>
 
     $(function () {
-        $("#add_param_form").validate({
+        $("#edit_param_form").validate({
             rules: {
                 paramName: {
                     required: true
@@ -74,19 +83,20 @@
             submitHandler: function () {
                 $.ajaxFileUpload({
                     method: "POST",
-                    url: "/param/save?time=" + (new Date()).getTime(),
+                    url: "/param/update?time=" + (new Date()).getTime(),
                     secureuri: true,
                     fileElementId: 'paramUrl',                        //文件选择框的id属性
                     data: {
-                        "paramValue": $("#add_param_form #paramValue").val(),
-                        "paramType": $("#add_param_form #paramType").val(),
-                        "paramCode": $("#add_param_form #paramCode").val(),
-                        "paramDesc": $("#add_param_form #paramDesc").val()
+                        "id":$("#edit_param_form #id").val(),
+                        "paramValue": $("#edit_param_form #paramValue").val(),
+                        "paramType": $("#edit_param_form #paramType").val(),
+                        "paramCode": $("#edit_param_form #paramCode").val(),
+                        "paramDesc": $("#edit_param_form #paramDesc").val()
                     },//自定义参数,
                     complete: function (data, s, status) {
-                        if(!(data.responseXML.firstChild.childNodes[0].innerHTML=='20000')){
+                        if (!(data.responseXML.firstChild.childNodes[0].innerHTML == '20000')) {
                             alert(data.responseXML.firstChild.childNodes[1].innerHTML);
-                        }else{
+                        } else {
                             $.ajax({
                                 type: "GET",
                                 url: '/param/main',

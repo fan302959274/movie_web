@@ -173,4 +173,36 @@ public class ParamServiceImpl implements ParamService {
         }
         return resp;
     }
+
+
+    @Override
+    public CommonResp<TblParam> update(MultipartFile file, Long id,String paramValue, String paramType, String paramCode, String paramDesc) {
+        CommonResp<TblParam> resp = new CommonResp<TblParam>();
+        TblParam tblParam = new TblParam();
+        try {
+            tblParam.setId(id);
+            tblParam.setParamValue(paramValue);
+            tblParam.setParamType(paramType);
+            tblParam.setParamCode(paramCode);
+            tblParam.setParamDesc(paramDesc);
+            if (!file.isEmpty()) {
+                // 上传文件至oss
+                String uploadResult = OssUploadByPartUtil.fileUpload(file, endpoint, accessKeyId, accessKeySecret, bucketName);
+                tblParam.setParamUrl(uploadResult);
+            }
+            tblParamMapper.updateByPrimaryKeySelective(tblParam);
+            resp.setResultList(null);
+        } catch (Exception e) {
+            logger.error("保存param列表异常" + e.getMessage());
+            resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
+            resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
+            return resp;
+        }
+        return resp;
+    }
+
+    @Override
+    public TblParam selectByKey(Long id) {
+        return tblParamMapper.selectByPrimaryKey(id);
+    }
 }
