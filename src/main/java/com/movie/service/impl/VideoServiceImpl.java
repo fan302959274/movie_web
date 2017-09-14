@@ -2,6 +2,7 @@ package com.movie.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.movie.mapper.TblVideoMapper;
+import com.movie.model.TblParam;
 import com.movie.model.TblParamExample;
 import com.movie.model.TblVideo;
 import com.movie.model.TblVideoExample;
@@ -147,5 +148,39 @@ public class VideoServiceImpl implements VideoService {
             return resp;
         }
         return resp;
+    }
+
+
+    @Override
+    public CommonResp<TblVideo> update(MultipartFile file, Long id,String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType,String videoViewPath, String videoTag) {
+
+        CommonResp<TblVideo> resp = new CommonResp<TblVideo>();
+        try {
+            TblVideo tblVideo = new TblVideo();
+            tblVideo.setId(id);
+            tblVideo.setVideoName(videoName);
+            tblVideo.setVideoDuration(videoDuration);
+            tblVideo.setVideoSize(videoSize);
+            tblVideo.setVideoType(videoType);
+            tblVideo.setVideoViewPath(videoViewPath);
+            tblVideo.setVideoTag(videoTag);
+            if (!file.isEmpty()) {
+                // 上传文件至oss
+                String uploadResult = OssUploadByPartUtil.fileUpload(file, endpoint, accessKeyId, accessKeySecret, bucketName);
+                tblVideo.setVideoPoster(uploadResult);
+            }
+            tblVideoMapper.updateByPrimaryKeySelective(tblVideo);
+            resp.setResultList(null);
+        } catch (Exception e) {
+            logger.error("保存video列表异常" + e.getMessage());
+            resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
+            resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
+            return resp;
+        }
+        return resp;
+    }
+    @Override
+    public TblVideo selectByKey(Long id) {
+        return tblVideoMapper.selectByPrimaryKey(id);
     }
 }

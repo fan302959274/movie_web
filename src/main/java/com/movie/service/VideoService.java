@@ -39,4 +39,19 @@ public interface VideoService {
      * @date 2017/7/13
      */
     public CommonResp<String> delete(String ids);
+
+    /**
+     * @description 获取视频
+     * @author sh00859
+     * @date 2017/7/13
+     */
+    public TblVideo selectByKey(Long id);
+
+    /**
+     * @description 保存记录
+     * @author sh00859
+     * @date 2017/7/13
+     */
+    public CommonResp<TblVideo> update(MultipartFile file,Long id,String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType,String videoViewPath, String videoTag);
+
 }

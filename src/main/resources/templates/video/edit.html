@@ -2,20 +2,21 @@
     <div class="panel panel-default">
         <div class="panel-heading">参数添加</div>
         <div class="panel-body">
-            <form id="add_video_form" class="form-horizontal">
+            <form id="edit_video_form" class="form-horizontal">
 
                 <div class="row">
 
+                    <input type="text" class="form-control" id="id" name="id" th:value="${data.id}" placeholder="请输入名字"/>
                     <div class="form-group">
                         <label for="videoName" class="col-sm-1 control-label">视频名称</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="videoName" name="videoName" placeholder="请输入名字"/>
+                            <input type="text" class="form-control" id="videoName" th:value="${data.videoName}" name="videoName" placeholder="请输入名字"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="videoDuration" class="col-sm-1 control-label">视频时长</label>
                         <div class="col-sm-2">
-                            <input type="number" class="form-control" id="videoDuration" name="videoDuration" placeholder="分钟"/>
+                            <input type="number" class="form-control" id="videoDuration" th:value="${data.videoDuration}" name="videoDuration" placeholder="分钟"/>
                         </div>
                         <div class="col-sm-2">
                             <input type="number" class="form-control" id="videoDuration1" name="videoDuration1" placeholder="秒"/>
@@ -24,19 +25,19 @@
                     <div class="form-group">
                         <label for="videoViewPath" class="col-sm-1 control-label">视频连接</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="videoViewPath" name="videoViewPath" placeholder="视频连接"/>
+                            <input type="text" class="form-control" id="videoViewPath" th:value="${data.videoViewPath}" name="videoViewPath" placeholder="视频连接"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="videoSize" class="col-sm-1 control-label">视频大小</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" id="videoSize" name="videoSize" placeholder="兆"/>
+                            <input type="number" class="form-control" id="videoSize" th:value="${data.videoSize}" name="videoSize" placeholder="兆"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="videoType" class="col-sm-1 control-label">类型</label>
                         <div class="col-sm-4">
-                            <select name="videoType" id="videoType"
+                            <select name="videoType" id="videoType" th:value="${data.videoType}"
                                     class="form-control">
                                 <option value="">全部</option>
                                 <option th:each="type:${video_type_list}" th:value="${type.paramCode}"
@@ -47,14 +48,15 @@
                     <div class="form-group">
                         <label for="videoPoster" class="col-sm-1 control-label">视频封面</label>
                         <div class="col-sm-4">
-                            <input type="file" class="form-control" id="videoPoster" name="videoPoster" placeholder="视频封面"/>
+                            <img  th:attr="src=${data.videoPoster}" />
+                            <input type="file" class="form-control" id="videoPoster" name="videoPoster" th:value="${data.videoPoster}" placeholder="视频封面"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="videoTag" class="col-sm-1 control-label">标签</label>
                         <div class="col-sm-4 checkbox">
                             <label th:each="type:${video_tag_list}">
-                                <input type="checkbox" th:value="${type.paramCode}" th:text="${type.paramValue}" name="videoTag"
+                                <input type="checkbox" th:value="${type.paramCode}" th:attr="checked=${#strings.contains(data.videoTag,type.paramCode)}"  th:text="${type.paramValue}" name="videoTag"
                                        id="videoTag"/>
                             </label>
                         </div>
@@ -78,12 +80,10 @@
 </div>
 
 
-
-
 <script>
 
     $(function () {
-        $("#add_video_form").validate({
+        $("#edit_video_form").validate({
             rules: {
                 videoName: {
                     required: true
@@ -103,15 +103,16 @@
 
                 $.ajaxFileUpload({
                     method: "POST",
-                    url: "/video/save?time=" + (new Date()).getTime(),
+                    url: "/video/update?time=" + (new Date()).getTime(),
                     secureuri: true,
                     fileElementId: 'videoPoster',                        //文件选择框的id属性
                     data: {
-                        "videoName": $("#add_video_form #videoName").val(),
-                        "videoDuration": $("#add_video_form #videoDuration").val(),
-                        "videoSize": $("#add_video_form #videoSize").val(),
-                        "videoType": $("#add_video_form #videoType").val(),
-                        "videoViewPath": $("#add_video_form #videoViewPath").val(),
+                        "id": $("#edit_video_form #id").val(),
+                        "videoName": $("#edit_video_form #videoName").val(),
+                        "videoDuration": $("#edit_video_form #videoDuration").val(),
+                        "videoSize": $("#edit_video_form #videoSize").val(),
+                        "videoType": $("#edit_video_form #videoType").val(),
+                        "videoViewPath": $("#edit_video_form #videoViewPath").val(),
                         "videoTag": videoTags
                     },//自定义参数,
                     complete: function (data, status, e) {

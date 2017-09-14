@@ -91,7 +91,7 @@ public class VideoController {
      */
     @RequestMapping(value = {"/save"})
     @ResponseBody
-    public CommonResp<TblVideo> save(HttpServletResponse response, HttpServletRequest request, String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType, String videoViewPath, String videoTag) throws Exception {
+    public CommonResp<TblVideo> save(HttpServletRequest request, String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType, String videoViewPath, String videoTag) throws Exception {
         MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("videoPoster");
         return videoService.save(file , videoName,  videoDuration, videoSize, videoType, videoViewPath, videoTag);
@@ -132,6 +132,36 @@ public class VideoController {
         return videoService.delete(ids);
     }
 
+
+    /**
+     * @description 更新
+     * @author sh00859
+     * @date 2017/9/8
+     */
+    @RequestMapping(value = {"/edit"})
+    public ModelAndView edit(TblVideo tblVideo,Map map) throws Exception {
+        //获取所有的视频类型
+        TblParam param = new TblParam();
+        param.setParamType("001");
+        map.put("video_type_list",paramService.selectList(param ));
+        param.setParamType("002");
+        map.put("video_tag_list",paramService.selectList(param ));
+        map.put("data",videoService.selectByKey(tblVideo.getId()));
+        return new ModelAndView("/video/edit", map);
+    }
+
+    /**
+     * @description 更新
+     * @author sh00859
+     * @date 2017/9/8
+     */
+    @RequestMapping(value = {"/update"})
+    @ResponseBody
+    public CommonResp<TblVideo> update(HttpServletRequest request, Long id,String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType, String videoViewPath, String videoTag) throws Exception {
+        MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;
+        MultipartFile file = multipartRequest.getFile("videoPoster");
+        return videoService.update(file, id, videoName,  videoDuration,  videoSize,  videoType,  videoViewPath,  videoTag);
+    }
 
 
 }
