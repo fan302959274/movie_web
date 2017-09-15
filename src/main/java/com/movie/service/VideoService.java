@@ -17,7 +17,7 @@ public interface VideoService {
      * @author sh00859
      * @date 2017/7/13
      */
-    public CommonResp<TblVideo> save(MultipartFile file,String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType,String videoViewPath, String videoTag);
+    public CommonResp<TblVideo> save(MultipartFile file,String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType,String videoViewPath, String videoTag,String videoIntroduction);
 
     /**
      * @description 分页查询记录
@@ -52,6 +52,6 @@ public interface VideoService {
      * @author sh00859
      * @date 2017/7/13
      */
-    public CommonResp<TblVideo> update(MultipartFile file,Long id,String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType,String videoViewPath, String videoTag);
+    public CommonResp<TblVideo> update(MultipartFile file,Long id,String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType,String videoViewPath, String videoTag,String videoIntroduction);
 
 }

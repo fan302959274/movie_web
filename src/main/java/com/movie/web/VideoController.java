@@ -92,11 +92,11 @@ public class VideoController {
      */
     @RequestMapping(value = {"/save"})
     @ResponseBody
-    public String save(HttpServletRequest request, String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType, String videoViewPath, String videoTag) throws Exception {
+    public String save(HttpServletRequest request, String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType, String videoViewPath, String videoTag,String videoIntroduction) throws Exception {
         CommonResp<TblVideo> resp = new CommonResp<>();
         MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("videoPoster");
-        resp = videoService.save(file , videoName,  videoDuration, videoSize, videoType, videoViewPath, videoTag);
+        resp = videoService.save(file , videoName,  videoDuration, videoSize, videoType, videoViewPath, videoTag,videoIntroduction);
         return JSONObject.toJSONString(resp);
     }
 
@@ -160,10 +160,10 @@ public class VideoController {
      */
     @RequestMapping(value = {"/update"})
     @ResponseBody
-    public CommonResp<TblVideo> update(HttpServletRequest request, Long id,String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType, String videoViewPath, String videoTag) throws Exception {
+    public CommonResp<TblVideo> update(HttpServletRequest request, Long id,String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType, String videoViewPath, String videoTag,String videoIntroduction) throws Exception {
         MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("videoPoster");
-        return videoService.update(file, id, videoName,  videoDuration,  videoSize,  videoType,  videoViewPath,  videoTag);
+        return videoService.update(file, id, videoName,  videoDuration,  videoSize,  videoType,  videoViewPath,  videoTag, videoIntroduction);
     }
 
 

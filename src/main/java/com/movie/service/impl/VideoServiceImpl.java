@@ -40,7 +40,7 @@ public class VideoServiceImpl implements VideoService {
 
 
     @Override
-    public CommonResp<TblVideo> save(MultipartFile file, String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType,String videoViewPath, String videoTag) {
+    public CommonResp<TblVideo> save(MultipartFile file, String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType,String videoViewPath, String videoTag,String videoIntroduction) {
 
         CommonResp<TblVideo> resp = new CommonResp<TblVideo>();
         try {
@@ -54,6 +54,7 @@ public class VideoServiceImpl implements VideoService {
                 tblVideo.setVideoType(videoType);
                 tblVideo.setVideoViewPath(videoViewPath);
                 tblVideo.setVideoTag(videoTag);
+                tblVideo.setVideoIntroduction(videoIntroduction);
                 tblVideo.setVideoPoster(uploadResult);
                 tblVideoMapper.insertSelective(tblVideo);
             } else {
@@ -152,7 +153,7 @@ public class VideoServiceImpl implements VideoService {
 
 
     @Override
-    public CommonResp<TblVideo> update(MultipartFile file, Long id,String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType,String videoViewPath, String videoTag) {
+    public CommonResp<TblVideo> update(MultipartFile file, Long id,String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType,String videoViewPath, String videoTag,String videoIntroduction) {
 
         CommonResp<TblVideo> resp = new CommonResp<TblVideo>();
         try {
@@ -164,6 +165,7 @@ public class VideoServiceImpl implements VideoService {
             tblVideo.setVideoType(videoType);
             tblVideo.setVideoViewPath(videoViewPath);
             tblVideo.setVideoTag(videoTag);
+            tblVideo.setVideoIntroduction(videoIntroduction);
             if (!file.isEmpty()) {
                 // 上传文件至oss
                 String uploadResult = OssUploadByPartUtil.fileUpload(file, endpoint, accessKeyId, accessKeySecret, bucketName);
