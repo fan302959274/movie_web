@@ -37,10 +37,10 @@
                     <div class="form-group">
                         <label for="videoType" class="col-sm-1 control-label">类型</label>
                         <div class="col-sm-4">
-                            <select name="videoType" id="videoType" th:value="${data.videoType}"
+                            <select name="videoType" id="videoType"
                                     class="form-control">
                                 <option value="">全部</option>
-                                <option th:each="type:${video_type_list}" th:value="${type.paramCode}"
+                                <option th:each="type:${video_type_list}" th:value="${type.paramCode}" th:attr="selected=${#strings.equals(data.videoType,type.paramCode)}"
                                         th:text="${type.paramValue}"></option>
                             </select>
                         </div>
