@@ -1,5 +1,6 @@
 package com.movie.web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.movie.model.TblParam;
 import com.movie.model.TblParam;
 import com.movie.service.ParamService;
@@ -74,16 +75,18 @@ public class ParamController {
 
 
     /**
-     * @description 保存
+     * @description 保存(此处需要将对象转换为json String类型ps:ajaxFileUpload版本太老,重构太麻烦)
      * @author sh00859
      * @date 2017/9/8
      */
     @RequestMapping(value = {"/save"})
     @ResponseBody
-    public CommonResp<TblParam> save(HttpServletRequest request, String paramValue, String paramType,String paramCode, String paramDesc) throws Exception {
+    public String save(HttpServletRequest request, String paramValue, String paramType,String paramCode, String paramDesc) throws Exception {
+        CommonResp<TblParam> resp = new CommonResp<TblParam>();
         MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("paramUrl");
-        return paramService.save(file, paramValue,  paramType, paramCode,  paramDesc);
+        resp = paramService.save(file, paramValue,  paramType, paramCode,  paramDesc);
+        return JSONObject.toJSONString(resp);
     }
 
 

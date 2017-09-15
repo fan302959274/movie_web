@@ -1,6 +1,7 @@
 package com.movie.web;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.movie.model.TblParam;
 import com.movie.model.TblVideo;
 import com.movie.service.ParamService;
@@ -85,16 +86,18 @@ public class VideoController {
 
 
     /**
-     * @description 保存
+     * @description 保存(此处需要将对象转换为json String类型ps:ajaxFileUpload版本太老,重构太麻烦)
      * @author sh00859
      * @date 2017/9/8
      */
     @RequestMapping(value = {"/save"})
     @ResponseBody
-    public CommonResp<TblVideo> save(HttpServletRequest request, String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType, String videoViewPath, String videoTag) throws Exception {
+    public String save(HttpServletRequest request, String videoName, BigDecimal videoDuration, BigDecimal videoSize, String videoType, String videoViewPath, String videoTag) throws Exception {
+        CommonResp<TblVideo> resp = new CommonResp<>();
         MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("videoPoster");
-        return videoService.save(file , videoName,  videoDuration, videoSize, videoType, videoViewPath, videoTag);
+        resp = videoService.save(file , videoName,  videoDuration, videoSize, videoType, videoViewPath, videoTag);
+        return JSONObject.toJSONString(resp);
     }
 
     /**

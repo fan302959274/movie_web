@@ -105,6 +105,7 @@
                     method: "POST",
                     url: "/video/save?time=" + (new Date()).getTime(),
                     secureuri: true,
+                    dataType : 'json',
                     fileElementId: 'videoPoster',                        //文件选择框的id属性
                     data: {
                         "videoName": $("#add_video_form #videoName").val(),
@@ -114,9 +115,9 @@
                         "videoViewPath": $("#add_video_form #videoViewPath").val(),
                         "videoTag": videoTags
                     },//自定义参数,
-                    complete: function (data, status, e) {
-                        if(!(data.responseXML.firstChild.childNodes[0].innerHTML=='20000')){
-                            alert(data.responseXML.firstChild.childNodes[1].innerHTML);
+                    success: function (data, status, e) {
+                        if(data.code!='20000'){
+                            alert(data.msg);
                         }else{
                             $.ajax({
                                 type: "GET",
@@ -126,7 +127,6 @@
                                 }
                             });
                         }
-
 
                     }, error: function (data, status, e) {
                         alert("操作失败，请再次操作！")

@@ -76,6 +76,7 @@
                     method: "POST",
                     url: "/param/save?time=" + (new Date()).getTime(),
                     secureuri: true,
+                    dataType : 'json',
                     fileElementId: 'paramUrl',                        //文件选择框的id属性
                     data: {
                         "paramValue": $("#add_param_form #paramValue").val(),
@@ -83,9 +84,9 @@
                         "paramCode": $("#add_param_form #paramCode").val(),
                         "paramDesc": $("#add_param_form #paramDesc").val()
                     },//自定义参数,
-                    complete: function (data, s, status) {
-                        if(!(data.responseXML.firstChild.childNodes[0].innerHTML=='20000')){
-                            alert(data.responseXML.firstChild.childNodes[1].innerHTML);
+                    success: function (data, s, status) {
+                        if(data.code!='20000'){
+                            alert(data.msg);
                         }else{
                             $.ajax({
                                 type: "GET",
@@ -95,6 +96,7 @@
                                 }
                             });
                         }
+
                     }, error: function (data, status, e) {
                         alert("操作失败，请再次操作！")
                         //上传失败之后的操作

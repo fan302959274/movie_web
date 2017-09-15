@@ -135,7 +135,7 @@
         $("#btn_edit").click(function () {
             var delete_rows = $("#tb_departments").bootstrapTable('getSelections');
             if (delete_rows.length == 0) {
-                alert("至少删除一行");
+                alert("至少选择一行");
             }else if (delete_rows.length > 1) {
                 alert("只允许修改一行");
             } else {
