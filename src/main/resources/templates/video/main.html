@@ -187,7 +187,7 @@
                                     <select name="videoType" id="videoType"
                                             class="form-control">
                                         <option value="">全部</option>
-                                        <option th:each="type:${video_type_list}" th:value="${type.paramCode}" th:text="${type.paramValue}"></option>
+                                        <option th:each="type:${video_type_list}" th:value="${type.id}" th:text="${type.paramValue}"></option>
                                     </select>
                                 </div>
                             </div>
