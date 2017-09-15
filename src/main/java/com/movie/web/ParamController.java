@@ -151,4 +151,17 @@ public class ParamController {
     }
 
 
+
+
+
+    /**
+     * @description 更新
+     * @author sh00859
+     * @date 2017/9/8
+     */
+    @RequestMapping(value = {"/search_id"})
+    @ResponseBody
+    public CommonResp<TblParam> video_type(TblParam tblParam) throws Exception {
+        return paramService.video_type(tblParam.getId());
+    }
 }

@@ -70,4 +70,12 @@ public interface ParamService {
      */
     public CommonResp<TblParam> upload(MultipartFile file,Long id);
 
+
+    /**
+     * @description 通过主键获取
+     * @author sh00859
+     * @date 2017/7/13
+     */
+    public CommonResp<TblParam> video_type(Long id);
+
 }

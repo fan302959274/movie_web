@@ -205,4 +205,18 @@ public class ParamServiceImpl implements ParamService {
     public TblParam selectByKey(Long id) {
         return tblParamMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public CommonResp<TblParam> video_type(Long id) {
+        CommonResp<TblParam> resp = new CommonResp<TblParam>();
+        try {
+            resp.setResult(tblParamMapper.selectByPrimaryKey(id));
+        } catch (Exception e) {
+            logger.error("获取param异常" + e.getMessage());
+            resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
+            resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
+            return resp;
+        }
+        return resp;
+    }
 }

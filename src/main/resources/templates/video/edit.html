@@ -40,7 +40,7 @@
                             <select name="videoType" id="videoType"
                                     class="form-control">
                                 <option value="">全部</option>
-                                <option th:each="type:${video_type_list}" th:value="${type.paramCode}" th:attr="selected=${#strings.equals(data.videoType,type.paramCode)}"
+                                <option th:each="type:${video_type_list}" th:value="${type.id}" th:attr="selected=${#strings.equals(data.videoType,type.id)}"
                                         th:text="${type.paramValue}"></option>
                             </select>
                         </div>
@@ -55,8 +55,8 @@
                     <div class="form-group">
                         <label for="videoTag" class="col-sm-1 control-label">标签</label>
                         <div class="col-sm-4 checkbox">
-                            <label th:each="type:${video_tag_list}">
-                                <input type="checkbox" th:value="${type.paramCode}" th:attr="checked=${#strings.contains(data.videoTag,type.paramCode)}"  th:text="${type.paramValue}" name="videoTag"
+                            <label th:each="tag:${video_tag_list}">
+                                <input type="checkbox" th:value="${tag.id}" th:attr="checked=${#strings.contains(data.videoTag,tag.id)}"  th:text="${tag.paramValue}" name="videoTag"
                                        id="videoTag"/>
                             </label>
                         </div>
