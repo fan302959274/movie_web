@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.movie.mapper.extend.TblVideoExtendMapper">
+    <resultMap id="BaseResultMap" type="com.movie.model.extend.TblVideoExtend">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="video_name" property="videoName" jdbcType="VARCHAR"/>
+        <result column="video_introduction" property="videoIntroduction" jdbcType="VARCHAR"/>
+        <result column="video_poster" property="videoPoster" jdbcType="VARCHAR"/>
+        <result column="video_type" property="videoType" jdbcType="VARCHAR"/>
+        <result column="video_tag" property="videoTag" jdbcType="VARCHAR"/>
+        <result column="video_view_path" property="videoViewPath" jdbcType="VARCHAR"/>
+        <result column="video_down_path" property="videoDownPath" jdbcType="VARCHAR"/>
+        <result column="video_duration" property="videoDuration" jdbcType="DECIMAL"/>
+        <result column="video_size" property="videoSize" jdbcType="DECIMAL"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="updator" property="updator" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
+        <result column="video_type_name" property="videoTypeName" jdbcType="VARCHAR"/>
+        <result column="video_tag_name" property="videoTagName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT v.*,p2.param_value AS video_type_name,GROUP_CONCAT(p.`param_value`) AS video_tag_name FROM movie.`tbl_video` v
+        LEFT JOIN movie.`tbl_param` p ON FIND_IN_SET(p.`id`,v.`video_tag`) AND p.`is_deleted` = '0'
+        LEFT JOIN movie.`tbl_param` p2 ON p2.id = v.`video_type` AND  p2.`is_deleted` = '0'
+        WHERE v.`is_deleted` = '0'
+        <if test="videoType != null and videoType !='' " >
+            AND v.`video_type` = #{videoType,jdbcType=VARCHAR}
+        </if>
+        <if test="videoName != null and videoName !='' " >
+            AND v.`video_name` LIKE concat(concat('%',#{videoName,jdbcType=VARCHAR}),'%')
+        </if>
+        limit #{offset},#{limit}
+    </select>
+
+
+</mapper>

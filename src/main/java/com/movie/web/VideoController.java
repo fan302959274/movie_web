@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.movie.model.TblParam;
 import com.movie.model.TblVideo;
+import com.movie.model.extend.TblVideoExtend;
 import com.movie.service.ParamService;
 import com.movie.service.VideoService;
 import com.movie.util.request.TblVideoPageReq;
@@ -62,8 +63,8 @@ public class VideoController {
      */
     @RequestMapping(value = {"/data"})
     @ResponseBody
-    public PageResp<TblVideo> list(TblVideoPageReq pageReq) throws Exception {
-        PageResp<TblVideo> resp = videoService.selectListByPage(pageReq);
+    public PageResp<TblVideoExtend> list(TblVideoPageReq pageReq) throws Exception {
+        PageResp<TblVideoExtend> resp = videoService.selectListByPage(pageReq);
         return resp;
     }
 

@@ -2,10 +2,12 @@ package com.movie.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.movie.mapper.TblVideoMapper;
+import com.movie.mapper.extend.TblVideoExtendMapper;
 import com.movie.model.TblParam;
 import com.movie.model.TblParamExample;
 import com.movie.model.TblVideo;
 import com.movie.model.TblVideoExample;
+import com.movie.model.extend.TblVideoExtend;
 import com.movie.service.VideoService;
 import com.movie.util.oss.OssUploadByPartUtil;
 import com.movie.util.request.TblVideoPageReq;
@@ -22,13 +24,17 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class VideoServiceImpl implements VideoService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Resource
     private TblVideoMapper tblVideoMapper;
+    @Resource
+    private TblVideoExtendMapper tblVideoExtendMapper;
     @Value("${endpoint}")
     private String endpoint;
     @Value("${accessKeyId}")
@@ -73,23 +79,25 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public PageResp<TblVideo> selectListByPage(TblVideoPageReq pageReq) {
-        PageResp<TblVideo> resp = new PageResp<TblVideo>();
+    public PageResp<TblVideoExtend> selectListByPage(TblVideoPageReq pageReq) {
+        PageResp<TblVideoExtend> resp = new PageResp<TblVideoExtend>();
         TblVideoExample example = new TblVideoExample();
+        Map param = new HashMap();
         try {
             Integer offset = pageReq.getOffset() == null ? 0 : pageReq.getOffset();
             Integer limit = pageReq.getLimit() == null ? 10 : pageReq.getLimit();
-            PageHelper.offsetPage(offset, limit);
+            param.put("offset",offset);
+            param.put("limit",limit);
             if (null != pageReq) {
                 TblVideoExample.Criteria criteria = example.createCriteria();
                 if (!StringUtils.isBlank(pageReq.getVideoName())) {
-                    criteria.andVideoNameLike("%" + pageReq.getVideoName() + "%");
+                    param.put("videoName",pageReq.getVideoName());
                 }
                 if (!StringUtils.isBlank(pageReq.getVideoType())) {
-                    criteria.andVideoTypeEqualTo(pageReq.getVideoType());
+                    param.put("videoType",pageReq.getVideoType());
                 }
             }
-            List<TblVideo> list = tblVideoMapper.selectByExample(example);
+            List<TblVideoExtend> list = tblVideoExtendMapper.selectByExample(param);
             Integer total = tblVideoMapper.countByExample(example);
             resp.setTotalPage(total % limit == 0 ? total / limit : (total / limit + 1));
             resp.setTotal(total);
