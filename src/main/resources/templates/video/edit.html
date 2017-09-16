@@ -48,7 +48,7 @@
                     <div class="form-group">
                         <label for="videoPoster" class="col-sm-1 control-label">视频封面</label>
                         <div class="col-sm-4">
-                            <img  th:attr="src=${data.videoPoster}" />
+                            <img  class="carousel-inner img-responsive img-rounded" th:attr="src=${data.videoPoster}" />
                             <input type="file" class="form-control" id="videoPoster" name="videoPoster" th:value="${data.videoPoster}" placeholder="视频封面"/>
                         </div>
                     </div>

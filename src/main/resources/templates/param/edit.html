@@ -42,7 +42,7 @@
                     <div class="form-group">
                         <label for="paramUrl" class="col-sm-1 control-label">参数连接</label>
                         <div class="col-sm-4">
-                            <img  th:attr="src=${data.paramUrl}" />
+                            <img  class="carousel-inner img-responsive img-rounded" th:attr="src=${data.paramUrl}" />
                             <input type="file" class="form-control" id="paramUrl" name="paramUrl"
                                    th:value="${data.paramUrl}" placeholder="参数连接"/>
                         </div>
