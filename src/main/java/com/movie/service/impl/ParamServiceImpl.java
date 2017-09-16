@@ -35,7 +35,7 @@ public class ParamServiceImpl implements ParamService {
     private String accessKeyId;
     @Value("${accessKeySecret}")
     private String accessKeySecret;
-    @Value("${bucketName}")
+    @Value("${bucketName.pic}")
     private String bucketName;
 
     @Override

@@ -24,4 +24,6 @@ mybatis:
 endpoint: http://oss-cn-beijing.aliyuncs.com
 accessKeyId: LTAIOymMDH5DQyY2
 accessKeySecret: ER7SfUVjivxI6Tn3M5YQQAH6a02LBm
-bucketName: foxmovie
+bucketName:
+  video: foxmovie
+  pic: foxmoviepic
