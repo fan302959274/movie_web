@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -91,9 +92,11 @@ public class VideoServiceImpl implements VideoService {
             if (null != pageReq) {
                 TblVideoExample.Criteria criteria = example.createCriteria();
                 if (!StringUtils.isBlank(pageReq.getVideoName())) {
+                    criteria.andVideoNameLike("%"+pageReq.getVideoName()+"%");
                     param.put("videoName",pageReq.getVideoName());
                 }
                 if (!StringUtils.isBlank(pageReq.getVideoType())) {
+                    criteria.andVideoTypeEqualTo(pageReq.getVideoType());
                     param.put("videoType",pageReq.getVideoType());
                 }
             }

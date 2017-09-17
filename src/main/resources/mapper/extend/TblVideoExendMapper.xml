@@ -22,15 +22,16 @@
     </resultMap>
 
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="java.util.Map">
-        SELECT v.*,p2.param_value AS video_type_name,GROUP_CONCAT(p.`param_value`) AS video_tag_name FROM movie.`tbl_video` v
+        SELECT * FROM
+        (SELECT v.*,p2.param_value AS video_type_name,GROUP_CONCAT(p.`param_value`) AS video_tag_name FROM movie.`tbl_video` v
         LEFT JOIN movie.`tbl_param` p ON FIND_IN_SET(p.`id`,v.`video_tag`) AND p.`is_deleted` = '0'
-        LEFT JOIN movie.`tbl_param` p2 ON p2.id = v.`video_type` AND  p2.`is_deleted` = '0'
-        WHERE v.`is_deleted` = '0'
+        LEFT JOIN movie.`tbl_param` p2 ON p2.id = v.`video_type` AND  p2.`is_deleted` = '0')tmp
+        WHERE tmp.`is_deleted` = '0'
         <if test="videoType != null and videoType !='' " >
-            AND v.`video_type` = #{videoType,jdbcType=VARCHAR}
+            AND tmp.`video_type` = #{videoType,jdbcType=VARCHAR}
         </if>
         <if test="videoName != null and videoName !='' " >
-            AND v.`video_name` LIKE concat(concat('%',#{videoName,jdbcType=VARCHAR}),'%')
+            AND tmp.`video_name` LIKE concat(concat('%',#{videoName,jdbcType=VARCHAR}),'%')
         </if>
         limit #{offset},#{limit}
     </select>
