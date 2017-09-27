@@ -51,7 +51,9 @@ public class VideoController {
         //获取所有的视频类型
         TblParam param = new TblParam();
         param.setParamType("001");
+        Long startTime = System.currentTimeMillis();
         map.put("video_type_list",paramService.selectList(param ));
+        System.out.println("耗时:" + (System.currentTimeMillis() - startTime));
         return new ModelAndView("/video/main", map);
 
     }

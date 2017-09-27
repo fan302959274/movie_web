@@ -14,6 +14,8 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,6 +40,7 @@ public class ParamServiceImpl implements ParamService {
     @Value("${bucketName.pic}")
     private String bucketName;
 
+    @Cacheable(value = "tblParamListCache",key = "#tblParam.paramType")
     @Override
     public List<TblParam> selectList(TblParam tblParam) {
         if (tblParam != null) {
@@ -51,7 +54,7 @@ public class ParamServiceImpl implements ParamService {
         return null;
 
     }
-
+    @CacheEvict(value="tblParamListCache",allEntries=true)// 清空tblParamListCache 缓存
     @Override
     public CommonResp<TblParam> save(MultipartFile file, String paramValue, String paramType, String paramCode, String paramDesc) {
         CommonResp<TblParam> resp = new CommonResp<TblParam>();
@@ -112,7 +115,7 @@ public class ParamServiceImpl implements ParamService {
         }
         return resp;
     }
-
+    @CacheEvict(value="tblParamListCache",allEntries=true)// 清空tblParamListCache 缓存
     @Override
     public CommonResp<String> delete(String ids) {
         CommonResp<String> resp = new CommonResp<String>();
@@ -159,6 +162,7 @@ public class ParamServiceImpl implements ParamService {
         return resp;
     }
 
+    @CacheEvict(value="tblParamListCache",allEntries=true)// 清空tblParamListCache 缓存
     @Override
     public CommonResp<TblParam> edit(TblParam tblParam) {
         CommonResp<TblParam> resp = new CommonResp<TblParam>();
@@ -174,7 +178,7 @@ public class ParamServiceImpl implements ParamService {
         return resp;
     }
 
-
+    @CacheEvict(value="tblParamListCache",allEntries=true)// 清空tblParamListCache 缓存
     @Override
     public CommonResp<TblParam> update(MultipartFile file, Long id,String paramValue, String paramType, String paramCode, String paramDesc) {
         CommonResp<TblParam> resp = new CommonResp<TblParam>();
