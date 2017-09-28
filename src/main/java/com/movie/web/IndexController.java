@@ -1,7 +1,7 @@
 package com.movie.web;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    protected final Logger logger = LogManager.getLogger(this.getClass());
 
     /**
      * 首页
