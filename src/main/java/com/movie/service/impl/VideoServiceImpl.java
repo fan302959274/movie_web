@@ -1,10 +1,7 @@
 package com.movie.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import com.movie.mapper.TblVideoMapper;
 import com.movie.mapper.extend.TblVideoExtendMapper;
-import com.movie.model.TblParam;
-import com.movie.model.TblParamExample;
 import com.movie.model.TblVideo;
 import com.movie.model.TblVideoExample;
 import com.movie.model.extend.TblVideoExtend;
@@ -15,11 +12,10 @@ import com.movie.util.response.CommonResp;
 import com.movie.util.response.PageResp;
 import com.movie.util.response.ResponseCode;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -31,7 +27,7 @@ import java.util.Map;
 
 @Service
 public class VideoServiceImpl implements VideoService {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    protected final Logger logger = LogManager.getLogger(this.getClass());
     @Resource
     private TblVideoMapper tblVideoMapper;
     @Resource
