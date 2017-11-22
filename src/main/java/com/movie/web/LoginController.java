@@ -59,5 +59,13 @@ public class LoginController {
         return resp;
     }
 
+//    @RequestMapping("/logOut")
+//    public String logOut(HttpSession session) {
+//        Subject subject = SecurityUtils.getSubject();
+//        subject.logout();
+////        session.removeAttribute("user");
+//        return "login";
+//    }
+
 
 }

@@ -17,22 +17,7 @@
 
     $(function () {
         $("#login_form").validate({
-            rules: {
-                nickname: {
-                    required: true
-                },
-                pswd: {
-                    required: true
-                }
-            },
-            messages: {
-                nickname: {
-                    required: "请输登录名",
-                },
-                pswd: {
-                    required: "请输密码",
-                }
-            },
+
             submitHandler: function () {
                 $.ajax({
                     method: "POST",
@@ -50,7 +35,7 @@
                         }
 
                     }, error: function (data, status, e) {
-                        alert("操作失败，请再次操作！")
+                        alert("用户名或密码错误！")
                         //上传失败之后的操作
                     }
                 });
