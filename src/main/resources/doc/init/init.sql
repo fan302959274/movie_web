@@ -86,72 +86,59 @@ CREATE TABLE `tbl_likes` (
 
 
 
+/*表结构插入*/
+DROP TABLE
+IF EXISTS `tbl_auth_permission`;
 
--- used in tests that use HSQL
-create table oauth_client_details (
-  client_id VARCHAR(256) PRIMARY KEY,
-  resource_ids VARCHAR(256),
-  client_secret VARCHAR(256),
-  scope VARCHAR(256),
-  authorized_grant_types VARCHAR(256),
-  web_server_redirect_uri VARCHAR(256),
-  authorities VARCHAR(256),
-  access_token_validity INTEGER,
-  refresh_token_validity INTEGER,
-  additional_information VARCHAR(4096),
-  autoapprove VARCHAR(256)
-);
+CREATE TABLE `tbl_auth_permission` (
+	`id` BIGINT (20) NOT NULL AUTO_INCREMENT,
+	`code` VARCHAR (256) DEFAULT NULL COMMENT '权限对应的code',
+	`name` VARCHAR (64) DEFAULT NULL COMMENT '权限对应的描述',
+	PRIMARY KEY (`id`)
+) ENGINE = INNODB AUTO_INCREMENT = 21 DEFAULT CHARSET = utf8;
 
-create table oauth_client_token (
-  token_id VARCHAR(256),
-  token blob,
-  authentication_id VARCHAR(256) PRIMARY KEY,
-  user_name VARCHAR(256),
-  client_id VARCHAR(256)
-);
+/*Table structure for table `u_role` */
+DROP TABLE
+IF EXISTS `tbl_auth_role`;
 
-create table oauth_access_token (
-  token_id VARCHAR(256),
-  token blob,
-  authentication_id VARCHAR(256) PRIMARY KEY,
-  user_name VARCHAR(256),
-  client_id VARCHAR(256),
-  authentication blob,
-  refresh_token VARCHAR(256)
-);
+CREATE TABLE `tbl_auth_role` (
+	`id` BIGINT (20) NOT NULL AUTO_INCREMENT,
+	`code` VARCHAR (32) DEFAULT NULL COMMENT '角色code',
+	`name` VARCHAR (32) DEFAULT NULL COMMENT '角色名称',
+	`type` VARCHAR (10) DEFAULT NULL COMMENT '角色类型',
+	PRIMARY KEY (`id`)
+) ENGINE = INNODB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8;
 
-create table oauth_refresh_token (
-  token_id VARCHAR(256),
-  token blob,
-  authentication blob
-);
+/*Table structure for table `u_role_permission` */
+DROP TABLE
+IF EXISTS `tbl_auth_role_permission`;
 
-create table oauth_code (
-  code VARCHAR(256), authentication blob
-);
+CREATE TABLE `tbl_auth_role_permission` (
+	`role_id` BIGINT (20) DEFAULT NULL COMMENT '角色ID',
+	`permission_id` BIGINT (20) DEFAULT NULL COMMENT '权限ID'
+) ENGINE = INNODB DEFAULT CHARSET = utf8;
 
-create table oauth_approvals (
-  userId VARCHAR(256),
-  clientId VARCHAR(256),
-  scope VARCHAR(256),
-  status VARCHAR(10),
-  expiresAt TIMESTAMP,
-  lastModifiedAt TIMESTAMP
-);
+/*Table structure for table `u_user` */
+DROP TABLE
+IF EXISTS `tbl_auth_user`;
 
+CREATE TABLE `tbl_auth_user` (
+	`id` BIGINT (20) NOT NULL AUTO_INCREMENT,
+	`nickname` VARCHAR (20) DEFAULT NULL COMMENT '用户昵称',
+	`email` VARCHAR (128) DEFAULT NULL COMMENT '邮箱|登录帐号',
+	`pswd` VARCHAR (32) DEFAULT NULL COMMENT '密码',
+	`create_time` datetime DEFAULT NULL COMMENT '创建时间',
+	`last_login_time` datetime DEFAULT NULL COMMENT '最后登录时间',
+	`status` BIGINT (1) DEFAULT '1' COMMENT '1:有效，0:禁止登录',
+	PRIMARY KEY (`id`)
+) ENGINE = INNODB AUTO_INCREMENT = 15 DEFAULT CHARSET = utf8;
 
--- customized oauth_client_details table
-create table ClientDetails (
-  appId VARCHAR(256) PRIMARY KEY,
-  resourceIds VARCHAR(256),
-  appSecret VARCHAR(256),
-  scope VARCHAR(256),
-  grantTypes VARCHAR(256),
-  redirectUrl VARCHAR(256),
-  authorities VARCHAR(256),
-  access_token_validity INTEGER,
-  refresh_token_validity INTEGER,
-  additionalInformation VARCHAR(4096),
-  autoApproveScopes VARCHAR(256)
-);
+/*Table structure for table `u_user_role` */
+DROP TABLE
+IF EXISTS `tbl_auth_user_role`;
+
+CREATE TABLE `tbl_auth_user_role` (
+	`user_id` BIGINT (20) DEFAULT NULL COMMENT '用户ID',
+	`role_id` BIGINT (20) DEFAULT NULL COMMENT '角色ID'
+) ENGINE = INNODB DEFAULT CHARSET = utf8;
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>基于Bootstrap的CSS3登录表单DEMO演示</title>
+    <link rel="stylesheet" href="/css/common/font-awesome.min.css"/>
+    <link rel='stylesheet' href='/css/common/jquery-ui.css'/>
+    <link rel='stylesheet prefetch' href='/css/bootstrap/bootstrap.css'/>
+    <link rel="stylesheet" href="/css/common/style.css" media="screen" type="text/css"/>
+    <script src="/js/common/modernizr.js"></script>
+</head>
+<body class="login-page">
+<div class="login-form">
+    <div class="login-content">
+
+        <div class="form-login-error">
+            <h3>Invalid login</h3>
+            <p>Enter <strong>demo</strong>/<strong>demo</strong> as login and password.</p>
+        </div>
+        <form method="post" role="form" id="form_login">
+            <div class="form-group">
+                <h3 style="color:#fff;font-family:'微软雅黑';">2016版渠道业务管理系统</h3>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-user"></i>
+                    </div>
+
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Username"
+                           autocomplete="off"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-key"></i>
+                    </div>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password"
+                           autocomplete="off"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block btn-login">
+                    <i class="fa fa-sign-in"></i>
+                    Login in
+                </button>
+            </div>
+            <!-- Implemented in v1.1.4 -->
+            <div class="form-group">
+                <em>- or -</em>
+            </div>
+        </form>
+        <div style="text-align:center;clear:both;">
+            <script src="/js/common/gg_bd_ad_720x90.js" type="text/javascript"></script>
+            <script src="/js/common/follow.js" type="text/javascript"></script>
+        </div>
+    </div>
+</div>
+</body>
+</html>
