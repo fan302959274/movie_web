@@ -36,7 +36,7 @@
                         }
 
                     }, error: function (data, status, e) {
-                        alert("用户名或密码错误！")
+                        toastr.error("用户名或密码错误！");
                         //上传失败之后的操作
                     }
                 });
