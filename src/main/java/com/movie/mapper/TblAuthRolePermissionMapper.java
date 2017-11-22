@@ -1,0 +1,22 @@
+package com.movie.mapper;
+
+import com.movie.model.TblAuthRolePermission;
+import com.movie.model.TblAuthRolePermissionExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface TblAuthRolePermissionMapper {
+    int countByExample(TblAuthRolePermissionExample example);
+
+    int deleteByExample(TblAuthRolePermissionExample example);
+
+    int insert(TblAuthRolePermission record);
+
+    int insertSelective(TblAuthRolePermission record);
+
+    List<TblAuthRolePermission> selectByExample(TblAuthRolePermissionExample example);
+
+    int updateByExampleSelective(@Param("record") TblAuthRolePermission record, @Param("example") TblAuthRolePermissionExample example);
+
+    int updateByExample(@Param("record") TblAuthRolePermission record, @Param("example") TblAuthRolePermissionExample example);
+}
