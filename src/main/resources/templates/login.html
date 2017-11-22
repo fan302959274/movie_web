@@ -4,11 +4,63 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>基于Bootstrap的CSS3登录表单DEMO演示</title>
     <link rel="stylesheet" href="/css/common/font-awesome.min.css"/>
+    <script src="js/jquery/jquery.js"></script>
+    <script src="js/jquery/jquery.validate.min.js"></script>
     <link rel='stylesheet' href='/css/common/jquery-ui.css'/>
     <link rel='stylesheet prefetch' href='/css/bootstrap/bootstrap.css'/>
     <link rel="stylesheet" href="/css/common/style.css" media="screen" type="text/css"/>
     <script src="/js/common/modernizr.js"></script>
 </head>
+
+
+<script>
+
+    $(function () {
+        $("#login_form").validate({
+            rules: {
+                nickname: {
+                    required: true
+                },
+                pswd: {
+                    required: true
+                }
+            },
+            messages: {
+                nickname: {
+                    required: "请输登录名",
+                },
+                pswd: {
+                    required: "请输密码",
+                }
+            },
+            submitHandler: function () {
+                $.ajax({
+                    method: "POST",
+                    url: "/ajaxlogin",
+                    dataType: 'json',
+                    data: {
+                        "nickname": $("#login_form #nickname").val(),
+                        "pswd": $("#login_form #pswd").val()
+                    },//自定义参数,
+                    success: function (data, status, e) {
+                        if (data.code != '20000') {
+                            alert(data.msg);
+                        } else {
+                            location.href = "/index";
+                        }
+
+                    }, error: function (data, status, e) {
+                        alert("操作失败，请再次操作！")
+                        //上传失败之后的操作
+                    }
+                });
+            }
+        });
+
+    });
+
+
+</script>
 <body class="login-page">
 <div class="login-form">
     <div class="login-content">
@@ -17,7 +69,7 @@
             <h3>Invalid login</h3>
             <p>Enter <strong>demo</strong>/<strong>demo</strong> as login and password.</p>
         </div>
-        <form method="post" role="form" id="form_login">
+        <form method="post" role="form" id="login_form">
             <div class="form-group">
                 <h3 style="color:#fff;font-family:'微软雅黑';">2016版渠道业务管理系统</h3>
             </div>
@@ -27,7 +79,7 @@
                         <i class="fa fa-user"></i>
                     </div>
 
-                    <input type="text" class="form-control" name="username" id="username" placeholder="Username"
+                    <input type="text" class="form-control" name="nickname" id="nickname" placeholder="Username"
                            autocomplete="off"/>
                 </div>
             </div>
@@ -36,7 +88,7 @@
                     <div class="input-group-addon">
                         <i class="fa fa-key"></i>
                     </div>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Password"
+                    <input type="password" class="form-control" name="pswd" id="pswd" placeholder="Password"
                            autocomplete="off"/>
                 </div>
             </div>

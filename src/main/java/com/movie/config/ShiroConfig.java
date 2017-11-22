@@ -1,5 +1,6 @@
 package com.movie.config;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -44,7 +45,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/fonts/**", "anon");
-        filterChainDefinitionMap.put("/ajaxLogin", "anon");
+        filterChainDefinitionMap.put("/ajaxlogin", "anon");
 
         // 配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/logout", "logout");
@@ -77,5 +78,11 @@ public class ShiroConfig {
     public ShiroRealm myShiroRealm() {
         ShiroRealm myShiroRealm = new ShiroRealm();
         return myShiroRealm;
+    }
+
+    //    thymeleaf页面整合shiro标签
+    @Bean
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
     }
 }

@@ -24,7 +24,7 @@ public class IndexController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = {"/"})
+    @RequestMapping(value = {"/index"})
     public String index() throws Exception {
         return "/index";
     }

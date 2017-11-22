@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link href="/css/bootstrap/bootstrap.css" rel="stylesheet"/>
@@ -64,7 +65,7 @@
                         <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
                     </a>
                     <ul id="systemSetting" class="nav nav-list secondmenu collapse  in">
-                        <li><a id="paramsearch" href="javascript:change_list('/param/main')"><i
+                        <li><a shiro:hasAllRoles="100002" id="paramsearch" href="javascript:change_list('/param/main')"><i
                                 class="glyphicon glyphicon-th-list"></i>&nbsp;参数管理</a></li>
                         <!--<li><a href="#"><i class="glyphicon glyphicon-asterisk"></i>&nbsp;角色管理</a></li>-->
                         <!--<li><a href="#"><i class="glyphicon glyphicon-edit"></i>&nbsp;修改密码</a></li>-->

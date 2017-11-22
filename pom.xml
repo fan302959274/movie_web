@@ -121,6 +121,13 @@
             <version>1.3.2</version>
         </dependency>
 
+        <!--thymeleaf页面整合shiro标签-->
+        <dependency>
+            <groupId>com.github.theborakompanioni</groupId>
+            <artifactId>thymeleaf-extras-shiro</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+
 
 
 
