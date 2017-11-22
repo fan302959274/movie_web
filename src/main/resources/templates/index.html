@@ -65,11 +65,10 @@
                         <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
                     </a>
                     <ul id="systemSetting" class="nav nav-list secondmenu collapse  in">
-                        <li><a shiro:hasAllRoles="100002" id="paramsearch" href="javascript:change_list('/param/main')"><i
-                                class="glyphicon glyphicon-th-list"></i>&nbsp;参数管理</a></li>
-                        <!--<li><a href="#"><i class="glyphicon glyphicon-asterisk"></i>&nbsp;角色管理</a></li>-->
-                        <!--<li><a href="#"><i class="glyphicon glyphicon-edit"></i>&nbsp;修改密码</a></li>-->
-                        <!--<li><a href="#"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;日志查看</a></li>-->
+
+                        <li><a href="#"><i class="glyphicon glyphicon-asterisk"></i>&nbsp;角色管理</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-edit"></i>&nbsp;修改密码</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;日志查看</a></li>
                     </ul>
                 </li>
                 <li>
@@ -79,8 +78,9 @@
                         <span class="pull-right glyphicon  glyphicon-chevron-toggle"></span>
                     </a>
                     <ul id="configSetting" class="nav nav-list secondmenu collapse">
-                        <li><a href="javascript:change_list('/video/main')"><i class="glyphicon glyphicon-film"></i>&nbsp;视频管理</a>
-                        </li>
+                        <li><a shiro:hasAllRoles="100002" id="paramsearch" href="javascript:change_list('/param/main')"><i
+                                class="glyphicon glyphicon-th-list"></i>&nbsp;参数管理</a></li>
+
                         <!--<li class="active"><a href="#"><i class="glyphicon glyphicon-globe"></i>&nbsp;全局缺省配置</a></li>-->
                         <!--<li><a href="#"><i class="glyphicon glyphicon-star-empty"></i>&nbsp;未开通用户配置</a></li>-->
                         <!--<li><a href="#"><i class="glyphicon glyphicon-star"></i>&nbsp;退订用户配置</a></li>-->
@@ -92,11 +92,13 @@
                 <li>
                     <a href="#disSetting" class="nav-header collapsed" data-toggle="collapse">
                         <i class="glyphicon glyphicon-globe"></i>
-                        分发配置
+                        业务管理
                         <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
                     </a>
                     <ul id="disSetting" class="nav nav-list secondmenu collapse">
-                        <li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;分发包配置</a></li>
+                        <!--<li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;分发包配置</a></li>-->
+                        <li><a href="javascript:change_list('/video/main')"><i class="glyphicon glyphicon-film"></i>&nbsp;视频管理</a>
+                        </li>
                     </ul>
                 </li>
 

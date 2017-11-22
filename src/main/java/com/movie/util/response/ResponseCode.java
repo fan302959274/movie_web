@@ -10,6 +10,10 @@ public enum ResponseCode {
     FILE_NOT_FOUND("30001", "文件未找到"),
     FILE_IS_EMPTY("30002", "文件为空"),
     COLLECTION_USERINFO_ERROR("40003", "收集用户信息失败"),
+    NICKNAME_EMPTY("40004", "登录用户名为空"),
+    PASSWORD_EMPTY("40005", "密码为空"),
+    NICKNAME_NOT_EXISTS("40006", "用户不存在"),
+    PASSWORD_ERROR("40007", "密码错误"),
     IO_ERROR("99998", "IO异常"),
     SYSTEM_ERROR("99999", "系统错误");
     private String code;

@@ -10,6 +10,8 @@
     <link rel='stylesheet prefetch' href='/css/bootstrap/bootstrap.css'/>
     <link rel="stylesheet" href="/css/common/style.css" media="screen" type="text/css"/>
     <script src="/js/common/modernizr.js"></script>
+    <link href="/css/common/toastr.css" rel="stylesheet"/>
+    <script src="/js/common/toastr.js"></script>
 </head>
 
 
@@ -17,7 +19,6 @@
 
     $(function () {
         $("#login_form").validate({
-
             submitHandler: function () {
                 $.ajax({
                     method: "POST",
@@ -29,7 +30,7 @@
                     },//自定义参数,
                     success: function (data, status, e) {
                         if (data.code != '20000') {
-                            alert(data.msg);
+                            toastr.error(data.msg);
                         } else {
                             location.href = "/index";
                         }
