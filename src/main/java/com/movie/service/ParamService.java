@@ -26,7 +26,7 @@ public interface ParamService {
      * @author sh00859
      * @date 2017/7/13
      */
-    public List<TblParam> selectList(TblParam tblParam);
+    public List<TblParam> selectList(TblParam record);
 
     /**
      * @description 分页查询记录
