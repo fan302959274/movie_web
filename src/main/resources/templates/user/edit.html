@@ -67,12 +67,7 @@
                 $.ajax({
                     method: "POST",
                     url: "/user/update?time=" + (new Date()).getTime(),
-                    data: {
-                        "id":$("#edit_form #id").val(),
-                        "nickname": $("#edit_form #nickname").val(),
-                        "email": $("#edit_form #email").val(),
-                        "status": $("#edit_form #status").val()
-                    },//自定义参数,
+                    data: $("#edit_form").serialize(),//自定义参数,
                     success: function (data) {
                         if (!(data.code == '20000')) {
                             toastr.warning(data.msg);

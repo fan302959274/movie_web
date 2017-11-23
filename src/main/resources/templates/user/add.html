@@ -64,11 +64,7 @@
                     method: "POST",
                     url: "/user/save?time=" + (new Date()).getTime(),
                     dataType : 'json',
-                    data: {
-                        "nickname": $("#add_form #nickname").val(),
-                        "email": $("#add_form #email").val(),
-                        "status": $("#add_form #status").val()
-                    },//自定义参数,
+                    data:$("#add_form").serialize(),//自定义参数,
                     success: function (data, s, status) {
                         if(data.code!='20000'){
                             toastr.warning(data.msg);
