@@ -44,11 +44,11 @@
          <!--<table tableName="tbl_user"/>-->
          <!--<table tableName="tbl_reply"/>-->
          <!--<table tableName="tbl_likes"/>-->
-        <table tableName="tbl_auth_permission"/>
+        <!--<table tableName="tbl_auth_permission"/>-->
         <table tableName="tbl_auth_user"/>
-        <table tableName="tbl_auth_role"/>
-        <table tableName="tbl_auth_user_role"/>
-        <table tableName="tbl_auth_role_permission"/>
+        <!--<table tableName="tbl_auth_role"/>-->
+        <!--<table tableName="tbl_auth_user_role"/>-->
+        <!--<table tableName="tbl_auth_role_permission"/>-->
 
 
     </context>

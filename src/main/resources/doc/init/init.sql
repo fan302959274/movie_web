@@ -125,9 +125,10 @@ IF EXISTS `tbl_auth_user`;
 CREATE TABLE `tbl_auth_user` (
 	`id` BIGINT (20) NOT NULL AUTO_INCREMENT,
 	`nickname` VARCHAR (20) DEFAULT NULL COMMENT '用户昵称',
-	`email` VARCHAR (128) DEFAULT NULL COMMENT '邮箱|登录帐号',
+	`email` VARCHAR (128) DEFAULT NULL COMMENT '邮箱',
 	`pswd` VARCHAR (32) DEFAULT NULL COMMENT '密码',
-	`create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_date` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP   COMMENT '更新时间',
 	`last_login_time` datetime DEFAULT NULL COMMENT '最后登录时间',
 	`status` BIGINT (1) DEFAULT '1' COMMENT '1:有效，0:禁止登录',
 	PRIMARY KEY (`id`)

@@ -11,7 +11,9 @@ public class TblAuthUser extends BaseModel {
 
     private String pswd;
 
-    private Date createTime;
+    private Date createDate;
+
+    private Date updateDate;
 
     private Date lastLoginTime;
 
@@ -49,12 +51,20 @@ public class TblAuthUser extends BaseModel {
         this.pswd = pswd;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 
     public Date getLastLoginTime() {
