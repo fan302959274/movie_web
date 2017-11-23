@@ -65,6 +65,7 @@
                 limit: params.limit,   //页面大小
                 offset: params.offset,  //页码
                 nickname: $("#nickname").val(),
+                lastLoginTimeStr:$("#lastLoginTimeStr").val(),
                 status: $("#status").val()
                 //每页多少条数据
             };
@@ -155,6 +156,10 @@
 
         });
 
+        $('#lastLoginTimeStr').daterangepicker(null, function(start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+
     });
 
 
@@ -173,6 +178,8 @@
 
                 <div class="row">
 
+
+
                     <div class="form-horizontal">
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                             <div class="form-group ">
@@ -185,12 +192,15 @@
                         </div>
                     </div>
                     <div class="form-horizontal">
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                             <div class="form-group ">
-                                <label class="col-lg-5 col-sm-5 control-label">最近登录时间</label>
-                                <div class="col-lg-7 col-sm-7">
-                                    <input type="text" class="form-control" id="lastLoginTime" name="lastLoginTime"
-                                           placeholder="最近登录时间"/>
+                                <label class="col-lg-4 col-sm-4 control-label">最近登录时间</label>
+                                <div class="col-lg-8 col-sm-8">
+                                    <div class="controls">
+                                        <div class="input-prepend input-group">
+                                            <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span><input type="text"  style="width: 200px" name="lastLoginTimeStr" id="lastLoginTimeStr" class="form-control" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -208,7 +218,7 @@
                     </div>
 
                     <div class="form-horizontal">
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                             <div class="form-group ">
                                 <button type="button" class="btn btn-primary btn-md" id="query">查询</button>
                                 <button type="button" class="btn btn-default btn-md" id="reset" onclick="clearValue();">

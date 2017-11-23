@@ -5,6 +5,7 @@ package com.movie.util.request;/**
 
 import com.movie.model.TblAuthUser;
 import com.movie.model.TblParam;
+import com.movie.model.extend.TblAuthUserExtend;
 
 /**
  * 通用请求类
@@ -12,7 +13,7 @@ import com.movie.model.TblParam;
  * @author
  * @create 2017-07-20 10:57
  **/
-public class TblAuthUserPageReq extends TblAuthUser {
+public class TblAuthUserPageReq extends TblAuthUserExtend {
 
     private Integer page;
     private Integer pageSize;

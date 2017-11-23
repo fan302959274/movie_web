@@ -43,6 +43,8 @@ public class DateUtil {
 
     public static final String YYYYMMDD = "yyyyMMdd";
 
+    public static final String YYYYMMDDCOMMON = "yyyy-MM-dd";
+
     public static final String YYYYMMDDHH = "yyyyMMddHH";
     
     public static final String HHMMSS = "HHmmss";

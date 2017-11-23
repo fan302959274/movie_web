@@ -9,6 +9,7 @@ import com.movie.model.TblParam;
 import com.movie.model.TblParamExample;
 import com.movie.service.AuthUserService;
 import com.movie.service.ParamService;
+import com.movie.util.common.DateUtil;
 import com.movie.util.oss.OssUploadByPartUtil;
 import com.movie.util.request.TblAuthUserPageReq;
 import com.movie.util.request.TblParamPageReq;
@@ -85,6 +86,10 @@ public class AuthUserServiceImpl implements AuthUserService {
                 }
                 if (!Objects.isNull(pageReq.getStatus())) {
                     criteria.andStatusEqualTo(pageReq.getStatus());
+                }
+                if(!StringUtils.isBlank(pageReq.getLastLoginTimeStr())){
+                    String[] times = pageReq.getLastLoginTimeStr().split(" - ");
+                    criteria.andLastLoginTimeBetween(DateUtil.parse(times[0],DateUtil.YYYYMMDDCOMMON),DateUtil.parse(times[1],DateUtil.YYYYMMDDCOMMON));
                 }
             }
             List<TblAuthUser> list = tblAuthUserMapper.selectByExample(example);
