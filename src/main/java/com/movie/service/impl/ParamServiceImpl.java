@@ -135,46 +135,6 @@ public class ParamServiceImpl implements ParamService {
         return resp;
     }
 
-    @Override
-    public CommonResp<TblParam> upload(MultipartFile file, Long id) {
-        CommonResp<TblParam> resp = new CommonResp<TblParam>();
-        if (!file.isEmpty()) {
-            try {
-                // 上传文件至oss
-                String uploadResult = OssUploadByPartUtil.fileUpload(file, endpoint, accessKeyId, accessKeySecret, bucketName);
-                TblParam tblParam = new TblParam();
-                tblParam.setId(id);
-                tblParam.setParamUrl(uploadResult);
-                tblParamMapper.updateByPrimaryKeySelective(tblParam);
-            } catch (Exception e) {
-                logger.error("上传参数文件异常" + e.getMessage());
-                resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
-                resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
-                return resp;
-            }
-        } else {
-            resp.setCode(ResponseCode.FILE_IS_EMPTY.getCode());
-            resp.setMsg(ResponseCode.FILE_IS_EMPTY.getMsg());
-            return resp;
-        }
-        return resp;
-    }
-
-    @CacheEvict(value="tblParamListCache",allEntries=true)// 清空tblParamListCache 缓存
-    @Override
-    public CommonResp<TblParam> edit(TblParam tblParam) {
-        CommonResp<TblParam> resp = new CommonResp<TblParam>();
-        try {
-            tblParamMapper.updateByPrimaryKeySelective(tblParam);
-            resp.setResultList(null);
-        } catch (Exception e) {
-            logger.error("编辑param异常" + e.getMessage());
-            resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
-            resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
-            return resp;
-        }
-        return resp;
-    }
 
     @CacheEvict(value="tblParamListCache",allEntries=true)// 清空tblParamListCache 缓存
     @Override
@@ -208,17 +168,5 @@ public class ParamServiceImpl implements ParamService {
         return tblParamMapper.selectByPrimaryKey(id);
     }
 
-    @Override
-    public CommonResp<TblParam> video_type(Long id) {
-        CommonResp<TblParam> resp = new CommonResp<TblParam>();
-        try {
-            resp.setResult(tblParamMapper.selectByPrimaryKey(id));
-        } catch (Exception e) {
-            logger.error("获取param异常" + e.getMessage());
-            resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
-            resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
-            return resp;
-        }
-        return resp;
-    }
+
 }

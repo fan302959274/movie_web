@@ -7,35 +7,23 @@
                 <div class="row">
 
                     <div class="form-group">
-                        <label for="paramValue" class="col-sm-1 control-label">参数名称</label>
+                        <label for="nickname" class="col-sm-1 control-label">用户昵称</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="paramValue" name="paramValue"
-                                   placeholder="请输入名字"/>
+                            <input type="text" class="form-control" id="nickname" name="nickname"
+                                   placeholder="用户昵称"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="paramType" class="col-sm-1 control-label">参数类型</label>
+                        <label for="email" class="col-sm-1 control-label">邮箱</label>
                         <div class="col-sm-2">
-                            <input type="number" class="form-control" id="paramType" name="paramType"
-                                   placeholder="参数类型"/>
+                            <input type="text" class="form-control" id="email" name="email"
+                                   placeholder="邮箱"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="paramCode" class="col-sm-1 control-label">参数编码</label>
+                        <label for="status" class="col-sm-1 control-label">状态</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="paramCode" name="paramCode" placeholder="参数编码"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="paramDesc" class="col-sm-1 control-label">参数描述</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="paramDesc" name="paramDesc" placeholder="参数描述"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="paramUrl" class="col-sm-1 control-label">参数连接</label>
-                        <div class="col-sm-4">
-                            <input type="file" class="form-control" id="paramUrl" name="paramUrl" placeholder="参数连接"/>
+                            <input type="text" class="form-control" id="status" name="status" placeholder="状态"/>
                         </div>
                     </div>
 
@@ -62,27 +50,24 @@
     $(function () {
         $("#add_form").validate({
             rules: {
-                paramName: {
+                nickname: {
                     required: true
                 }
             },
             messages: {
-                paramName: {
-                    required: "请输名称",
+                nickname: {
+                    required: "请输昵称",
                 }
             },
             submitHandler: function () {
-                $.ajaxFileUpload({
+                $.ajax({
                     method: "POST",
-                    url: "/param/save?time=" + (new Date()).getTime(),
-                    secureuri: true,
+                    url: "/user/save?time=" + (new Date()).getTime(),
                     dataType : 'json',
-                    fileElementId: 'paramUrl',                        //文件选择框的id属性
                     data: {
-                        "paramValue": $("#add_form #paramValue").val(),
-                        "paramType": $("#add_form #paramType").val(),
-                        "paramCode": $("#add_form #paramCode").val(),
-                        "paramDesc": $("#add_form #paramDesc").val()
+                        "nickname": $("#add_form #nickname").val(),
+                        "email": $("#add_form #email").val(),
+                        "status": $("#add_form #status").val()
                     },//自定义参数,
                     success: function (data, s, status) {
                         if(data.code!='20000'){
@@ -90,7 +75,7 @@
                         }else{
                             $.ajax({
                                 type: "GET",
-                                url: '/param/main',
+                                url: '/user/main',
                                 success: function (data) {
                                     $('#content').html(data);
                                 }
@@ -108,7 +93,7 @@
         });
 
         $("#return").click(function () {
-            change_list("/param/main");
+            change_list("/user/main");
         });
     });
 

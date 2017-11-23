@@ -2,7 +2,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">参数添加</div>
         <div class="panel-body">
-            <form id="add_video_form" class="form-horizontal">
+            <form id="add_form" class="form-horizontal">
 
                 <div class="row">
 
@@ -90,7 +90,7 @@
 <script>
 
     $(function () {
-        $("#add_video_form").validate({
+        $("#add_form").validate({
             rules: {
                 videoName: {
                     required: true
@@ -115,12 +115,12 @@
                     dataType : 'json',
                     fileElementId: 'videoPoster',                        //文件选择框的id属性
                     data: {
-                        "videoName": $("#add_video_form #videoName").val(),
-                        "videoDuration": $("#add_video_form #videoDuration").val(),
-                        "videoSize": $("#add_video_form #videoSize").val(),
-                        "videoType": $("#add_video_form #videoType").val(),
-                        "videoViewPath": $("#add_video_form #videoViewPath").val(),
-                        "videoIntroduction":$("#add_video_form #videoIntroduction").val(),
+                        "videoName": $("#add_form #videoName").val(),
+                        "videoDuration": $("#add_form #videoDuration").val(),
+                        "videoSize": $("#add_form #videoSize").val(),
+                        "videoType": $("#add_form #videoType").val(),
+                        "videoViewPath": $("#add_form #videoViewPath").val(),
+                        "videoIntroduction":$("#add_form #videoIntroduction").val(),
                         "videoTag": videoTags
                     },//自定义参数,
                     success: function (data, status, e) {

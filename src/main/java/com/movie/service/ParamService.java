@@ -47,13 +47,6 @@ public interface ParamService {
      * @author sh00859
      * @date 2017/7/13
      */
-    public CommonResp<TblParam> edit(TblParam tblParam);
-
-    /**
-     * @description 修改记录
-     * @author sh00859
-     * @date 2017/7/13
-     */
     public CommonResp<TblParam> update(MultipartFile file,Long id,String paramValue, String paramType, String paramCode, String paramDesc);
 
     /**
@@ -63,19 +56,5 @@ public interface ParamService {
      */
     public CommonResp<String> delete(String ids);
 
-    /**
-     * @description 上传文件
-     * @author sh00859
-     * @date 2017/7/13
-     */
-    public CommonResp<TblParam> upload(MultipartFile file,Long id);
-
-
-    /**
-     * @description 通过主键获取
-     * @author sh00859
-     * @date 2017/7/13
-     */
-    public CommonResp<TblParam> video_type(Long id);
 
 }
