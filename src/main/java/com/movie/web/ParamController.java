@@ -88,7 +88,7 @@ public class ParamController {
 
 
     /**
-     * @description 更新
+     * @description 更新页面
      * @author sh00859
      * @date 2017/9/8
      */
@@ -122,43 +122,4 @@ public class ParamController {
         return paramService.delete(ids);
     }
 
-
-    /**
-     * @description 上传页面
-     * @author sh00859
-     * @date 2017/9/8
-     */
-    @RequestMapping(value = {"/uploadpage"})
-    public ModelAndView uploadpage(TblParam tblParam, Map map) throws Exception {
-        map.put("data",tblParam);
-        return new ModelAndView("/param/upload",map);
-    }
-
-    /**
-     * @description 上传文件
-     * @author sh00859
-     * @date 2017/9/8
-     */
-    @RequestMapping(value = {"/upload"})
-    @ResponseBody
-    public CommonResp<TblParam> upload(HttpServletRequest request,Long id) throws Exception {
-        MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;
-        MultipartFile file = multipartRequest.getFile("paramUrl");
-        return paramService.upload(file,id);
-    }
-
-
-
-
-
-    /**
-     * @description 更新
-     * @author sh00859
-     * @date 2017/9/8
-     */
-    @RequestMapping(value = {"/search_id"})
-    @ResponseBody
-    public CommonResp<TblParam> video_type(TblParam tblParam) throws Exception {
-        return paramService.video_type(tblParam.getId());
-    }
 }

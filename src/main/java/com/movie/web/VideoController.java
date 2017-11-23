@@ -101,29 +101,7 @@ public class VideoController {
         return JSONObject.toJSONString(resp);
     }
 
-    /**
-     * @description 上传页面
-     * @author sh00859
-     * @date 2017/9/8
-     */
-    @RequestMapping(value = {"/uploadpage"})
-    public ModelAndView uploadpage(TblVideo tblVideo, Map map) throws Exception {
-        map.put("data",tblVideo);
-        return new ModelAndView("/video/upload",map);
-    }
 
-    /**
-     * @description 上传文件
-     * @author sh00859
-     * @date 2017/9/8
-     */
-    @RequestMapping(value = {"/upload"})
-    @ResponseBody
-    public CommonResp<TblVideo> upload(HttpServletRequest request, Long id) throws Exception {
-        MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;
-        MultipartFile file = multipartRequest.getFile("videoViewPath");
-        return videoService.upload(file,id);
-    }
 
     /**
      * @description 删除
@@ -138,7 +116,7 @@ public class VideoController {
 
 
     /**
-     * @description 更新
+     * @description 更新页面
      * @author sh00859
      * @date 2017/9/8
      */
