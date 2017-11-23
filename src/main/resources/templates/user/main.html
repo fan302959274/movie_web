@@ -41,12 +41,22 @@
                 }, {
                     field: 'lastLoginTime',
                     title: '最近登录时间',
+                    formatter: operateFormatter,
                 }, {
                     field: 'status',
                     title: '状态',
                 },]
             });
         };
+
+        function operateFormatter(value, row, index) {
+            if(value!=null){
+                return new Date(value).Format('yyyy-MM-dd hh:mm:ss');
+            }else{
+                return value;
+            }
+
+        }
 
 
         //得到查询的参数

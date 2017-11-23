@@ -69,13 +69,13 @@
                     url: "/user/update?time=" + (new Date()).getTime(),
                     data: {
                         "id":$("#edit_form #id").val(),
-                        "nickname": $("#edit_form #paramValue").val(),
-                        "email": $("#edit_form #paramType").val(),
-                        "status": $("#edit_form #paramCode").val()
+                        "nickname": $("#edit_form #nickname").val(),
+                        "email": $("#edit_form #email").val(),
+                        "status": $("#edit_form #status").val()
                     },//自定义参数,
-                    complete: function (data, s, status) {
+                    success: function (data) {
                         if (!(data.code == '20000')) {
-                            alert(data.msg);
+                            toastr.warning(data.msg);
                         } else {
                             $.ajax({
                                 type: "GET",
@@ -86,7 +86,7 @@
                             });
                         }
                     }, error: function (data, status, e) {
-                        alert("操作失败，请再次操作！")
+                        toastr.warning("操作失败，请再次操作！");
                         //上传失败之后的操作
                     }
                 });

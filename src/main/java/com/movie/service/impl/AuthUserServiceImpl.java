@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,6 +44,10 @@ public class AuthUserServiceImpl implements AuthUserService {
         example.createCriteria().andNicknameEqualTo(nickname);
         List<TblAuthUser> tblAuthUsers = tblAuthUserMapper.selectByExample(example);
         if (!CollectionUtils.isEmpty(tblAuthUsers)) {
+            //更新客户的最近登录时间
+            TblAuthUser tblAuthUser = tblAuthUsers.get(0);
+            tblAuthUser.setLastLoginTime(new Date());
+            tblAuthUserMapper.updateByPrimaryKeySelective(tblAuthUser);
             return tblAuthUsers.get(0);
         }
         return null;
@@ -52,6 +57,8 @@ public class AuthUserServiceImpl implements AuthUserService {
     public CommonResp<TblAuthUser> save(TblAuthUser tblAuthUser) {
         CommonResp<TblAuthUser> resp = new CommonResp<TblAuthUser>();
         try {
+            //初始密码000000
+            tblAuthUser.setPswd("000000");
             tblAuthUserMapper.insertSelective(tblAuthUser);
             resp.setResultList(null);
         } catch (Exception e) {
