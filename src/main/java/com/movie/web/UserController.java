@@ -119,4 +119,12 @@ public class UserController {
         return authUserService.delete(ids);
     }
 
+
+
+    @RequestMapping(value = {"/allot"})
+    public ModelAndView allot(String ids,Map map) throws Exception {
+        //获取所有的视频类型
+        TblParam param = new TblParam();
+        return new ModelAndView("/user/allot", map);
+    }
 }
