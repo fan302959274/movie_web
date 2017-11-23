@@ -133,15 +133,15 @@
         });
 
         $("#btn_edit").click(function () {
-            var delete_rows = $("#tb_departments").bootstrapTable('getSelections');
-            if (delete_rows.length == 0) {
+            var edit_rows = $("#tb_departments").bootstrapTable('getSelections');
+            if (edit_rows.length == 0) {
                 alert("至少选择一行");
-            }else if (delete_rows.length > 1) {
+            }else if (edit_rows.length > 1) {
                 alert("只允许修改一行");
             } else {
                 $.ajax({
                     type: "POST",
-                    data: {"id": delete_rows[0].id},
+                    data: {"id": edit_rows[0].id},
                     url: "/video/edit",
                     success: function (data) {
                         $("#content").html(data);
@@ -151,13 +151,19 @@
 
         });
 
+
+        //查询按钮事件
+        $('#query').click(function () {
+            $('#tb_departments').bootstrapTable('refresh', {url: '/video/data'});
+        })
+        //清空按钮事件
+        $('#reset').click(function () {
+            $('#search_form').find("input").val("");
+        })
+
     });
 
 
-    //查询按钮事件
-    $('#query').click(function () {
-        $('#tb_departments').bootstrapTable('refresh', {url: '/video/data'});
-    })
 
 
 </script>
@@ -165,7 +171,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">查询条件</div>
         <div class="panel-body">
-            <form id="formSearch" class="form-horizontal">
+            <form id="search_form" class="form-horizontal">
 
                 <div class="row">
 
@@ -198,9 +204,7 @@
 
                         <div class="col-md-3 col-sm-3 text-right">
                             <button type="button" class="btn btn-primary btn-md" id="query">查询</button>
-                            <button type="button" class="btn btn-default btn-md" id="reset" onclick="clearValue();">
-                                清空
-                            </button>
+                            <button type="button" class="btn btn-default btn-md" id="reset">清空</button>
                         </div>
 
                     </div>

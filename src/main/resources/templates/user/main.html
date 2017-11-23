@@ -160,13 +160,20 @@
             console.log(start.toISOString(), end.toISOString(), label);
         });
 
+        //查询按钮事件
+        $('#query').click(function () {
+            $('#tb_departments').bootstrapTable('refresh', {url: '/user/data'});
+        })
+
+        //清空按钮事件
+        $('#reset').click(function () {
+            $('#search_form').find("input").val("");
+        })
+
     });
 
 
-    //查询按钮事件
-    $('#query').click(function () {
-        $('#tb_departments').bootstrapTable('refresh', {url: '/user/data'});
-    })
+
 
 
 </script>
@@ -174,7 +181,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">查询条件</div>
         <div class="panel-body">
-            <form id="formSearch" class="form-horizontal">
+            <form id="search_form" class="form-horizontal">
 
                 <div class="row">
 
@@ -221,9 +228,7 @@
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                             <div class="form-group ">
                                 <button type="button" class="btn btn-primary btn-md" id="query">查询</button>
-                                <button type="button" class="btn btn-default btn-md" id="reset" onclick="clearValue();">
-                                    清空
-                                </button>
+                                <button type="button" class="btn btn-default btn-md" id="reset">清空</button>
                             </div>
                         </div>
                     </div>
