@@ -7,23 +7,17 @@
                 <div class="row">
 
                     <div class="form-group">
-                        <label for="nickname" class="col-sm-1 control-label">用户昵称</label>
+                        <label for="name" class="col-sm-1 control-label">权限名称</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="nickname" name="nickname"
-                                   placeholder="用户昵称"/>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="权限名称"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="email" class="col-sm-1 control-label">邮箱</label>
+                        <label for="code" class="col-sm-1 control-label">权限代码</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" id="email" name="email"
-                                   placeholder="邮箱"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="status" class="col-sm-1 control-label">状态</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="status" name="status" placeholder="状态"/>
+                            <input type="text" class="form-control" id="code" name="code"
+                                   placeholder="权限代码"/>
                         </div>
                     </div>
 
@@ -50,32 +44,28 @@
     $(function () {
         $("#add_form").validate({
             rules: {
-                nickname: {
+                code: {
                     required: true
                 }
             },
             messages: {
-                nickname: {
-                    required: "请输昵称",
+                code: {
+                    required: "请输权限代码",
                 }
             },
             submitHandler: function () {
                 $.ajax({
                     method: "POST",
-                    url: "/user/save?time=" + (new Date()).getTime(),
+                    url: "/permission/save?time=" + (new Date()).getTime(),
                     dataType : 'json',
-                    data: {
-                        "nickname": $("#add_form #nickname").val(),
-                        "email": $("#add_form #email").val(),
-                        "status": $("#add_form #status").val()
-                    },//自定义参数,
+                    data:$("#add_form").serialize(),//自定义参数,
                     success: function (data, s, status) {
                         if(data.code!='20000'){
-                            alert(data.msg);
+                            toastr.warning(data.msg);
                         }else{
                             $.ajax({
                                 type: "GET",
-                                url: '/user/main',
+                                url: '/permission/main',
                                 success: function (data) {
                                     $('#content').html(data);
                                 }
@@ -83,7 +73,7 @@
                         }
 
                     }, error: function (data, status, e) {
-                        alert("操作失败，请再次操作！")
+                        toastr.warning("操作失败，请再次操作！");
                         //上传失败之后的操作
                     }
                 });
@@ -93,7 +83,7 @@
         });
 
         $("#return").click(function () {
-            change_list("/user/main");
+            change_list("/permission/main");
         });
     });
 

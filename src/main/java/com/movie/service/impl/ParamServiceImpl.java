@@ -70,7 +70,7 @@ public class ParamServiceImpl implements ParamService {
             tblParamMapper.insertSelective(tblParam);
             resp.setResultList(null);
         } catch (Exception e) {
-            logger.error("保存param列表异常" + e.getMessage());
+            logger.error("保存异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
             resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
             return resp;
@@ -106,7 +106,7 @@ public class ParamServiceImpl implements ParamService {
             resp.setLimit(limit);
             resp.setResultList(list);
         } catch (Exception e) {
-            logger.error("获取param列表异常" + e.getMessage());
+            logger.error("获取异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
             resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
             return resp;
@@ -127,7 +127,7 @@ public class ParamServiceImpl implements ParamService {
             example.createCriteria().andIdIn(values);
             tblParamMapper.deleteByExample(example);
         } catch (Exception e) {
-            logger.error("删除param列表异常" + e.getMessage());
+            logger.error("删除异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
             resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
             return resp;
@@ -155,7 +155,7 @@ public class ParamServiceImpl implements ParamService {
             tblParamMapper.updateByPrimaryKeySelective(tblParam);
             resp.setResultList(null);
         } catch (Exception e) {
-            logger.error("保存param列表异常" + e.getMessage());
+            logger.error("保存异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
             resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
             return resp;

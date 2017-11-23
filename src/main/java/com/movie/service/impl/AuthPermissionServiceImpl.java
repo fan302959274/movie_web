@@ -1,11 +1,11 @@
 package com.movie.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.movie.mapper.TblAuthRoleMapper;
-import com.movie.model.TblAuthRole;
-import com.movie.model.TblAuthRoleExample;
-import com.movie.service.AuthRoleService;
-import com.movie.util.request.TblAuthRolePageReq;
+import com.movie.mapper.TblAuthPermissionMapper;
+import com.movie.model.TblAuthPermission;
+import com.movie.model.TblAuthPermissionExample;
+import com.movie.service.AuthPermissionService;
+import com.movie.util.request.TblAuthPermissionPageReq;
 import com.movie.util.response.CommonResp;
 import com.movie.util.response.PageResp;
 import com.movie.util.response.ResponseCode;
@@ -19,18 +19,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AuthRoleServiceImpl implements AuthRoleService {
+public class AuthPermissionServiceImpl implements AuthPermissionService {
     protected final Logger logger = LogManager.getLogger(this.getClass());
     @Resource
-    private TblAuthRoleMapper tblAuthRoleMapper;
+    private TblAuthPermissionMapper tblAuthPermissionMapper;
 
 
 
     @Override
-    public CommonResp<TblAuthRole> save(TblAuthRole record) {
-        CommonResp<TblAuthRole> resp = new CommonResp<TblAuthRole>();
+    public CommonResp<TblAuthPermission> save(TblAuthPermission record) {
+        CommonResp<TblAuthPermission> resp = new CommonResp<TblAuthPermission>();
         try {
-            tblAuthRoleMapper.insertSelective(record);
+            tblAuthPermissionMapper.insertSelective(record);
             resp.setResultList(null);
         } catch (Exception e) {
             logger.error("保存异常" + e.getMessage());
@@ -42,15 +42,15 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     }
 
     @Override
-    public PageResp<TblAuthRole> selectListByPage(TblAuthRolePageReq pageReq) {
-        PageResp<TblAuthRole> resp = new PageResp<TblAuthRole>();
-        TblAuthRoleExample example = new TblAuthRoleExample();
+    public PageResp<TblAuthPermission> selectListByPage(TblAuthPermissionPageReq pageReq) {
+        PageResp<TblAuthPermission> resp = new PageResp<TblAuthPermission>();
+        TblAuthPermissionExample example = new TblAuthPermissionExample();
         try {
             Integer offset = pageReq.getOffset() == null ? 0 : pageReq.getOffset();
             Integer limit = pageReq.getLimit() == null ? 10 : pageReq.getLimit();
             PageHelper.offsetPage(offset, limit);
             if (null != pageReq) {
-                TblAuthRoleExample.Criteria criteria = example.createCriteria();
+                TblAuthPermissionExample.Criteria criteria = example.createCriteria();
                 if (!StringUtils.isBlank(pageReq.getName())) {
                     criteria.andNameLike("%" + pageReq.getName() + "%");
                 }
@@ -58,8 +58,8 @@ public class AuthRoleServiceImpl implements AuthRoleService {
                     criteria.andCodeEqualTo(pageReq.getCode());
                 }
             }
-            List<TblAuthRole> list = tblAuthRoleMapper.selectByExample(example);
-            Integer total = tblAuthRoleMapper.countByExample(example);
+            List<TblAuthPermission> list = tblAuthPermissionMapper.selectByExample(example);
+            Integer total = tblAuthPermissionMapper.countByExample(example);
             resp.setTotalPage(total % limit == 0 ? total / limit : (total / limit + 1));
             resp.setTotal(total);
             resp.setOffset(offset);
@@ -77,14 +77,14 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     public CommonResp<String> delete(String ids) {
         CommonResp<String> resp = new CommonResp<String>();
         try {
-            TblAuthRoleExample example = new TblAuthRoleExample();
+            TblAuthPermissionExample example = new TblAuthPermissionExample();
             String[] idLongs =  ids.split(",");
             List<Long> values = new ArrayList<Long>();
             for(String id :idLongs){
                 values.add(Long.parseLong(id));
             }
             example.createCriteria().andIdIn(values);
-            tblAuthRoleMapper.deleteByExample(example);
+            tblAuthPermissionMapper.deleteByExample(example);
         } catch (Exception e) {
             logger.error("删除异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
@@ -97,10 +97,10 @@ public class AuthRoleServiceImpl implements AuthRoleService {
 
 
     @Override
-    public CommonResp<TblAuthRole> update(TblAuthRole record) {
-        CommonResp<TblAuthRole> resp = new CommonResp<TblAuthRole>();
+    public CommonResp<TblAuthPermission> update(TblAuthPermission record) {
+        CommonResp<TblAuthPermission> resp = new CommonResp<TblAuthPermission>();
         try {
-            tblAuthRoleMapper.updateByPrimaryKeySelective(record);
+            tblAuthPermissionMapper.updateByPrimaryKeySelective(record);
             resp.setResultList(null);
         } catch (Exception e) {
             logger.error("保存异常" + e.getMessage());
@@ -112,8 +112,8 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     }
 
     @Override
-    public TblAuthRole selectByKey(Long id) {
-        return tblAuthRoleMapper.selectByPrimaryKey(id);
+    public TblAuthPermission selectByKey(Long id) {
+        return tblAuthPermissionMapper.selectByPrimaryKey(id);
     }
 
 }

@@ -63,7 +63,7 @@ public class AuthUserServiceImpl implements AuthUserService {
             tblAuthUserMapper.insertSelective(tblAuthUser);
             resp.setResultList(null);
         } catch (Exception e) {
-            logger.error("保存user异常" + e.getMessage());
+            logger.error("保存异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
             resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
             return resp;
@@ -100,7 +100,7 @@ public class AuthUserServiceImpl implements AuthUserService {
             resp.setLimit(limit);
             resp.setResultList(list);
         } catch (Exception e) {
-            logger.error("获取user列表异常" + e.getMessage());
+            logger.error("获取异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
             resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
             return resp;
@@ -120,7 +120,7 @@ public class AuthUserServiceImpl implements AuthUserService {
             example.createCriteria().andIdIn(values);
             tblAuthUserMapper.deleteByExample(example);
         } catch (Exception e) {
-            logger.error("删除user列表异常" + e.getMessage());
+            logger.error("删除异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
             resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
             return resp;
@@ -137,7 +137,7 @@ public class AuthUserServiceImpl implements AuthUserService {
             tblAuthUserMapper.updateByPrimaryKeySelective(tblAuthUser);
             resp.setResultList(null);
         } catch (Exception e) {
-            logger.error("保存user列表异常" + e.getMessage());
+            logger.error("保存异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
             resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
             return resp;

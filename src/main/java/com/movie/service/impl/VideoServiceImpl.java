@@ -67,7 +67,7 @@ public class VideoServiceImpl implements VideoService {
             }
             resp.setResultList(null);
         } catch (Exception e) {
-            logger.error("保存video列表异常" + e.getMessage());
+            logger.error("保存异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
             resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
             return resp;
@@ -104,7 +104,7 @@ public class VideoServiceImpl implements VideoService {
             resp.setLimit(limit);
             resp.setResultList(list);
         } catch (Exception e) {
-            logger.error("获取video列表异常" + e.getMessage());
+            logger.error("获取异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
             resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
             return resp;
@@ -150,7 +150,7 @@ public class VideoServiceImpl implements VideoService {
             example.createCriteria().andIdIn(values);
             tblVideoMapper.deleteByExample(example);
         } catch (Exception e) {
-            logger.error("删除video列表异常" + e.getMessage());
+            logger.error("删除异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
             resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
             return resp;
@@ -181,7 +181,7 @@ public class VideoServiceImpl implements VideoService {
             tblVideoMapper.updateByPrimaryKeySelective(tblVideo);
             resp.setResultList(null);
         } catch (Exception e) {
-            logger.error("保存video列表异常" + e.getMessage());
+            logger.error("保存异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
             resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
             return resp;
