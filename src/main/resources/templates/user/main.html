@@ -50,9 +50,9 @@
         };
 
         function operateFormatter(value, row, index) {
-            if(value!=null){
+            if (value != null) {
                 return new Date(value).Format('yyyy-MM-dd hh:mm:ss');
-            }else{
+            } else {
                 return value;
             }
 
@@ -65,7 +65,7 @@
                 limit: params.limit,   //页面大小
                 offset: params.offset,  //页码
                 nickname: $("#nickname").val(),
-                lastLoginTimeStr:$("#lastLoginTimeStr").val(),
+                lastLoginTimeStr: $("#lastLoginTimeStr").val(),
                 status: $("#status").val()
                 //每页多少条数据
             };
@@ -141,7 +141,7 @@
             var edit_rows = $("#tb_departments").bootstrapTable('getSelections');
             if (edit_rows.length == 0) {
                 toastr.warning("至少选择一行");
-            }else if (edit_rows.length > 1) {
+            } else if (edit_rows.length > 1) {
                 toastr.warning("只能选择一行");
             } else {
                 $.ajax({
@@ -160,7 +160,7 @@
             var allot_rows = $("#tb_departments").bootstrapTable('getSelections');
             if (allot_rows.length == 0) {
                 toastr.warning("至少选择一行");
-            }else if (allot_rows.length > 1) {
+            } else if (allot_rows.length > 1) {
                 toastr.warning("只能选择一行");
             } else {
                 $.ajax({
@@ -168,6 +168,7 @@
                     data: {"id": allot_rows[0].id},
                     url: "/user/allot",
                     success: function (data) {
+                        $("#userId").val(allot_rows[0].id);
                         $('#calcfmmodel').modal("show");
                         $("#allotcontent").html(data);
                     }
@@ -176,8 +177,7 @@
         });
 
 
-
-        $('#lastLoginTimeStr').daterangepicker(null, function(start, end, label) {
+        $('#lastLoginTimeStr').daterangepicker(null, function (start, end, label) {
             console.log(start.toISOString(), end.toISOString(), label);
         });
 
@@ -190,11 +190,47 @@
         $('#reset').click(function () {
             $('#search_form').find("input").val("");
         })
+        //分配按钮
+        $('#calsubmmit').click(function () {
+            var all_rows = $('#tb_departmentsinner').bootstrapTable('getData');
+            var allot_rows = $("#tb_departmentsinner").bootstrapTable('getSelections');
+
+            var allotIds = "";
+            var noAllotIds = "";
+            for (row in allot_rows) {
+                allotIds += allot_rows[row].id + ",";
+            }
+            allotIds = allotIds.substring(0, allotIds.length - 1);
+            for (row in all_rows) {
+                if (allotIds.indexOf(all_rows[row].id) == -1) {
+                    noAllotIds += all_rows[row].id + ",";
+                }
+
+            }
+            noAllotIds = noAllotIds.substring(0, noAllotIds.length - 1);
+            $.ajax({
+                type: "POST",
+                data: {
+                    "userId": $("#userId").val(),
+                    "allotRoleIds": allotIds,
+                    "noAllotRoleIds": noAllotIds
+                },
+                url: "/role/userroleallot",
+                success: function (data) {
+                    if(data.code!='20000'){
+                        toastr.warning(data.msg);
+                    }else{
+                        toastr.success(data.msg);
+                        $('#calcfmmodel').modal("hide");
+                    }
+                }
+            });
+
+
+        })
+
 
     });
-
-
-
 
 
 </script>
@@ -205,7 +241,6 @@
             <form id="search_form" class="form-horizontal">
 
                 <div class="row">
-
 
 
                     <div class="form-horizontal">
@@ -226,7 +261,10 @@
                                 <div class="col-lg-8 col-sm-8">
                                     <div class="controls">
                                         <div class="input-prepend input-group">
-                                            <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span><input type="text"   placeholder="登录时间" style="width: 200px" name="lastLoginTimeStr" id="lastLoginTimeStr" class="form-control" />
+                                            <span class="add-on input-group-addon"><i
+                                                    class="glyphicon glyphicon-calendar fa fa-calendar"></i></span><input
+                                                type="text" placeholder="登录时间" style="width: 200px"
+                                                name="lastLoginTimeStr" id="lastLoginTimeStr" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>
@@ -301,10 +339,8 @@
 </div><!-- /.modal -->
 
 
-
-
 <!-- 角色分配确认 -->
-<div class="modal fade" id="calcfmmodel" >
+<div class="modal fade" id="calcfmmodel">
     <div class="modal-dialog" style="width: 750px;">
         <div class="modal-content message_align">
             <div class="modal-header">
@@ -316,6 +352,7 @@
 
             </div>
             <div class="modal-footer">
+                <input type="hidden" id="userId"/>
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <a id="calsubmmit" value="" class="btn btn-danger" data-dismiss="modal">分配</a>
             </div>

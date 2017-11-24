@@ -126,4 +126,16 @@ public class RoleController {
         return resp;
     }
 
+    /**
+     * @description 用户角色分配
+     * @author sh00859
+     * @date 2017/9/8
+     */
+    @RequestMapping(value = {"/userroleallot"})
+    @ResponseBody
+    public CommonResp<TblAuthRole> userroleallot(String allotRoleIds,String noAllotRoleIds,String userId) throws Exception {
+        CommonResp<TblAuthRole> resp = authRoleService.allotRole(allotRoleIds,noAllotRoleIds,userId);
+        return resp;
+    }
+
 }

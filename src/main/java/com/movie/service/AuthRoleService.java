@@ -53,4 +53,12 @@ public interface AuthRoleService {
      */
     public PageResp<TblAuthRoleExtend> selectUserRoleListByPage(TblAuthRolePageReq pageReq);
 
+
+    /**
+     *@description
+     *@author sh00859
+     *@date 2017/11/24
+     */
+    public CommonResp<TblAuthRole> allotRole(String allotRoleIds,String noAllotRoleIds,String userId);
+
 }

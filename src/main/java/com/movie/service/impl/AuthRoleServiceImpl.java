@@ -2,10 +2,9 @@ package com.movie.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.movie.mapper.TblAuthRoleMapper;
+import com.movie.mapper.TblAuthUserRoleMapper;
 import com.movie.mapper.extend.TblAuthRoleExtendMapper;
-import com.movie.model.TblAuthRole;
-import com.movie.model.TblAuthRoleExample;
-import com.movie.model.TblVideoExample;
+import com.movie.model.*;
 import com.movie.model.extend.TblAuthRoleExtend;
 import com.movie.model.extend.TblVideoExtend;
 import com.movie.service.AuthRoleService;
@@ -32,6 +31,8 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     private TblAuthRoleMapper tblAuthRoleMapper;
     @Resource
     private TblAuthRoleExtendMapper tblAuthRoleExtendMapper;
+    @Resource
+    private TblAuthUserRoleMapper tblAuthUserRoleMapper;
 
 
 
@@ -155,6 +156,49 @@ public class AuthRoleServiceImpl implements AuthRoleService {
             resp.setResultList(list);
         } catch (Exception e) {
             logger.error("获取异常" + e.getMessage());
+            resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
+            resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
+            return resp;
+        }
+        return resp;
+    }
+
+    @Override
+    public CommonResp<TblAuthRole> allotRole(String allotRoleIds,String noAllotRoleIds,String userId) {
+        CommonResp<TblAuthRole> resp = new CommonResp<TblAuthRole>();
+        try {
+            String[] allotRoleIdArr =  allotRoleIds.split(",");
+            String[] noAllotRoleArr =  noAllotRoleIds.split(",");
+            List<Long> allotRoleIdList = new ArrayList<Long>();
+            List<Long> noAllotRoleIdList = new ArrayList<Long>();
+            TblAuthUserRoleExample example = new TblAuthUserRoleExample();
+
+            if(StringUtils.isNotBlank(allotRoleIds)){
+                for(String id :allotRoleIdArr){
+                    allotRoleIdList.add(Long.parseLong(id));
+                }
+                example.createCriteria().andUserIdEqualTo(Long.parseLong(userId)).andRoleIdIn(allotRoleIdList);
+                tblAuthUserRoleMapper.deleteByExample(example);
+                allotRoleIdList.forEach(aLong -> {
+                    TblAuthUserRole record = new TblAuthUserRole();
+                    record.setRoleId(aLong);
+                    record.setUserId(Long.parseLong(userId));
+                    tblAuthUserRoleMapper.insertSelective(record);
+                });
+            }
+
+            if(StringUtils.isNotBlank(noAllotRoleIds)) {
+                for(String id :noAllotRoleArr){
+                    noAllotRoleIdList.add(Long.parseLong(id));
+                }
+                example = new TblAuthUserRoleExample();
+                example.createCriteria().andUserIdEqualTo(Long.parseLong(userId)).andRoleIdIn(noAllotRoleIdList);
+                tblAuthUserRoleMapper.deleteByExample(example);
+            }
+
+            resp.setResultList(null);
+        } catch (Exception e) {
+            logger.error("保存异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
             resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
             return resp;
