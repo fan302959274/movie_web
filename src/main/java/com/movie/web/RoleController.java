@@ -2,6 +2,7 @@ package com.movie.web;
 
 import com.movie.model.TblAuthRole;
 import com.movie.model.TblParam;
+import com.movie.model.extend.TblAuthRoleExtend;
 import com.movie.service.AuthRoleService;
 import com.movie.util.request.TblAuthRolePageReq;
 import com.movie.util.response.CommonResp;
@@ -111,6 +112,18 @@ public class RoleController {
     @ResponseBody
     public CommonResp<String> delete(String ids) throws Exception {
         return authRoleService.delete(ids);
+    }
+
+    /**
+     * @description 用户角色数据
+     * @author sh00859
+     * @date 2017/9/8
+     */
+    @RequestMapping(value = {"/userroledata"})
+    @ResponseBody
+    public PageResp<TblAuthRoleExtend> userroledata(TblAuthRolePageReq pageReq) throws Exception {
+        PageResp<TblAuthRoleExtend> resp = authRoleService.selectUserRoleListByPage(pageReq);
+        return resp;
     }
 
 }

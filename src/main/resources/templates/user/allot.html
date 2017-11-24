@@ -3,10 +3,10 @@
         var oTableInitInner = new Object();
         //初始化Table
         oTableInitInner.Init = function () {
-            $('#tb_departments').bootstrapTable({
-                url: '/role/data',                 //请求后台的URL（*）
+            $('#tb_departmentsinner').bootstrapTable({
+                url: '/role/userroledata',                 //请求后台的URL（*）
                 method: 'get',                      //请求方式（*）
-                toolbar: '#toolbar',                //工具按钮用哪个容器
+//                toolbar: '#toolbar',                //工具按钮用哪个容器
                 striped: true,                      //是否显示行间隔色
                 dataField: "resultList",            //bootstrap table 可以前端分页也可以后端分页，这里
                 cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
@@ -20,18 +20,20 @@
                 pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
 //                search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
                 strictSearch: true,
-                showColumns: true,                  //是否显示所有的列
-                showRefresh: true,                  //是否显示刷新按钮
+//                showColumns: true,                  //是否显示所有的列
+//                showRefresh: true,                  //是否显示刷新按钮
                 minimumCountColumns: 2,             //最少允许的列数
                 clickToSelect: true,                //是否启用点击选中行
-                height: 530,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
-                showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+//                showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
 //                showExport:true,
                 columns: [{
+                    field: 'isUserHave',
                     checkbox: true,
+                    formatter:stateFormatter
                 }, {
                     field: 'id',
                     title: 'id',
@@ -45,6 +47,15 @@
             });
         };
 
+        function stateFormatter(value, row, index) {
+            if (row.userHave == true){
+                return {
+                    disabled : false,//设置是否可用
+                    checked : true//设置选中
+                };
+            }
+            return value;
+        }
 
         //得到查询的参数
         oTableInitInner.queryParams = function (params) {
@@ -52,7 +63,7 @@
                 limit: params.limit,   //页面大小
                 offset: params.offset,  //页码
                 name: $("#name").val(),
-                code:$("#code").val()//每页多少条数据
+                code: $("#code").val()//每页多少条数据
             };
             return temp;
         };
@@ -82,83 +93,17 @@
         var oButtonInitInner = new ButtonInitInner();
         oButtonInitInner.Init();
 
-
-        //添加
-        $("#btn_add").click(function () {
-            $.ajax({
-                type: "POST",
-                url: "/role/add",
-                success: function (data) {
-                    $('#content').html(data);
-                }
-            });
-        });
-        //删除
-        $("#btn_delete").click(function () {
-            var ids = "";
-            var delete_rows = $("#tb_departments").bootstrapTable('getSelections');
-            for (row in delete_rows) {
-                ids += delete_rows[row].id + ",";
-            }
-            ids = ids.substring(0, ids.length - 1);
-            if (delete_rows.length == 0) {
-                toastr.warning("至少选择一行");
-            } else {
-                $('#delcfmmodel').modal("show");
-                $('#delcfmmodel #deletesubmmit').val(ids);
-            }
-        });
-
-        $("#deletesubmmit").click(function () {
-            $.ajax({
-                type: "POST",
-                data: {"ids": $(this).val()},
-                url: "/role/delete",
-                success: function (data) {
-                    if ("20000" == data.code) {
-                        $("#query").click();
-                    }
-                }
-            });
-        });
-
-        $("#btn_edit").click(function () {
-            var edit_rows = $("#tb_departments").bootstrapTable('getSelections');
-            if (edit_rows.length == 0) {
-                toastr.warning("至少选择一行");
-            }else if (edit_rows.length > 1) {
-                toastr.warning("只能选择一行");
-            } else {
-                $.ajax({
-                    type: "POST",
-                    data: {"id": edit_rows[0].id},
-                    url: "/role/edit",
-                    success: function (data) {
-                        $("#content").html(data);
-                    }
-                });
-            }
-
-        });
-
-        $('#lastLoginTimeStr').daterangepicker(null, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-
         //查询按钮事件
-        $('#query').click(function () {
-            $('#tb_departments').bootstrapTable('refresh', {url: '/role/data'});
+        $('#search_form_inner #query').click(function () {
+            $('#tb_departmentsinner').bootstrapTable('refresh', {url: '/role/userroledata'});
         })
 
         //清空按钮事件
-        $('#reset').click(function () {
-            $('#search_form').find("input").val("");
+        $('#search_form_inner #reset').click(function () {
+            $('#search_form_inner #search_form').find("input").val("");
         })
 
     });
-
-
-
 
 
 </script>
@@ -166,17 +111,16 @@
     <div class="panel panel-default">
         <div class="panel-heading">查询条件</div>
         <div class="panel-body">
-            <form id="search_form" class="form-horizontal">
+            <form id="search_form_inner" class="form-horizontal">
 
                 <div class="row">
 
 
-
                     <div class="form-horizontal">
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                             <div class="form-group ">
-                                <label class="col-lg-4 col-sm-4 control-label">角色名称</label>
-                                <div class="col-lg-8 col-sm-8">
+                                <label class="col-lg-6 col-sm-6 control-label">角色名称</label>
+                                <div class="col-lg-6 col-sm-6">
                                     <input type="text" class="form-control" id="name" name="name"
                                            placeholder="角色名称"/>
                                 </div>
@@ -184,10 +128,10 @@
                         </div>
                     </div>
                     <div class="form-horizontal">
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                             <div class="form-group ">
-                                <label class="col-lg-4 col-sm-4 control-label">角色代码</label>
-                                <div class="col-lg-8 col-sm-8">
+                                <label class="col-lg-6 col-sm-6 control-label">角色代码</label>
+                                <div class="col-lg-6 col-sm-6">
                                     <input type="text" class="form-control" id="code" name="code"
                                            placeholder="角色代码"/>
                                 </div>
@@ -196,7 +140,7 @@
                     </div>
 
                     <div class="form-horizontal">
-                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                             <div class="form-group ">
                                 <button type="button" class="btn btn-primary btn-md" id="query">查询</button>
                                 <button type="button" class="btn btn-default btn-md" id="reset">清空</button>
@@ -211,27 +155,6 @@
         </div>
     </div>
 
-    <table id="tb_departments"></table>
+    <table id="tb_departmentsinner"></table>
 </div>
 
-
-<!-- 信息删除确认 -->
-<div class="modal fade" id="delcfmmodel">
-    <div class="modal-dialog">
-        <div class="modal-content message_align">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">×</span></button>
-                <h4 class="modal-title">提示信息</h4>
-            </div>
-            <div class="modal-body">
-                <p>您确认要删除吗？</p>
-            </div>
-            <div class="modal-footer">
-                <input type="hidden" id="url"/>
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <a id="deletesubmmit" value="" class="btn btn-danger" data-dismiss="modal">确定</a>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->

@@ -2,10 +2,15 @@ package com.movie.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.movie.mapper.TblAuthRoleMapper;
+import com.movie.mapper.extend.TblAuthRoleExtendMapper;
 import com.movie.model.TblAuthRole;
 import com.movie.model.TblAuthRoleExample;
+import com.movie.model.TblVideoExample;
+import com.movie.model.extend.TblAuthRoleExtend;
+import com.movie.model.extend.TblVideoExtend;
 import com.movie.service.AuthRoleService;
 import com.movie.util.request.TblAuthRolePageReq;
+import com.movie.util.request.TblVideoPageReq;
 import com.movie.util.response.CommonResp;
 import com.movie.util.response.PageResp;
 import com.movie.util.response.ResponseCode;
@@ -16,13 +21,17 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AuthRoleServiceImpl implements AuthRoleService {
     protected final Logger logger = LogManager.getLogger(this.getClass());
     @Resource
     private TblAuthRoleMapper tblAuthRoleMapper;
+    @Resource
+    private TblAuthRoleExtendMapper tblAuthRoleExtendMapper;
 
 
 
@@ -116,4 +125,40 @@ public class AuthRoleServiceImpl implements AuthRoleService {
         return tblAuthRoleMapper.selectByPrimaryKey(id);
     }
 
+    @Override
+    public PageResp<TblAuthRoleExtend> selectUserRoleListByPage(TblAuthRolePageReq pageReq)  {
+        PageResp<TblAuthRoleExtend> resp = new PageResp<TblAuthRoleExtend>();
+        TblAuthRoleExample example = new TblAuthRoleExample();
+        Map param = new HashMap();
+        try {
+            Integer offset = pageReq.getOffset() == null ? 0 : pageReq.getOffset();
+            Integer limit = pageReq.getLimit() == null ? 10 : pageReq.getLimit();
+            param.put("offset",offset);
+            param.put("limit",limit);
+            if (null != pageReq) {
+                TblAuthRoleExample.Criteria criteria = example.createCriteria();
+                if (!StringUtils.isBlank(pageReq.getName())) {
+                    criteria.andNameLike("%"+pageReq.getName()+"%");
+                    param.put("name",pageReq.getName());
+                }
+                if (!StringUtils.isBlank(pageReq.getCode())) {
+                    criteria.andCodeEqualTo(pageReq.getCode());
+                    param.put("code",pageReq.getCode());
+                }
+            }
+            List<TblAuthRoleExtend> list = tblAuthRoleExtendMapper.selectUserRoleByExample(param);
+            Integer total = tblAuthRoleMapper.countByExample(example);
+            resp.setTotalPage(total % limit == 0 ? total / limit : (total / limit + 1));
+            resp.setTotal(total);
+            resp.setOffset(offset);
+            resp.setLimit(limit);
+            resp.setResultList(list);
+        } catch (Exception e) {
+            logger.error("获取异常" + e.getMessage());
+            resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
+            resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
+            return resp;
+        }
+        return resp;
+    }
 }

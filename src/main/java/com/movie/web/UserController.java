@@ -1,10 +1,15 @@
 package com.movie.web;
 
 import com.alibaba.fastjson.JSONObject;
+import com.movie.model.TblAuthRole;
 import com.movie.model.TblAuthUser;
 import com.movie.model.TblParam;
+import com.movie.model.extend.TblAuthRoleExtend;
+import com.movie.model.extend.TblAuthUserExtend;
+import com.movie.service.AuthRoleService;
 import com.movie.service.AuthUserService;
 import com.movie.service.ParamService;
+import com.movie.util.request.TblAuthRolePageReq;
 import com.movie.util.request.TblAuthUserPageReq;
 import com.movie.util.request.TblParamPageReq;
 import com.movie.util.response.CommonResp;
@@ -122,9 +127,11 @@ public class UserController {
 
 
     @RequestMapping(value = {"/allot"})
-    public ModelAndView allot(String ids,Map map) throws Exception {
+    public ModelAndView allot(String id,Map map) throws Exception {
         //获取所有的视频类型
         TblParam param = new TblParam();
         return new ModelAndView("/user/allot", map);
     }
+
+
 }
