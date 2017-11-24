@@ -166,7 +166,7 @@
                 $.ajax({
                     type: "POST",
                     data: {"id": allot_rows[0].id},
-                    url: "/user/allot",
+                    url: "/role/allot",
                     success: function (data) {
                         $("#userId").val(allot_rows[0].id);
                         $('#calcfmmodel').modal("show");

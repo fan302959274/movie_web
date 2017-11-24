@@ -2,27 +2,38 @@ package com.movie.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.movie.mapper.TblAuthPermissionMapper;
-import com.movie.model.TblAuthPermission;
-import com.movie.model.TblAuthPermissionExample;
+import com.movie.mapper.TblAuthRolePermissionMapper;
+import com.movie.mapper.extend.TblAuthPermissionExtendMapper;
+import com.movie.model.*;
+import com.movie.model.extend.TblAuthPermissionExtend;
+import com.movie.model.extend.TblAuthRoleExtend;
 import com.movie.service.AuthPermissionService;
 import com.movie.util.request.TblAuthPermissionPageReq;
+import com.movie.util.request.TblAuthRolePageReq;
 import com.movie.util.response.CommonResp;
 import com.movie.util.response.PageResp;
 import com.movie.util.response.ResponseCode;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AuthPermissionServiceImpl implements AuthPermissionService {
     protected final Logger logger = LogManager.getLogger(this.getClass());
     @Resource
     private TblAuthPermissionMapper tblAuthPermissionMapper;
+    @Resource
+    private TblAuthRolePermissionMapper tblAuthRolePermissionMapper;
+    @Autowired
+    private TblAuthPermissionExtendMapper tblAuthPermissionExtendMapper;
 
 
 
@@ -116,4 +127,84 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
         return tblAuthPermissionMapper.selectByPrimaryKey(id);
     }
 
+
+    @Override
+    public PageResp<TblAuthPermissionExtend> selectRolePermissionListByPage(TblAuthPermissionPageReq pageReq)  {
+        PageResp<TblAuthPermissionExtend> resp = new PageResp<TblAuthPermissionExtend>();
+        TblAuthPermissionExample example = new TblAuthPermissionExample();
+        Map param = new HashMap();
+        try {
+            Integer offset = pageReq.getOffset() == null ? 0 : pageReq.getOffset();
+            Integer limit = pageReq.getLimit() == null ? 10 : pageReq.getLimit();
+            param.put("offset",offset);
+            param.put("limit",limit);
+            if (null != pageReq) {
+                TblAuthPermissionExample.Criteria criteria = example.createCriteria();
+                if (!StringUtils.isBlank(pageReq.getName())) {
+                    criteria.andNameLike("%"+pageReq.getName()+"%");
+                    param.put("name",pageReq.getName());
+                }
+                if (!StringUtils.isBlank(pageReq.getCode())) {
+                    criteria.andCodeEqualTo(pageReq.getCode());
+                    param.put("code",pageReq.getCode());
+                }
+            }
+            List<TblAuthPermissionExtend> list = tblAuthPermissionExtendMapper.selectRolePermissionByExample(param);
+            Integer total = tblAuthPermissionMapper.countByExample(example);
+            resp.setTotalPage(total % limit == 0 ? total / limit : (total / limit + 1));
+            resp.setTotal(total);
+            resp.setOffset(offset);
+            resp.setLimit(limit);
+            resp.setResultList(list);
+        } catch (Exception e) {
+            logger.error("获取异常" + e.getMessage());
+            resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
+            resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
+            return resp;
+        }
+        return resp;
+    }
+
+    @Override
+    public CommonResp<TblAuthPermission> allotPermission(String allotPermissionIds, String noAllotPermissionIds, String roleId) {
+        CommonResp<TblAuthPermission> resp = new CommonResp<TblAuthPermission>();
+        try {
+            String[] allotPermissionIdArr =  allotPermissionIds.split(",");
+            String[] noAllotPermissionArr =  noAllotPermissionIds.split(",");
+            List<Long> allotPermissionIdList = new ArrayList<Long>();
+            List<Long> noAllotPermissionIdList = new ArrayList<Long>();
+            TblAuthRolePermissionExample example = new TblAuthRolePermissionExample();
+
+            if(StringUtils.isNotBlank(allotPermissionIds)){
+                for(String id :allotPermissionIdArr){
+                    allotPermissionIdList.add(Long.parseLong(id));
+                }
+                example.createCriteria().andRoleIdEqualTo(Long.parseLong(roleId)).andPermissionIdIn(allotPermissionIdList);
+                tblAuthRolePermissionMapper.deleteByExample(example);
+                allotPermissionIdList.forEach(aLong -> {
+                    TblAuthRolePermission record = new TblAuthRolePermission();
+                    record.setPermissionId(aLong);
+                    record.setRoleId(Long.parseLong(roleId));
+                    tblAuthRolePermissionMapper.insertSelective(record);
+                });
+            }
+
+            if(StringUtils.isNotBlank(noAllotPermissionIds)) {
+                for(String id :noAllotPermissionArr){
+                    noAllotPermissionIdList.add(Long.parseLong(id));
+                }
+                example = new TblAuthRolePermissionExample();
+                example.createCriteria().andRoleIdEqualTo(Long.parseLong(roleId)).andPermissionIdIn(noAllotPermissionIdList);
+                tblAuthRolePermissionMapper.deleteByExample(example);
+            }
+
+            resp.setResultList(null);
+        } catch (Exception e) {
+            logger.error("保存异常" + e.getMessage());
+            resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
+            resp.setMsg(ResponseCode.SYSTEM_ERROR.getMsg());
+            return resp;
+        }
+        return resp;
+    }
 }

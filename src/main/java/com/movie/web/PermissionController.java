@@ -1,9 +1,13 @@
 package com.movie.web;
 
 import com.movie.model.TblAuthPermission;
+import com.movie.model.TblAuthRole;
 import com.movie.model.TblParam;
+import com.movie.model.extend.TblAuthPermissionExtend;
+import com.movie.model.extend.TblAuthRoleExtend;
 import com.movie.service.AuthPermissionService;
 import com.movie.util.request.TblAuthPermissionPageReq;
+import com.movie.util.request.TblAuthRolePageReq;
 import com.movie.util.response.CommonResp;
 import com.movie.util.response.PageResp;
 import org.apache.logging.log4j.LogManager;
@@ -112,6 +116,40 @@ public class PermissionController {
     public CommonResp<String> delete(String ids) throws Exception {
         return authPermissionService.delete(ids);
     }
+
+
+    @RequestMapping(value = {"/allot"})
+    public ModelAndView allot(String id,Map map) throws Exception {
+        //获取所有的视频类型
+        TblParam param = new TblParam();
+        map.put("roleId",id);
+        return new ModelAndView("/role/allot", map);
+    }
+
+    /**
+     * @description 用户角色数据
+     * @author sh00859
+     * @date 2017/9/8
+     */
+    @RequestMapping(value = {"/rolepermissiondata"})
+    @ResponseBody
+    public PageResp<TblAuthPermissionExtend> rolepermissiondata(TblAuthPermissionPageReq pageReq) throws Exception {
+        PageResp<TblAuthPermissionExtend> resp = authPermissionService.selectRolePermissionListByPage(pageReq);
+        return resp;
+    }
+
+    /**
+     * @description 用户角色分配
+     * @author sh00859
+     * @date 2017/9/8
+     */
+    @RequestMapping(value = {"/rolepermissionallot"})
+    @ResponseBody
+    public CommonResp<TblAuthPermission> userroleallot(String allotPermissionIds, String noAllotPermissionIds, String roleId) throws Exception {
+        CommonResp<TblAuthPermission> resp = authPermissionService.allotPermission(allotPermissionIds,noAllotPermissionIds,roleId);
+        return resp;
+    }
+
 
 
 

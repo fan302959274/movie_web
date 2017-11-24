@@ -126,13 +126,7 @@ public class UserController {
 
 
 
-    @RequestMapping(value = {"/allot"})
-    public ModelAndView allot(String id,Map map) throws Exception {
-        //获取所有的视频类型
-        TblParam param = new TblParam();
-        map.put("userId",id);
-        return new ModelAndView("/user/allot", map);
-    }
+
 
 
 }

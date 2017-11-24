@@ -109,6 +109,26 @@
             }
         });
 
+        $("#btn_allot").click(function () {
+            var allot_rows = $("#tb_departments").bootstrapTable('getSelections');
+            if (allot_rows.length == 0) {
+                toastr.warning("至少选择一行");
+            } else if (allot_rows.length > 1) {
+                toastr.warning("只能选择一行");
+            } else {
+                $.ajax({
+                    type: "POST",
+                    data: {"id": allot_rows[0].id},
+                    url: "/permission/allot",
+                    success: function (data) {
+                        $("#roleId").val(allot_rows[0].id);
+                        $('#calcfmmodel').modal("show");
+                        $("#allotcontent").html(data);
+                    }
+                });
+            }
+        });
+
         $("#deletesubmmit").click(function () {
             $.ajax({
                 type: "POST",
@@ -153,6 +173,45 @@
         //清空按钮事件
         $('#reset').click(function () {
             $('#search_form').find("input").val("");
+        })
+
+        //分配按钮
+        $('#calsubmmit').click(function () {
+            var all_rows = $('#tb_departmentsinner').bootstrapTable('getData');
+            var allot_rows = $("#tb_departmentsinner").bootstrapTable('getSelections');
+
+            var allotIds = "";
+            var noAllotIds = "";
+            for (row in allot_rows) {
+                allotIds += allot_rows[row].id + ",";
+            }
+            allotIds = allotIds.substring(0, allotIds.length - 1);
+            for (row in all_rows) {
+                if (allotIds.indexOf(all_rows[row].id) == -1) {
+                    noAllotIds += all_rows[row].id + ",";
+                }
+
+            }
+            noAllotIds = noAllotIds.substring(0, noAllotIds.length - 1);
+            $.ajax({
+                type: "POST",
+                data: {
+                    "roleId": $("#roleId").val(),
+                    "allotPermissionIds": allotIds,
+                    "noAllotPermissionIds": noAllotIds
+                },
+                url: "/permission/rolepermissionallot",
+                success: function (data) {
+                    if(data.code!='20000'){
+                        toastr.warning(data.msg);
+                    }else{
+                        toastr.success(data.msg);
+                        $('#calcfmmodel').modal("hide");
+                    }
+                }
+            });
+
+
         })
 
     });
@@ -245,6 +304,28 @@
                 <input type="hidden" id="url"/>
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <a id="deletesubmmit" value="" class="btn btn-danger" data-dismiss="modal">确定</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!-- 角色分配确认 -->
+<div class="modal fade" id="calcfmmodel">
+    <div class="modal-dialog" style="width: 750px;">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">分配菜单</h4>
+            </div>
+            <div class="modal-body" id="allotcontent">
+
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="roleId"/>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <a id="calsubmmit" value="" class="btn btn-danger" data-dismiss="modal">分配</a>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

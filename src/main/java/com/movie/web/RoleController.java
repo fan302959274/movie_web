@@ -114,6 +114,15 @@ public class RoleController {
         return authRoleService.delete(ids);
     }
 
+
+    @RequestMapping(value = {"/allot"})
+    public ModelAndView allot(String id,Map map) throws Exception {
+        //获取所有的视频类型
+        TblParam param = new TblParam();
+        map.put("userId",id);
+        return new ModelAndView("/user/allot", map);
+    }
+
     /**
      * @description 用户角色数据
      * @author sh00859
@@ -137,5 +146,9 @@ public class RoleController {
         CommonResp<TblAuthRole> resp = authRoleService.allotRole(allotRoleIds,noAllotRoleIds,userId);
         return resp;
     }
+
+
+
+
 
 }
