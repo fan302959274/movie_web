@@ -1,9 +1,12 @@
 package com.movie.service;
 
+import com.movie.model.TblAuthPermission;
 import com.movie.model.TblAuthUser;
 import com.movie.util.request.TblAuthUserPageReq;
 import com.movie.util.response.CommonResp;
 import com.movie.util.response.PageResp;
+
+import java.util.List;
 
 public interface AuthUserService {
     /**
@@ -47,5 +50,14 @@ public interface AuthUserService {
      * @date 2017/7/13
      */
     public CommonResp<String> delete(String ids);
+
+    /**
+     *@description 通过昵称获取用户的权限
+     *@author sh00859
+     *@date 2017/11/23
+     */
+    List<TblAuthPermission> findUserPermissionByNickName(String nickname);
+
+
 
 }

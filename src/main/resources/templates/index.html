@@ -84,8 +84,8 @@
                         首页
                     </a>
                 </li>
-                <li>
-                    <a href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">
+                <li shiro:hasRole="admin">
+                    <a  href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">
                         <i class="glyphicon glyphicon-cog"></i>
                         系统管理
                         <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
@@ -103,7 +103,7 @@
                         <span class="pull-right glyphicon  glyphicon-chevron-toggle"></span>
                     </a>
                     <ul id="configSetting" class="nav nav-list secondmenu collapse">
-                        <li><a shiro:hasAllRoles="100002" id="paramsearch" href="javascript:change_list('/param/main')"><i
+                        <li><a shiro:hasPermission="param" id="paramsearch" href="javascript:change_list('/param/main')"><i
                                 class="glyphicon glyphicon-th-list"></i>&nbsp;参数管理</a></li>
 
                         <!--<li class="active"><a href="#"><i class="glyphicon glyphicon-globe"></i>&nbsp;全局缺省配置</a></li>-->
@@ -122,7 +122,7 @@
                     </a>
                     <ul id="disSetting" class="nav nav-list secondmenu collapse">
                         <!--<li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;分发包配置</a></li>-->
-                        <li><a href="javascript:change_list('/video/main')"><i class="glyphicon glyphicon-film"></i>&nbsp;视频管理</a>
+                        <li><a shiro:hasPermission="video" href="javascript:change_list('/video/main')"><i class="glyphicon glyphicon-film"></i>&nbsp;视频管理</a>
                         </li>
                     </ul>
                 </li>

@@ -148,6 +148,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
                     criteria.andCodeEqualTo(pageReq.getCode());
                     param.put("code",pageReq.getCode());
                 }
+                param.put("roleId",pageReq.getRoleId());
             }
             List<TblAuthPermissionExtend> list = tblAuthPermissionExtendMapper.selectRolePermissionByExample(param);
             Integer total = tblAuthPermissionMapper.countByExample(example);

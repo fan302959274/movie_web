@@ -14,7 +14,7 @@
         FROM
         tbl_auth_permission p
         LEFT JOIN tbl_auth_role_permission rp ON p.id = rp.permission_id
-        LEFT JOIN tbl_auth_role r ON rp.role_id = r.id
+        LEFT JOIN tbl_auth_role r ON rp.role_id = r.id and r.id = #{roleId}
         WHERE 1=1
         <if test="code != null and code !='' " >
             AND p.`code` = #{code,jdbcType=VARCHAR}
@@ -24,6 +24,20 @@
         </if>
         limit #{offset},#{limit}
     </select>
+
+    <select id="findUserPermissionByNickName" resultMap="com.movie.mapper.TblAuthPermissionMapper.BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        p.*
+        FROM
+        tbl_auth_permission p
+        LEFT JOIN tbl_auth_role_permission rp ON p.id = rp.permission_id
+        LEFT JOIN tbl_auth_role r ON rp.role_id = r.id
+        LEFT JOIN tbl_auth_user_role ur ON r.id = ur.role_id
+        LEFT JOIN tbl_auth_user u ON ur.user_id = u.id
+        WHERE u.nickname = #{nickname}
+    </select>
+
+
 
 
 </mapper>

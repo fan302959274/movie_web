@@ -1,6 +1,7 @@
 package com.movie.util.request;
 
 import com.movie.model.TblAuthPermission;
+import com.movie.model.extend.TblAuthPermissionExtend;
 
 /**
  * 通用请求类
@@ -8,7 +9,7 @@ import com.movie.model.TblAuthPermission;
  * @author
  * @create 2017-07-20 10:57
  **/
-public class TblAuthPermissionPageReq extends TblAuthPermission {
+public class TblAuthPermissionPageReq extends TblAuthPermissionExtend {
 
     private Integer page;
     private Integer pageSize;

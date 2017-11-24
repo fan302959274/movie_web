@@ -3,10 +3,8 @@ package com.movie.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.movie.mapper.TblAuthUserMapper;
 import com.movie.mapper.TblParamMapper;
-import com.movie.model.TblAuthUser;
-import com.movie.model.TblAuthUserExample;
-import com.movie.model.TblParam;
-import com.movie.model.TblParamExample;
+import com.movie.mapper.extend.TblAuthPermissionExtendMapper;
+import com.movie.model.*;
 import com.movie.service.AuthUserService;
 import com.movie.service.ParamService;
 import com.movie.util.common.DateUtil;
@@ -37,6 +35,8 @@ public class AuthUserServiceImpl implements AuthUserService {
     protected final Logger logger = LogManager.getLogger(this.getClass());
     @Resource
     private TblAuthUserMapper tblAuthUserMapper;
+    @Resource
+    private TblAuthPermissionExtendMapper tblAuthPermissionExtendMapper;
 
 
     @Override
@@ -150,4 +150,14 @@ public class AuthUserServiceImpl implements AuthUserService {
         return tblAuthUserMapper.selectByPrimaryKey(id);
     }
 
+    @Override
+    public List<TblAuthPermission> findUserPermissionByNickName(String nickname) {
+        try {
+            List<TblAuthPermission> list = tblAuthPermissionExtendMapper.findUserPermissionByNickName(nickname);
+            return list;
+        } catch (Exception e) {
+            logger.error("保存异常" + e.getMessage());
+            return null;
+        }
+    }
 }

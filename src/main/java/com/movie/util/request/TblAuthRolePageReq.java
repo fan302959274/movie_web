@@ -4,6 +4,7 @@ package com.movie.util.request;/**
 
 
 import com.movie.model.TblAuthRole;
+import com.movie.model.extend.TblAuthRoleExtend;
 
 /**
  * 通用请求类
@@ -11,7 +12,7 @@ import com.movie.model.TblAuthRole;
  * @author
  * @create 2017-07-20 10:57
  **/
-public class TblAuthRolePageReq extends TblAuthRole {
+public class TblAuthRolePageReq extends TblAuthRoleExtend {
 
     private Integer page;
     private Integer pageSize;

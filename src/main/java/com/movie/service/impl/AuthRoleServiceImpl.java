@@ -19,10 +19,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AuthRoleServiceImpl implements AuthRoleService {
@@ -146,6 +143,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
                     criteria.andCodeEqualTo(pageReq.getCode());
                     param.put("code",pageReq.getCode());
                 }
+                param.put("userId",pageReq.getUserId());
             }
             List<TblAuthRoleExtend> list = tblAuthRoleExtendMapper.selectUserRoleByExample(param);
             Integer total = tblAuthRoleMapper.countByExample(example);
