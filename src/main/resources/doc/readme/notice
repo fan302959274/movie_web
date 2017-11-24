@@ -3,3 +3,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 protected final Logger logger = LogManager.getLogger(this.getClass());
+
+2、权限配置
+添加初始用户admin，然后依次添加别的

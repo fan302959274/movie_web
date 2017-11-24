@@ -96,7 +96,7 @@
                         <li><a href="javascript:change_list('/permission/main')"><i class="glyphicon glyphicon-list"></i>&nbsp;菜单管理</a></li>
                     </ul>
                 </li>
-                <li>
+                <li shiro:hasPermission="config">
                     <a href="#configSetting" class="nav-header collapsed" data-toggle="collapse">
                         <i class="glyphicon glyphicon-credit-card"></i>
                         配置管理
@@ -114,7 +114,7 @@
                     </ul>
                 </li>
 
-                <li>
+                <li shiro:hasPermission="business">
                     <a href="#disSetting" class="nav-header collapsed" data-toggle="collapse">
                         <i class="glyphicon glyphicon-globe"></i>
                         业务管理
@@ -127,23 +127,14 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="#dicSetting" class="nav-header collapsed" data-toggle="collapse">
-                        <i class="glyphicon glyphicon-bold"></i>
-                        字典配置
-                        <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
-                    </a>
-                    <ul id="dicSetting" class="nav nav-list secondmenu collapse">
-                        <li><a href="#"><i class="glyphicon glyphicon-text-width"></i>&nbsp;关键字配置</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="glyphicon glyphicon-fire"></i>
-                        关于系统
-                        <span class="badge pull-right">1</span>
-                    </a>
-                </li>
+
+                <!--<li>-->
+                    <!--<a href="#">-->
+                        <!--<i class="glyphicon glyphicon-fire"></i>-->
+                        <!--关于系统-->
+                        <!--<span class="badge pull-right">1</span>-->
+                    <!--</a>-->
+                <!--</li>-->
 
             </ul>
         </div>

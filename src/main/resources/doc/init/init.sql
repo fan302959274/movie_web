@@ -143,3 +143,7 @@ CREATE TABLE `tbl_auth_user_role` (
 	`role_id` BIGINT (20) DEFAULT NULL COMMENT '角色ID'
 ) ENGINE = INNODB DEFAULT CHARSET = utf8;
 
+/*初始化用户admin*/
+INSERT INTO `tbl_auth_user` VALUES (1, 'admin', '110@qq.com', '000000', '2017-11-24 20:20:53', '2017-11-24 20:20:53', '2017-11-24 20:20:30', 1);
+
+

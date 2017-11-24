@@ -79,8 +79,9 @@ public class AuthUserServiceImpl implements AuthUserService {
             Integer offset = pageReq.getOffset() == null ? 0 : pageReq.getOffset();
             Integer limit = pageReq.getLimit() == null ? 10 : pageReq.getLimit();
             PageHelper.offsetPage(offset, limit);
+            TblAuthUserExample.Criteria criteria = example.createCriteria();
+            criteria.andNicknameNotEqualTo("admin");
             if (null != pageReq) {
-                TblAuthUserExample.Criteria criteria = example.createCriteria();
                 if (!StringUtils.isBlank(pageReq.getNickname())) {
                     criteria.andNicknameLike("%" + pageReq.getNickname() + "%");
                 }
