@@ -93,7 +93,8 @@ IF EXISTS `tbl_auth_permission`;
 CREATE TABLE `tbl_auth_permission` (
 	`id` BIGINT (20) NOT NULL AUTO_INCREMENT,
 	`code` VARCHAR (256) DEFAULT NULL COMMENT '权限对应的code',
-	`name` VARCHAR (64) DEFAULT NULL COMMENT '权限对应的描述',
+	`name` VARCHAR (64) DEFAULT NULL COMMENT '权限对应的名称',
+	`description` VARCHAR (256) DEFAULT NULL COMMENT '权限对应的描述',
 	PRIMARY KEY (`id`)
 ) ENGINE = INNODB AUTO_INCREMENT = 21 DEFAULT CHARSET = utf8;
 

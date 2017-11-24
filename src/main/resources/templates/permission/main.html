@@ -41,6 +41,9 @@
                 }, {
                     field: 'code',
                     title: '权限代码',
+                }, {
+                    field: 'description',
+                    title: '权限描述',
                 },]
             });
         };
@@ -52,6 +55,7 @@
                 limit: params.limit,   //页面大小
                 offset: params.offset,  //页码
                 name: $("#name").val(),
+                description:$("#description").val(),
                 code:$("#code").val()//每页多少条数据
             };
             return temp;
@@ -187,6 +191,17 @@
                                 <div class="col-lg-8 col-sm-8">
                                     <input type="text" class="form-control" id="code" name="code"
                                            placeholder="权限代码"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-horizontal">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div class="form-group ">
+                                <label class="col-lg-4 col-sm-4 control-label">权限描述</label>
+                                <div class="col-lg-8 col-sm-8">
+                                    <input type="text" class="form-control" id="description" name="description"
+                                           placeholder="权限描述"/>
                                 </div>
                             </div>
                         </div>

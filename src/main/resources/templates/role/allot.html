@@ -33,7 +33,7 @@
                 columns: [{
                     field: 'isRoleHave',
                     checkbox: true,
-                    formatter:stateFormatter
+                    formatter: stateFormatter
                 }, {
                     field: 'id',
                     title: 'id',
@@ -43,15 +43,18 @@
                 }, {
                     field: 'code',
                     title: '权限代码',
+                }, {
+                    field: 'description',
+                    title: '权限描述',
                 },]
             });
         };
 
         function stateFormatter(value, row, index) {
-            if (row.roleHave == true){
+            if (row.roleHave == true) {
                 return {
-                    disabled : false,//设置是否可用
-                    checked : true//设置选中
+                    disabled: false,//设置是否可用
+                    checked: true//设置选中
                 };
             }
             return value;
@@ -64,6 +67,7 @@
                 offset: params.offset,  //页码
                 name: $("#name").val(),
                 code: $("#code").val(),//每页多少条数据
+                description: $("#description").val(),
                 roleId: $("#roleId").val(),
             };
             return temp;
@@ -117,18 +121,17 @@
                 <div class="row">
 
 
-
-                    <div class="form-horizontal">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                            <div class="form-group ">
-                                <label class="col-lg-6 col-sm-6 control-label">权限名称</label>
-                                <div class="col-lg-6 col-sm-6">
-                                    <input type="text" class="form-control" id="name" name="name"
-                                           placeholder="权限名称"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!--<div class="form-horizontal">-->
+                        <!--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">-->
+                            <!--<div class="form-group ">-->
+                                <!--<label class="col-lg-6 col-sm-6 control-label">权限名称</label>-->
+                                <!--<div class="col-lg-6 col-sm-6">-->
+                                    <!--<input type="text" class="form-control" id="name" name="name"-->
+                                           <!--placeholder="权限名称"/>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <div class="form-horizontal">
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                             <div class="form-group ">
@@ -136,6 +139,18 @@
                                 <div class="col-lg-6 col-sm-6">
                                     <input type="text" class="form-control" id="code" name="code"
                                            placeholder="权限代码"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-horizontal">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="form-group ">
+                                <label class="col-lg-6 col-sm-6 control-label">权限描述</label>
+                                <div class="col-lg-6 col-sm-6">
+                                    <input type="text" class="form-control" id="description" name="description"
+                                           placeholder="权限描述"/>
                                 </div>
                             </div>
                         </div>
@@ -150,8 +165,14 @@
                         </div>
                     </div>
 
-
                 </div>
+                <!--<div class="row">-->
+
+
+                    <!---->
+
+
+                <!--</div>-->
 
             </form>
         </div>

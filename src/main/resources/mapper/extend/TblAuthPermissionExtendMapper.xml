@@ -5,6 +5,7 @@
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="code" property="code" jdbcType="VARCHAR" />
         <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
         <result column="isRoleHave" property="isRoleHave" jdbcType="BIGINT" />
     </resultMap>
 
