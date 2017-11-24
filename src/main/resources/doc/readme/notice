@@ -5,4 +5,4 @@ import org.apache.logging.log4j.Logger;
 protected final Logger logger = LogManager.getLogger(this.getClass());
 
 2、权限配置
-添加初始用户admin，然后依次添加别的
+添加初始用户admin后期添加的所有用户初始密码都是000000
