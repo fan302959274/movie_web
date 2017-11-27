@@ -14,8 +14,8 @@
         r.*, IFNULL(u.id, FALSE) AS isUserHave
         FROM
         tbl_auth_role r
-        LEFT JOIN tbl_auth_user_role ur ON r.id = ur.role_id
-        LEFT JOIN tbl_auth_user u ON ur.user_id = u.id  and u.id = #{userId,jdbcType=BIGINT}
+        LEFT JOIN tbl_auth_user_role ur ON r.id = ur.role_id  and ur.user_id = #{userId,jdbcType=BIGINT}
+        LEFT JOIN tbl_auth_user u ON ur.user_id = u.id
         WHERE 1=1
         <if test="code != null and code !='' " >
             AND r.`code` = #{code,jdbcType=VARCHAR}

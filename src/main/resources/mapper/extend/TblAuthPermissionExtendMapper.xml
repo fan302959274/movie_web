@@ -14,8 +14,8 @@
         p.*,IFNULL(r.id, FALSE) AS isRoleHave
         FROM
         tbl_auth_permission p
-        LEFT JOIN tbl_auth_role_permission rp ON p.id = rp.permission_id
-        LEFT JOIN tbl_auth_role r ON rp.role_id = r.id and r.id = #{roleId}
+        LEFT JOIN tbl_auth_role_permission rp ON p.id = rp.permission_id and rp.role_id = #{roleId}
+        LEFT JOIN tbl_auth_role r ON rp.role_id = r.id
         WHERE 1=1
         <if test="code != null and code !='' " >
             AND p.`code` = #{code,jdbcType=VARCHAR}
