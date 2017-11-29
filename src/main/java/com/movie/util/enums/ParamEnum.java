@@ -6,7 +6,9 @@ package com.movie.util.enums;
  * @date 2017/7/13
  */
 public enum ParamEnum {
-    MOVIE_PARAM("movie_type", "视频类型");
+    MOVIE_TYPE("001", "视频类型"),
+    MOVIE_TAG("002", "视频标签"),
+    TOP_PIC("003", "轮转图片");
 
 
     private String paramType;
