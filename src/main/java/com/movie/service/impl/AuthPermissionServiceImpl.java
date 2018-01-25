@@ -71,11 +71,11 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
             }
             List<TblAuthPermission> list = tblAuthPermissionMapper.selectByExample(example);
             Integer total = tblAuthPermissionMapper.countByExample(example);
-            resp.setTotalPage(total % limit == 0 ? total / limit : (total / limit + 1));
-            resp.setTotal(total);
+            resp.setCountPage(total % limit == 0 ? total / limit : (total / limit + 1));
+            resp.setCount(total);
             resp.setOffset(offset);
             resp.setLimit(limit);
-            resp.setResultList(list);
+            resp.setData(list);
         } catch (Exception e) {
             logger.error("获取异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
@@ -152,11 +152,11 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
             }
             List<TblAuthPermissionExtend> list = tblAuthPermissionExtendMapper.selectRolePermissionByExample(param);
             Integer total = tblAuthPermissionMapper.countByExample(example);
-            resp.setTotalPage(total % limit == 0 ? total / limit : (total / limit + 1));
-            resp.setTotal(total);
+            resp.setCountPage(total % limit == 0 ? total / limit : (total / limit + 1));
+            resp.setCount(total);
             resp.setOffset(offset);
             resp.setLimit(limit);
-            resp.setResultList(list);
+            resp.setData(list);
         } catch (Exception e) {
             logger.error("获取异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());

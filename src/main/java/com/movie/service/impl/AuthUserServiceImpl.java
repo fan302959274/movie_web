@@ -95,11 +95,13 @@ public class AuthUserServiceImpl implements AuthUserService {
             }
             List<TblAuthUser> list = tblAuthUserMapper.selectByExample(example);
             Integer total = tblAuthUserMapper.countByExample(example);
-            resp.setTotalPage(total % limit == 0 ? total / limit : (total / limit + 1));
-            resp.setTotal(total);
+            resp.setCountPage(total % limit == 0 ? total / limit : (total / limit + 1));
+            resp.setCount(total);
             resp.setOffset(offset);
             resp.setLimit(limit);
-            resp.setResultList(list);
+            resp.setMsg("");
+            resp.setCode("0");
+            resp.setData(list);
         } catch (Exception e) {
             logger.error("获取异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());

@@ -15,11 +15,11 @@ public class PageResp<T> {
     private String code = ResponseCode.SUCCESS.getCode();
     private String msg = ResponseCode.SUCCESS.getMsg();
     private T result;
-    private List<T> resultList;
+    private List<T> data;
     private Integer page;
     private Integer pageSize;
-    private Integer total;
-    private Integer totalPage;
+    private Integer count;
+    private Integer countPage;
     private Integer offset;
     private Integer limit;
 
@@ -31,13 +31,6 @@ public class PageResp<T> {
         this.result = result;
     }
 
-    public List<T> getResultList() {
-        return resultList;
-    }
-
-    public void setResultList(List<T> resultList) {
-        this.resultList = resultList;
-    }
 
     public String getCode() {
         return code;
@@ -49,6 +42,14 @@ public class PageResp<T> {
 
     public String getMsg() {
         return msg;
+    }
+
+    public List<T> getData() {
+        return data;
+    }
+
+    public void setData(List<T> data) {
+        this.data = data;
     }
 
     public void setMsg(String msg) {
@@ -71,20 +72,20 @@ public class PageResp<T> {
         this.pageSize = pageSize;
     }
 
-    public Integer getTotal() {
-        return total;
+    public Integer getCount() {
+        return count;
     }
 
-    public void setTotal(Integer total) {
-        this.total = total;
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
-    public Integer getTotalPage() {
-        return totalPage;
+    public Integer getCountPage() {
+        return countPage;
     }
 
-    public void setTotalPage(Integer totalPage) {
-        this.totalPage = totalPage;
+    public void setCountPage(Integer countPage) {
+        this.countPage = countPage;
     }
 
     public Integer getOffset() {

@@ -83,9 +83,9 @@ public class ParamServiceImpl implements ParamService {
         PageResp<TblParam> resp = new PageResp<TblParam>();
         TblParamExample example = new TblParamExample();
         try {
-            Integer offset = pageReq.getOffset() == null ? 0 : pageReq.getOffset();
+            Integer page = pageReq.getPage() == null ? 0 : pageReq.getPage();
             Integer limit = pageReq.getLimit() == null ? 10 : pageReq.getLimit();
-            PageHelper.offsetPage(offset, limit);
+            PageHelper.offsetPage((page-1)*limit, limit);
             if (null != pageReq) {
                 TblParamExample.Criteria criteria = example.createCriteria();
                 if (!StringUtils.isBlank(pageReq.getParamValue())) {
@@ -100,11 +100,11 @@ public class ParamServiceImpl implements ParamService {
             }
             List<TblParam> list = tblParamMapper.selectByExample(example);
             Integer total = tblParamMapper.countByExample(example);
-            resp.setTotalPage(total % limit == 0 ? total / limit : (total / limit + 1));
-            resp.setTotal(total);
-            resp.setOffset(offset);
+            resp.setCountPage(total % limit == 0 ? total / limit : (total / limit + 1));
+            resp.setCount(total);
+            resp.setOffset((page-1)*limit);
             resp.setLimit(limit);
-            resp.setResultList(list);
+            resp.setData(list);
         } catch (Exception e) {
             logger.error("获取异常" + e.getMessage());
             resp.setCode(ResponseCode.SYSTEM_ERROR.getCode());
