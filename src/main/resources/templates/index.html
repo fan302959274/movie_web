@@ -1,149 +1,148 @@
 <!DOCTYPE html>
-<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html>
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link href="/css/bootstrap/bootstrap.css" rel="stylesheet"/>
-    <link href="/css/common/common.css" rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" media="all" href="/css/common/daterangepicker-bs3.css"
-    />
-
-    <script src="js/jquery/jquery.js"></script>
-    <script src="js/jquery/jquery.validate.min.js"></script>
-    <script src="js/jquery/jquery.form.js" type="text/javascript"></script>
-    <script src="/js/common/index.js"></script>
-    <script src="/js/common/ajaxfileupload.js"></script>
-    <script src="/js/bootstrap/bootstrap.min.js"></script>
-    <!--[if lt IE 9]>
-    <script src="/js/common/html5shiv.min.js"></script>
-    <script src="/js/common/respond.min.js"></script>
-    <![endif]-->
-
-    <!--@*3、bootstrap table组件以及中文包的引用*@-->
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="/css/bootstrap/bootstrap-table.css"/>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="/js/bootstrap/bootstrap-table.min.js"></script>
-    <!-- Latest compiled and minified Locales -->
-    <script src="/js/bootstrap/bootstrap-table-zh-CN.min.js"></script>
-
-    <script src="/js/bootstrap/bootstrap-table-export.js"></script>
-    <script src="/js/bootstrap/tableExport.js"></script>
-    <link href="/css/common/toastr.css" rel="stylesheet"/>
-    <script src="/js/common/toastr.js"></script>
-
-    <script type="text/javascript" src="/js/common/moment.js">
-    </script>
-    <script type="text/javascript" src="/js/common/daterangepicker.js"/>
-
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>KIT ADMIN</title>
+    <link rel="stylesheet" href="plugins/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css" media="all"/>
+    <link rel="stylesheet" href="src/css/app.css" media="all"/>
 </head>
 
-<script type="text/javascript">
-    toastr.options = {
-        closeButton: false,
-        debug: false,
-        progressBar: false,
-        positionClass: "toast-top-right",
-        onclick: null,
-        showDuration: "300",
-        hideDuration: "1000",
-        timeOut: "2000",
-        extendedTimeOut: "1000",
-        showEasing: "swing",
-        hideEasing: "linear",
-        showMethod: "fadeIn",
-        hideMethod: "fadeOut"
-    };
-</script>
-
 <body>
-<div class="navbar navbar-inverse navbar-static-top" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#" id="logo">配置管理系统（狐狸网）
-            </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right" style="margin-right: 0;">
-                <li><a href="#"><shiro:principal property="nickname"/></a></li>
+<div class="layui-layout layui-layout-admin kit-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">KIT ADMIN</div>
+        <div class="layui-logo kit-logo-mobile">K</div>
+        <!--<ul class="layui-nav layui-layout-left kit-nav kit-one-level">-->
+        <!--<li class="layui-nav-item"><a href="javascript:;">控制台</a></li>-->
+        <!--<li class="layui-nav-item"><a href="javascript:;">商品管理</a></li>-->
+        <!--</ul>-->
+        <ul class="layui-nav layui-layout-right kit-nav">
+            <li class="layui-nav-item"><a href="javascript:;" id="pay"><i class="fa fa-gratipay" aria-hidden="true"></i>
+                捐赠我</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://m.zhengjinfan.cn/images/0.jpg" class="layui-nav-img"/> Van
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">基本资料</a></dd>
+                    <dd><a href="javascript:;">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="/login"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a>
+            </li>
+        </ul>
+    </div>
 
-                <li><a href="/logout">退出</a></li>
+    <div class="layui-side layui-bg-black kit-side">
+        <div class="layui-side-scroll">
+            <div class="kit-side-fold"><i class="fa fa-navicon" aria-hidden="true"></i></div>
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree kit-navbar" lay-filter="kitNavbar">
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 系统管理</span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" kit-target=""
+                               data-options="{url:'user/main',icon:'fa-user',title:'用户管理',id:'1'}">
+                                <i class="fa fa-user"></i><span> 用户管理</span></a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-url="form.html" data-icon="fa-home" data-title="角色管理"
+                               kit-target=""
+                               data-id='2'><i class="fa fa-home" aria-hidden="true"></i><span> 角色管理</span></a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" data-url="nav.html" data-icon="&#xe628;" data-title="菜单管理"
+                               kit-target=""
+                               data-id='3'><i class="layui-icon">&#xe628;</i><span> 菜单管理</span></a>
+                        </dd>
+
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 配置管理</span></a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" kit-target=""
+                               data-options="{url:'navbar.html',icon:'&#xe658;',title:'Navbar',id:'6'}"><i
+                                class="layui-icon">&#xe658;</i><span> 参数配置</span></a></dd>
+
+                    </dl>
+                </li>
+
             </ul>
         </div>
     </div>
-</div>
-
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2">
-            <ul id="main-nav" class="main-nav nav nav-tabs nav-stacked" style="">
-                <li>
-                    <a href="#">
-                        <i class="glyphicon glyphicon-th-large"></i>
-                        首页
-                    </a>
-                </li>
-                <li shiro:hasRole="admin">
-                    <a  href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">
-                        <i class="glyphicon glyphicon-cog"></i>
-                        系统管理
-                        <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
-                    </a>
-                    <ul id="systemSetting" class="nav nav-list secondmenu collapse  in">
-                        <li><a href="javascript:change_list('/user/main')"><i class="glyphicon glyphicon-user"></i>&nbsp;用户管理</a></li>
-                        <li><a href="javascript:change_list('/role/main')"><i class="glyphicon glyphicon-record"></i>&nbsp;角色管理</a></li>
-                        <li><a href="javascript:change_list('/permission/main')"><i class="glyphicon glyphicon-list"></i>&nbsp;菜单管理</a></li>
-                    </ul>
-                </li>
-                <li shiro:hasPermission="config">
-                    <a href="#configSetting" class="nav-header collapsed" data-toggle="collapse">
-                        <i class="glyphicon glyphicon-credit-card"></i>
-                        配置管理
-                        <span class="pull-right glyphicon  glyphicon-chevron-toggle"></span>
-                    </a>
-                    <ul id="configSetting" class="nav nav-list secondmenu collapse">
-                        <li><a shiro:hasPermission="param" id="paramsearch" href="javascript:change_list('/param/main')"><i
-                                class="glyphicon glyphicon-th-list"></i>&nbsp;参数管理</a></li>
-
-                        <!--<li class="active"><a href="#"><i class="glyphicon glyphicon-globe"></i>&nbsp;全局缺省配置</a></li>-->
-                        <!--<li><a href="#"><i class="glyphicon glyphicon-star-empty"></i>&nbsp;未开通用户配置</a></li>-->
-                        <!--<li><a href="#"><i class="glyphicon glyphicon-star"></i>&nbsp;退订用户配置</a></li>-->
-                        <!--<li><a href="#"><i class="glyphicon glyphicon-text-width"></i>&nbsp;试用用户配置</a></li>-->
-                        <!--<li><a href="#"><i class="glyphicon glyphicon-ok-circle"></i>&nbsp;开通用户配置</a></li>-->
-                    </ul>
-                </li>
-
-                <li shiro:hasPermission="business">
-                    <a href="#disSetting" class="nav-header collapsed" data-toggle="collapse">
-                        <i class="glyphicon glyphicon-globe"></i>
-                        业务管理
-                        <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
-                    </a>
-                    <ul id="disSetting" class="nav nav-list secondmenu collapse">
-                        <!--<li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;分发包配置</a></li>-->
-                        <li><a shiro:hasPermission="video" href="javascript:change_list('/video/main')"><i class="glyphicon glyphicon-film"></i>&nbsp;视频管理</a>
-                        </li>
-                    </ul>
-                </li>
-
-
-                <!--<li>-->
-                    <!--<a href="#">-->
-                        <!--<i class="glyphicon glyphicon-fire"></i>-->
-                        <!--关于系统-->
-                        <!--<span class="badge pull-right">1</span>-->
-                    <!--</a>-->
-                <!--</li>-->
-
+    <div class="layui-body" id="container">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">主体内容加载中,请稍等...</div>
+    </div>
+    <div class="layui-body">
+        <div class="layui-tab marg0" lay-filter="bodyTab" id="top_tabs_box">
+            <ul class="layui-tab-title top_tab" id="top_tabs">
+                <li class="layui-this" lay-id=""><i class="iconfont icon-computer"></i> <cite>后台首页</cite></li>
             </ul>
-        </div>
-        <div class="col-md-10" id="content">
-
+            <ul class="layui-nav closeBox">
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-caozuo"></i> 页面操作<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child layui-anim layui-anim-upbit">
+                        <dd class=""><a href="javascript:;" class="refresh refreshThis"><i class="layui-icon">ဂ</i> 刷新当前</a>
+                        </dd>
+                        <dd class=""><a href="javascript:;" class="closePageOther"><i
+                                class="iconfont icon-prohibit"></i> 关闭其他</a></dd>
+                        <dd class="layui-this"><a href="javascript:;" class="closePageAll"><i
+                                class="iconfont icon-guanbi"></i> 关闭全部</a></dd>
+                    </dl>
+                </li>
+                <span class="layui-nav-bar" style="left: 20px; top: 35px; width: 96px; opacity: 1;"></span>
+            </ul>
+            <div class="layui-tab-content clildFrame">
+                <div class="layui-tab-item layui-show">
+                    <iframe src="/main"></iframe>
+                </div>
+            </div>
         </div>
     </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        2017 &copy;
+        <a href="http://kit.zhengjinfan.cn/">kit.zhengjinfan.cn/</a> MIT license
+
+    </div>
 </div>
-
-
+<script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1264021086'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1264021086%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script src="plugins/layui/layui.js"></script>
+<script>
+    var message;
+    layui.config({
+        base: 'src/js/'
+    }).use(['app', 'message'], function () {
+        var app = layui.app,
+            $ = layui.jquery,
+            layer = layui.layer;
+        //将message设置为全局以便子页面调用
+        message = layui.message;
+        //主入口
+        app.set({
+            type: 'iframe'
+        }).init();
+        $('#pay').on('click', function () {
+            layer.open({
+                title: false,
+                type: 1,
+                content: '<img src="/build/images/pay.png" />',
+                area: ['500px', '250px'],
+                shadeClose: true
+            });
+        });
+    });
+</script>
 </body>
+
 </html>
