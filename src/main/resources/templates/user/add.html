@@ -97,6 +97,8 @@
             layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
         });
 
+
+
         //监听提交
         form.on('submit(demo1)', function (data) {
             console.log(data.field);
@@ -112,7 +114,9 @@
                             title: "提示"
                         });
                     } else {
-                        location.href = "/user/main";
+                        window.parent.location.reload(); //刷新父页面
+                        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                        parent.layer.close(index);  // 关闭layer
                     }
 
                 }, error: function (data, status, e) {
