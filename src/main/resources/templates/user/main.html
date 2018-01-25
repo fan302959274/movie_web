@@ -11,10 +11,6 @@
 </head>
 <body style="margin: 10px;">
 
-<!--<blockquote class="layui-elem-quote layui-text">-->
-<!--鉴于小伙伴的普遍反馈，先温馨提醒两个常见“问题”：1. <a href="/doc/base/faq.html#form" target="_blank">为什么select/checkbox/radio没显示？</a> 2. <a href="/doc/modules/form.html#render" target="_blank">动态添加的表单元素如何更新？</a>-->
-<!--</blockquote>-->
-
 <blockquote class="layui-elem-quote news_search">
     <div class="demoTable" id="layerDemo">
         用户名：
@@ -22,31 +18,18 @@
             <input class="layui-input" name="id" id="demoReload" autocomplete="off"/>
         </div>
         <button class="layui-btn" data-type="reload">搜索</button>
-
-
         <button data-method="setTop" class="layui-btn layui-btn-normal newsAdd_btn">添加用户</button>
         <button class="layui-btn layui-btn-danger batchDel">批量删除</button>
-
-
     </div>
-
-
 </blockquote>
-
-
 <div class="layui-form news_list">
     <table class="layui-hide" id="test"></table>
 </div>
-
-
 <script src="/plugins/layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
-
-
     layui.use('layer', function () { //独立版的layer无需执行这一句
         var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
-
         //触发事件
         var active = {
             setTop: function () {
@@ -58,33 +41,26 @@
                     , area: ['100%', '100%']
                     , shade: 0
                     , content: '/user/add'
-//                    ,btn: ['继续弹出', '全部关闭'] //只是为了演示
                     , yes: function () {
                         $(that).click();
                     }
                     , btn2: function () {
                         layer.closeAll();
                     }
-
                     , zIndex: layer.zIndex //重点1
                     , success: function (layero) {
                         layer.setTop(layero); //重点2
                     }
                 });
             }
-
         };
-
         $('#layerDemo .layui-btn').on('click', function () {
             var othis = $(this), method = othis.data('method');
             active[method] ? active[method].call(this, othis) : '';
         });
-
-
     });
     layui.use('table', function () {
         var table = layui.table;
-
         table.render({
             elem: '#test'
             , url: '/user/data'
@@ -99,7 +75,6 @@
             , page: true
             , id: 'testReload'
         });
-
         var $ = layui.$, active = {
             reload: function () {
                 var demoReload = $('#demoReload');
@@ -115,7 +90,6 @@
                 });
             }
         };
-
         $('.demoTable .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
@@ -128,7 +102,6 @@
                     time: 2000 //20s后自动关闭
                 });
             } else {
-
                 layer.alert('确认删除吗？', {
                     skin: 'layui-layer-molv' //样式类名  自定义样式
                     , closeBtn: 1    // 是否显示关闭按钮
@@ -157,13 +130,9 @@
                     , btn2: function () {
                     }
                 });
-
             }
-
-
         });
     });
 </script>
-
 </body>
 </html>
