@@ -88,9 +88,9 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
                 return;
             //模板
             var tpl = [
-                    '<div class="layui-tab marg0" lay-filter="' + that._filter + '">',
+                    '<div class="layui-tab layui-tab-card kit-tab" lay-filter="' + that._filter + '">',
                     '<ul class="layui-tab-title">',
-                    '<li class="layui-tab-title top_tab" lay-id="-1" data-url="' + _config.mainUrl + '"><i class="layui-icon">&#xe68e;</i> 控制面板</li>',
+                    '<li class="layui-this" lay-id="-1" data-url="' + _config.mainUrl + '"><i class="layui-icon">&#xe68e;</i> 控制面板</li>',
                     '</ul>',
                     '<div class="kit-tab-tool">操作&nbsp;<i class="fa fa-caret-down"></i></div>',
                     '<div class="kit-tab-tool-body layui-anim layui-anim-upbit">',
@@ -201,6 +201,7 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
                         break;
                     case renderType.iframe:
                         $('.kit-tab .layui-tab-content iframe').height(currBoxHeight - 47);
+                        $('.kit-tab .layui-tab-content iframe').css("padding","10px");
                         break;
                 }
             }).resize();
