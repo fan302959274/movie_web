@@ -172,7 +172,7 @@
                         "pswd": $("#layui-form #password").val()
                     },//自定义参数,
                     success: function (data, status, e) {
-                        if (data.code != '20000') {
+                        if (data.code != '0') {
                             layer.alert(data.msg, {
                                 icon: 5,
                                 title: "提示"
