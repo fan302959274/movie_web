@@ -53,9 +53,9 @@ public class AuthRoleServiceImpl implements AuthRoleService {
         PageResp<TblAuthRole> resp = new PageResp<TblAuthRole>();
         TblAuthRoleExample example = new TblAuthRoleExample();
         try {
-            Integer offset = pageReq.getOffset() == null ? 0 : pageReq.getOffset();
+            Integer page = pageReq.getPage() == null ? 0 : pageReq.getPage();
             Integer limit = pageReq.getLimit() == null ? 10 : pageReq.getLimit();
-            PageHelper.offsetPage(offset, limit);
+            PageHelper.offsetPage((page-1)*limit, limit);
             if (null != pageReq) {
                 TblAuthRoleExample.Criteria criteria = example.createCriteria();
                 if (!StringUtils.isBlank(pageReq.getName())) {
@@ -69,7 +69,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
             Integer total = tblAuthRoleMapper.countByExample(example);
             resp.setCountPage(total % limit == 0 ? total / limit : (total / limit + 1));
             resp.setCount(total);
-            resp.setOffset(offset);
+            resp.setOffset((page-1)*limit);
             resp.setLimit(limit);
             resp.setData(list);
         } catch (Exception e) {
@@ -129,9 +129,9 @@ public class AuthRoleServiceImpl implements AuthRoleService {
         TblAuthRoleExample example = new TblAuthRoleExample();
         Map param = new HashMap();
         try {
-            Integer offset = pageReq.getOffset() == null ? 0 : pageReq.getOffset();
+            Integer page = pageReq.getPage() == null ? 0 : pageReq.getPage();
             Integer limit = pageReq.getLimit() == null ? 10 : pageReq.getLimit();
-            param.put("offset",offset);
+            param.put("offset",(page-1)*limit);
             param.put("limit",limit);
             if (null != pageReq) {
                 TblAuthRoleExample.Criteria criteria = example.createCriteria();
@@ -149,7 +149,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
             Integer total = tblAuthRoleMapper.countByExample(example);
             resp.setCountPage(total % limit == 0 ? total / limit : (total / limit + 1));
             resp.setCount(total);
-            resp.setOffset(offset);
+            resp.setOffset((page-1)*limit);
             resp.setLimit(limit);
             resp.setData(list);
         } catch (Exception e) {

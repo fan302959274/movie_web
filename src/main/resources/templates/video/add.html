@@ -1,159 +1,124 @@
-<div class="panel-body" style="padding-bottom:0px;padding-top:0px;">
-    <div class="panel panel-default">
-        <div class="panel-heading">参数添加</div>
-        <div class="panel-body">
-            <form id="add_form" class="form-horizontal">
-
-                <div class="row">
-
-                    <div class="form-group">
-                        <label for="videoName" class="col-sm-1 control-label">视频名称</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="videoName" name="videoName" placeholder="请输入名字"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="videoDuration" class="col-sm-1 control-label">视频时长</label>
-                        <div class="col-sm-2">
-                            <input type="number" class="form-control" id="videoDuration" name="videoDuration" placeholder="分钟"/>
-                        </div>
-                        <div class="col-sm-2">
-                            <input type="number" class="form-control" id="videoDuration1" name="videoDuration1" placeholder="秒"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="videoViewPath" class="col-sm-1 control-label">视频连接</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="videoViewPath" name="videoViewPath" placeholder="视频连接"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="videoSize" class="col-sm-1 control-label">视频大小</label>
-                        <div class="col-sm-4">
-                            <input type="number" class="form-control" id="videoSize" name="videoSize" placeholder="兆"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="videoType" class="col-sm-1 control-label">类型</label>
-                        <div class="col-sm-4">
-                            <select name="videoType" id="videoType"
-                                    class="form-control">
-                                <option value="">全部</option>
-                                <option th:each="type:${video_type_list}" th:value="${type.id}"
-                                        th:text="${type.paramValue}"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="videoPoster" class="col-sm-1 control-label">视频封面</label>
-                        <div class="col-sm-4">
-                            <input type="file" class="form-control" id="videoPoster" name="videoPoster" placeholder="视频封面"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="videoTag" class="col-sm-1 control-label">标签</label>
-                        <div class="col-sm-4 checkbox">
-                            <label th:each="tag:${video_tag_list}">
-                                <input type="checkbox" th:value="${tag.id}" th:text="${tag.paramValue}" name="videoTag"
-                                       id="videoTag"/>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="videoIntroduction" class="col-sm-1 control-label">视频介绍</label>
-                        <div class="col-sm-4">
-                            <textarea class="form-control" id="videoIntroduction" name="videoIntroduction" placeholder="视频介绍"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-1 col-sm-8">
-                            <button type="submit" class="btn btn-success">保存</button>
-                            <button type="button" id="return" class="btn btn-default">返回</button>
-                        </div>
-                    </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>layui</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" href="/plugins/layui/css/layui.css" media="all"/>
+    <script src="/plugins/layui/layui.js" charset="utf-8"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body style="margin: 10px;">
 
 
-                </div>
+<form class="layui-form" action="">
 
-            </form>
-
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">用户昵称</label>
+            <div class="layui-input-inline">
+                <input type="text" id="nickname" name="nickname" lay-verify="required" autocomplete="off"
+                       placeholder="请输入用户昵称" class="layui-input"/>
+            </div>
         </div>
     </div>
 
-</div>
+
+    <div class="layui-form-item">
+
+        <div class="layui-inline">
+            <label class="layui-form-label">验证邮箱</label>
+            <div class="layui-input-inline">
+                <input type="text" id="email" name="email" lay-verify="email" autocomplete="off" placeholder="请输入用户邮箱"
+                       class="layui-input"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
 
 
 
-
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form,
+            $ = layui.jquery
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
 
-    $(function () {
-        $("#add_form").validate({
-            rules: {
-                videoName: {
-                    required: true
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则(thymeleaf 识别不了小于号所以加上/*<![CDATA[*/)
+        /*<![CDATA[*/
+        form.verify({
+            title: function (value) {
+                if (value.length < 5) {
+                    return '标题至少得5个字符啊';
                 }
-            },
-            messages: {
-                videoName: {
-                    required: "请输名称",
-                }
-            },
-            submitHandler: function () {
-                var videoTags="";
-                $("input[name='videoTag']:checked").each(function(i){
-                    videoTags+=$(this).val()+",";
-                });
-                videoTags=videoTags.substring(0,videoTags.lastIndexOf(","));
-
-                $.ajaxFileUpload({
-                    method: "POST",
-                    url: "/video/save?time=" + (new Date()).getTime(),
-                    secureuri: true,
-                    dataType : 'json',
-                    fileElementId: 'videoPoster',                        //文件选择框的id属性
-                    data: {
-                        "videoName": $("#add_form #videoName").val(),
-                        "videoDuration": $("#add_form #videoDuration").val(),
-                        "videoSize": $("#add_form #videoSize").val(),
-                        "videoType": $("#add_form #videoType").val(),
-                        "videoViewPath": $("#add_form #videoViewPath").val(),
-                        "videoIntroduction":$("#add_form #videoIntroduction").val(),
-                        "videoTag": videoTags
-                    },//自定义参数,
-                    success: function (data, status, e) {
-                        if(data.code!='20000'){
-                            alert(data.msg);
-                        }else{
-                            $.ajax({
-                                type: "GET",
-                                url: '/video/main',
-                                success: function (data) {
-                                    $('#content').html(data);
-                                }
-                            });
-                        }
-
-                    }, error: function (data, status, e) {
-                        alert("操作失败，请再次操作！")
-                        //上传失败之后的操作
-                    }
-                });
+            }
+            , pass: [/(.+){6,12}$/, '密码必须6到12位']
+            , content: function (value) {
+                layedit.sync(editIndex);
             }
         });
+        /*]]>*/
 
-        $("#return").click(function () {
+        //监听指定开关
+        form.on('switch(switchTest)', function (data) {
+            layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+                offset: '6px'
+            });
+            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+        });
+
+
+
+        //监听提交
+        form.on('submit(demo1)', function (data) {
+            console.log(data.field);
             $.ajax({
-                type: "GET",
-                url: '/video/main',
-                success: function (data) {
-                    $('#content').html(data);
+                method: "POST",
+                url: "/video/save?time=" + (new Date()).getTime(),
+                dataType: 'json',
+                data: data.field,//自定义参数,
+                success: function (data, s, status) {
+                    if (data.code != '0') {
+                        layer.alert(data.msg, {
+                            icon: 5,
+                            title: "提示"
+                        });
+                    } else {
+                        window.parent.location.reload(); //刷新父页面
+                        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                        parent.layer.close(index);  // 关闭layer
+                    }
+
+                }, error: function (data, status, e) {
+                    layer.alert("操作失败，请再次操作！", {
+                        icon: 5,
+                        title: "提示"
+                    });
+                    //上传失败之后的操作
                 }
             });
+            return false;
         });
+
+
     });
-
-
 </script>
+
+</body>
+</html>

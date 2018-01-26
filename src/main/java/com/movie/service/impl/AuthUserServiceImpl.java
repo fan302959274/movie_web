@@ -76,9 +76,9 @@ public class AuthUserServiceImpl implements AuthUserService {
         PageResp<TblAuthUser> resp = new PageResp<TblAuthUser>();
         TblAuthUserExample example = new TblAuthUserExample();
         try {
-            Integer offset = pageReq.getOffset() == null ? 0 : pageReq.getOffset();
+            Integer page = pageReq.getPage() == null ? 0 : pageReq.getPage();
             Integer limit = pageReq.getLimit() == null ? 10 : pageReq.getLimit();
-            PageHelper.offsetPage(offset, limit);
+            PageHelper.offsetPage((page-1)*limit, limit);
             TblAuthUserExample.Criteria criteria = example.createCriteria();
             criteria.andNicknameNotEqualTo("admin");
             if (null != pageReq) {
@@ -97,7 +97,7 @@ public class AuthUserServiceImpl implements AuthUserService {
             Integer total = tblAuthUserMapper.countByExample(example);
             resp.setCountPage(total % limit == 0 ? total / limit : (total / limit + 1));
             resp.setCount(total);
-            resp.setOffset(offset);
+            resp.setOffset((page-1)*limit);
             resp.setLimit(limit);
             resp.setMsg("");
             resp.setCode("0");
